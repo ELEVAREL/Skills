@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fanta African Hair - Pricing</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    display: flex;
+    gap: 40px;
+    padding: 40px;
+    background: #1a1a1a;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Instagram Post */
+  .post {
+    width: 1080px;
+    height: 1080px;
+    background: linear-gradient(160deg, #0D0604 0%, #1B0E06 50%, #0D0604 100%);
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    padding: 70px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post::before {
+    content: '';
+    position: absolute;
+    top: 25px; left: 25px; right: 25px; bottom: 25px;
+    border: 1px solid rgba(193,127,62,0.1);
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .header-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #C17F3E;
+    margin-bottom: 15px;
+  }
+
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 58px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .header-title em {
+    font-style: italic;
+    color: #C17F3E;
+  }
+
+  .price-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 15px;
+    border-bottom: 1px solid rgba(193,127,62,0.1);
+  }
+
+  .price-item:last-child {
+    border-bottom: none;
+  }
+
+  .price-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .price-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: rgba(193,127,62,0.4);
+    width: 30px;
+  }
+
+  .price-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 600;
+  }
+
+  .price-dots {
+    flex: 1;
+    height: 1px;
+    margin: 0 20px;
+    background: repeating-linear-gradient(90deg, rgba(193,127,62,0.2) 0, rgba(193,127,62,0.2) 4px, transparent 4px, transparent 12px);
+  }
+
+  .price-amount {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #C17F3E;
+    white-space: nowrap;
+  }
+
+  .footer-section {
+    margin-top: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .footer-walkins {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.8);
+    padding: 16px 45px;
+    border: 1px solid rgba(193,127,62,0.3);
+    border-radius: 50px;
+  }
+
+  .footer-deposit {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .footer-location {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* TikTok/Reel Version */
+  .reel {
+    width: 1080px;
+    height: 1920px;
+    background: linear-gradient(180deg, #0D0604 0%, #1B0E06 30%, #0D0604 100%);
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    padding: 100px 70px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .reel::before {
+    content: '';
+    position: absolute;
+    top: 35px; left: 35px; right: 35px; bottom: 35px;
+    border: 1px solid rgba(193,127,62,0.08);
+  }
+
+  .reel-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .reel-header .header-label {
+    font-size: 18px;
+    margin-bottom: 25px;
+  }
+
+  .reel-header .header-title {
+    font-size: 72px;
+  }
+
+  .reel-header .header-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.45);
+    margin-top: 15px;
+  }
+
+  .reel .price-list {
+    gap: 0;
+  }
+
+  .reel .price-item {
+    padding: 38px 15px;
+  }
+
+  .reel .price-name {
+    font-size: 36px;
+  }
+
+  .reel .price-amount {
+    font-size: 32px;
+  }
+
+  .reel .price-time {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 5px;
+  }
+
+  .reel .footer-section {
+    margin-top: 70px;
+    gap: 18px;
+  }
+
+  .reel-cta-box {
+    width: 100%;
+    padding: 30px;
+    border: 1px solid rgba(193,127,62,0.2);
+    border-radius: 8px;
+    text-align: center;
+    background: rgba(193,127,62,0.04);
+  }
+
+  .reel-cta-box .cta-main {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #C17F3E;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .reel-cta-box .cta-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .reel .footer-location {
+    font-size: 15px;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Instagram Post - Pricing -->
+<div class="post">
+  <div class="header">
+    <div class="header-label">Fanta African Hair</div>
+    <div class="header-title">Our <em>Pricing</em></div>
+  </div>
+
+  <div class="price-list">
+    <div class="price-item">
+      <div class="price-left">
+        <div class="price-num">01</div>
+        <div class="price-name">Knotless Braids</div>
+      </div>
+      <div class="price-dots"></div>
+      <div class="price-amount">$120+</div>
+    </div>
+    <div class="price-item">
+      <div class="price-left">
+        <div class="price-num">02</div>
+        <div class="price-name">Box Braids</div>
+      </div>
+      <div class="price-dots"></div>
+      <div class="price-amount">$100+</div>
+    </div>
+    <div class="price-item">
+      <div class="price-left">
+        <div class="price-num">03</div>
+        <div class="price-name">Senegalese Twists</div>
+      </div>
+      <div class="price-dots"></div>
+      <div class="price-amount">$100+</div>
+    </div>
+    <div class="price-item">
+      <div class="price-left">
+        <div class="price-num">04</div>
+        <div class="price-name">Goddess Braids</div>
+      </div>
+      <div class="price-dots"></div>
+      <div class="price-amount">$80+</div>
+    </div>
+    <div class="price-item">
+      <div class="price-left">
+        <div class="price-num">05</div>
+        <div class="price-name">Weaves</div>
+      </div>
+      <div class="price-dots"></div>
+      <div class="price-amount">$100+</div>
+    </div>
+  </div>
+
+  <div class="footer-section">
+    <div class="footer-walkins">Walk-Ins Welcome</div>
+    <div class="footer-deposit">$50 deposit required for appointments</div>
+    <div class="footer-location">639 Cottage St, Pawtucket RI &bull; Open 7 Days 9AM-7PM</div>
+  </div>
+</div>
+
+<!-- TikTok/Reel - Pricing -->
+<div class="reel">
+  <div class="reel-header">
+    <div class="header-label">Fanta African Hair</div>
+    <div class="header-title">Our <em>Pricing</em></div>
+    <div class="header-sub">Transparent. No surprises.</div>
+  </div>
+
+  <div class="price-list">
+    <div class="price-item">
+      <div class="price-left">
+        <div class="price-num">01</div>
+        <div>
+          <div class="price-name">Knotless Braids</div>
+          <div class="price-time">3-5 hours</div>
+        </div>
+      </div>
+      <div class="price-dots"></div>
+      <div class="price-amount">$120+</div>
+    </div>
+    <div class="price-item">
+      <div class="price-left">
+        <div class="price-num">02</div>
+        <div>
+          <div class="price-name">Box Braids</div>
+          <div class="price-time">4-7 hours</div>
+        </div>
+      </div>
+      <div class="price-dots"></div>
+      <div class="price-amount">$100+</div>
+    </div>
+    <div class="price-item">
+      <div class="price-left">
+        <div class="price-num">03</div>
+        <div>
+          <div class="price-name">Senegalese Twists</div>
+          <div class="price-time">3-5 hours</div>
+        </div>
+      </div>
+      <div class="price-dots"></div>
+      <div class="price-amount">$100+</div>
+    </div>
+    <div class="price-item">
+      <div class="price-left">
+        <div class="price-num">04</div>
+        <div>
+          <div class="price-name">Goddess Braids</div>
+          <div class="price-time">2-4 hours</div>
+        </div>
+      </div>
+      <div class="price-dots"></div>
+      <div class="price-amount">$80+</div>
+    </div>
+    <div class="price-item">
+      <div class="price-left">
+        <div class="price-num">05</div>
+        <div>
+          <div class="price-name">Weaves</div>
+          <div class="price-time">2-4 hours</div>
+        </div>
+      </div>
+      <div class="price-dots"></div>
+      <div class="price-amount">$100+</div>
+    </div>
+  </div>
+
+  <div class="footer-section">
+    <div class="reel-cta-box">
+      <div class="cta-main">Walk-Ins Welcome</div>
+      <div class="cta-sub">$50 deposit to book an appointment</div>
+    </div>
+    <div class="footer-location">639 Cottage St, Pawtucket RI &bull; Open Daily 9AM-7PM</div>
+  </div>
+</div>
+
+</body>
+</html>

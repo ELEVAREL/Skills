@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fanta African Hair - Book Now</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    display: flex;
+    gap: 40px;
+    padding: 40px;
+    background: #1a1a1a;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Instagram Post (1080x1080) */
+  .post {
+    width: 1080px;
+    height: 1080px;
+    background: linear-gradient(160deg, #0D0604 0%, #1B0E06 30%, #2C1608 60%, #1B0E06 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    padding: 80px;
+  }
+
+  /* Decorative elements */
+  .post::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+    border: 1px solid rgba(193,127,62,0.15);
+  }
+
+  .corner-decor {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-color: #C17F3E;
+    border-style: solid;
+  }
+  .corner-decor.tl { top: 25px; left: 25px; border-width: 2px 0 0 2px; }
+  .corner-decor.tr { top: 25px; right: 25px; border-width: 2px 2px 0 0; }
+  .corner-decor.bl { bottom: 25px; left: 25px; border-width: 0 0 2px 2px; }
+  .corner-decor.br { bottom: 25px; right: 25px; border-width: 0 2px 2px 0; }
+
+  .glow-1 {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(193,127,62,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .glow-2 {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(193,127,62,0.08) 0%, transparent 70%);
+  }
+
+  .post-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #C17F3E;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .post-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .post-headline em {
+    font-style: italic;
+    color: #C17F3E;
+  }
+
+  .post-divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #C17F3E, transparent);
+    margin: 30px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .post-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.8;
+    max-width: 700px;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .post-cta-row {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .post-cta {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 22px 55px;
+    background: linear-gradient(135deg, #C17F3E, #A06830);
+    color: #fff;
+    border-radius: 4px;
+  }
+
+  .post-walkin {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.5);
+    padding: 22px 40px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+  }
+
+  .post-deposit {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .post-footer {
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 2px;
+    z-index: 1;
+  }
+
+  .post-footer span {
+    color: rgba(193,127,62,0.6);
+  }
+
+  /* TikTok/Reels (1080x1920) */
+  .reel {
+    width: 1080px;
+    height: 1920px;
+    background: linear-gradient(180deg, #0D0604 0%, #1B0E06 40%, #2C1608 70%, #0D0604 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    padding: 100px 80px;
+  }
+
+  .reel::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+    border: 1px solid rgba(193,127,62,0.1);
+  }
+
+  .reel .glow-1 {
+    top: 200px;
+    width: 500px;
+    height: 500px;
+  }
+
+  .reel-top-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #C17F3E;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .reel-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 88px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .reel-headline em {
+    font-style: italic;
+    color: #C17F3E;
+    display: block;
+  }
+
+  .reel-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    max-width: 700px;
+    margin-bottom: 70px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .reel-features {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-bottom: 70px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .reel-feature {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .reel-feature .check {
+    color: #C17F3E;
+    font-size: 20px;
+  }
+
+  .reel-cta {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 28px 70px;
+    background: linear-gradient(135deg, #C17F3E, #A06830);
+    color: #fff;
+    border-radius: 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .reel-deposit {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .reel-footer {
+    position: absolute;
+    bottom: 80px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 3px;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<!-- Instagram Post - Book Now -->
+<div class="post">
+  <div class="corner-decor tl"></div>
+  <div class="corner-decor tr"></div>
+  <div class="corner-decor bl"></div>
+  <div class="corner-decor br"></div>
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
+
+  <div class="post-label">Fanta African Hair</div>
+  <div class="post-headline">Your Next <em>Look</em><br>Starts Here</div>
+  <div class="post-divider"></div>
+  <div class="post-body">
+    Knotless braids, box braids, Senegalese twists,<br>
+    goddess braids & weaves. Open 7 days a week.
+  </div>
+  <div class="post-cta-row">
+    <div class="post-cta">Book Now</div>
+    <div class="post-walkin">Walk-Ins Welcome</div>
+  </div>
+  <div class="post-deposit">$50 deposit to secure your appointment</div>
+  <div class="post-footer">639 Cottage St, Pawtucket RI &bull; <span>Open Daily 9AM - 7PM</span></div>
+</div>
+
+<!-- TikTok/Reels - Book Now -->
+<div class="reel">
+  <div class="glow-1"></div>
+  <div class="reel-top-label">Fanta African Hair</div>
+  <div class="reel-headline">Ready For<br><em>Your Glow Up?</em></div>
+  <div class="reel-sub">Expert braiding & protective styles<br>in Pawtucket & Providence</div>
+  <div class="reel-features">
+    <div class="reel-feature"><span class="check">&#10003;</span> Knotless & Box Braids</div>
+    <div class="reel-feature"><span class="check">&#10003;</span> Senegalese Twists</div>
+    <div class="reel-feature"><span class="check">&#10003;</span> Goddess Braids & Weaves</div>
+    <div class="reel-feature"><span class="check">&#10003;</span> Walk-Ins Welcome</div>
+    <div class="reel-feature"><span class="check">&#10003;</span> Open 7 Days a Week</div>
+  </div>
+  <div class="reel-cta">Book Today</div>
+  <div class="reel-deposit">$50 deposit to secure your spot</div>
+  <div class="reel-footer">639 COTTAGE ST &bull; PAWTUCKET, RI</div>
+</div>
+
+</body>
+</html>

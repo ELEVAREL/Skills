@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fanta African Hair - Style Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    display: flex;
+    gap: 40px;
+    padding: 40px;
+    background: #1a1a1a;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .slide {
+    width: 1080px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  /* SLIDE 1 - Cover */
+  .slide-cover {
+    background: linear-gradient(145deg, #1B0A00 0%, #3D1C00 40%, #C17F3E 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+  }
+
+  .slide-cover::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(193,127,62,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .slide-cover::after {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    left: -150px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(193,127,62,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .cover-accent {
+    width: 60px;
+    height: 3px;
+    background: #C17F3E;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 22px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #C17F3E;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 82px;
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-title span {
+    display: block;
+    font-size: 38px;
+    font-weight: 400;
+    font-style: italic;
+    color: #C17F3E;
+    margin-top: 10px;
+  }
+
+  .cover-tagline {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 25px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-location {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 50px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+
+  .swipe-hint {
+    position: absolute;
+    bottom: 40px;
+    right: 50px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .swipe-hint::after {
+    content: '\2192';
+    font-size: 20px;
+  }
+
+  /* SLIDE 2-6 - Style Cards */
+  .slide-style {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    padding: 80px;
+  }
+
+  .style-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 180px;
+    font-weight: 800;
+    opacity: 0.06;
+    position: absolute;
+    top: 40px;
+    right: 60px;
+    line-height: 1;
+  }
+
+  .style-icon {
+    width: 100px;
+    height: 100px;
+    border: 2px solid #C17F3E;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+    font-size: 42px;
+  }
+
+  .style-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 58px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+
+  .style-desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 22px;
+    color: rgba(255,255,255,0.65);
+    max-width: 700px;
+    line-height: 1.7;
+    margin-bottom: 45px;
+  }
+
+  .style-price {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    color: #C17F3E;
+    padding: 15px 50px;
+    border: 2px solid rgba(193,127,62,0.4);
+    border-radius: 50px;
+  }
+
+  .style-time {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 20px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .slide-dots {
+    position: absolute;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+  }
+
+  .dot.active {
+    background: #C17F3E;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* Color variations */
+  .bg-1 { background: linear-gradient(145deg, #1B0A00 0%, #2A1200 50%, #1B0A00 100%); }
+  .bg-2 { background: linear-gradient(145deg, #0A0A1B 0%, #1A1230 50%, #0A0A1B 100%); }
+  .bg-3 { background: linear-gradient(145deg, #0A1B0A 0%, #12301A 50%, #0A1B0A 100%); }
+  .bg-4 { background: linear-gradient(145deg, #1B0A0A 0%, #301212 50%, #1B0A0A 100%); }
+  .bg-5 { background: linear-gradient(145deg, #1B1B0A 0%, #302A12 50%, #1B1B0A 100%); }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: Cover -->
+<div class="slide slide-cover">
+  <div class="cover-accent"></div>
+  <div class="cover-subtitle">Fanta African Hair</div>
+  <div class="cover-title">
+    Our Styles
+    <span>& What We Offer</span>
+  </div>
+  <div class="cover-tagline">Protective styling crafted with care</div>
+  <div class="cover-location">Pawtucket &bull; Providence, RI</div>
+  <div class="swipe-hint">SWIPE</div>
+  <div class="slide-dots">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+<!-- SLIDE 2: Knotless Braids -->
+<div class="slide slide-style bg-1">
+  <div class="style-number">01</div>
+  <div class="style-icon">&#10022;</div>
+  <div class="style-name">Knotless Braids</div>
+  <div class="style-desc">Lightweight, tension-free braids that start with your natural hair for a seamless, pain-free look. Gentle on your edges and lasts 6-8 weeks.</div>
+  <div class="style-price">Starting at $120+</div>
+  <div class="style-time">3 - 5 hours</div>
+  <div class="slide-dots">
+    <div class="dot"></div>
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+<!-- SLIDE 3: Box Braids -->
+<div class="slide slide-style bg-2">
+  <div class="style-number">02</div>
+  <div class="style-icon">&#9830;</div>
+  <div class="style-name">Box Braids</div>
+  <div class="style-desc">The timeless classic. Versatile, protective, and always in style. Available in any length, size, and color you desire.</div>
+  <div class="style-price">Starting at $100+</div>
+  <div class="style-time">4 - 7 hours</div>
+  <div class="slide-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+<!-- SLIDE 4: Senegalese Twists -->
+<div class="slide slide-style bg-3">
+  <div class="style-number">03</div>
+  <div class="style-icon">&#8734;</div>
+  <div class="style-name">Senegalese Twists</div>
+  <div class="style-desc">Silky, rope-like twists that give you an elegant, polished look. Lightweight and low-maintenance for weeks of effortless style.</div>
+  <div class="style-price">Starting at $100+</div>
+  <div class="style-time">3 - 5 hours</div>
+  <div class="slide-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Goddess Braids -->
+<div class="slide slide-style bg-4">
+  <div class="style-number">04</div>
+  <div class="style-icon">&#9733;</div>
+  <div class="style-name">Goddess Braids</div>
+  <div class="style-desc">Bold, chunky cornrow-style braids that hug the scalp. A regal, statement look perfect for any occasion.</div>
+  <div class="style-price">Starting at $80+</div>
+  <div class="style-time">2 - 4 hours</div>
+  <div class="slide-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot active"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Weaves -->
+<div class="slide slide-style bg-5">
+  <div class="style-number">05</div>
+  <div class="style-icon">&#9827;</div>
+  <div class="style-name">Weaves</div>
+  <div class="style-desc">Full, voluminous installs that give you the length and body you want. Sew-in or quick weave options available for every lifestyle.</div>
+  <div class="style-price">Starting at $100+</div>
+  <div class="style-time">2 - 4 hours</div>
+  <div class="slide-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot active"></div>
+  </div>
+</div>
+
+</body>
+</html>
