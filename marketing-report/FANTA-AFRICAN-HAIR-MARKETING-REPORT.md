@@ -65,73 +65,117 @@ The salon's biggest untapped asset is its work. Every braid, twist, and weave is
 
 ### The Hair Braiding Industry
 
-The U.S. hair braiding and natural hair care market has grown significantly, driven by:
+The global hair braiding market is valued at **$2.93 billion in 2026**, projected to reach **$6.8 billion by 2035** at an 8.2% CAGR ([Business Research Insights](https://www.businessresearchinsights.com/market-reports/hair-braiding-market-118864)).
 
-- Increasing demand for protective styling among Black women
-- Cultural appreciation and mainstream acceptance of braided styles
-- Social media (Instagram and TikTok) turning braiders into visual artists with massive followings
-- Deregulation in many states reducing licensing barriers for braiders
+Key demand signals:
 
-The protective hairstyling market is valued at over $2.5 billion annually in the U.S., with braiding salons making up a significant share.
+- **64%** of textured-hair consumers prefer braiding as their primary protective style
+- **52%** of salon operators report rising braid-specific bookings
+- **48%** of customers re-braid within 8 weeks (strong recurring revenue)
+- **72%** of purchase decisions are influenced by social media
+- **41%** of bookings now come via mobile
+
+Industry pricing has risen sharply. Knotless braids that cost $150-200 two years ago now run $350+ at many salons nationwide ([Dallas Weekly](https://dallasweekly.com/2025/03/braiding-culture-costs-black-women/)). Fanta's $80-$200+ range positions it as affordable relative to the national market.
+
+"Boho braids" searches spiked **150% year-over-year** in early 2026. "Box braids" and "knotless braids" remain the two dominant search terms, peaking every June with summer demand.
 
 ### Pawtucket & Providence Demographics
 
 | Metric | Pawtucket | Providence |
 |--------|-----------|------------|
-| **Population** | ~75,000 | ~190,000 |
-| **Median Household Income** | ~$48,000 | ~$45,000 |
-| **Black/African American** | ~17% | ~16% |
-| **Hispanic/Latino** | ~28% | ~44% |
-| **Combined Service Area** | ~265,000+ residents |
+| **Population (2026 est.)** | 77,604 | 197,012 |
+| **Median Household Income** | $63,499 | $68,119 |
+| **Black/African American** | ~11% (8,360 people) | ~10.2% |
+| **Hispanic/Latino** | 26.8% | 45.3% |
+| **Foreign-Born** | 25.9% (19,700) | 33.5% (64,300) |
+| **Two or More Races** | 12.1% | N/A |
+| **Median Age** | N/A | 32.8 years |
+| **Combined Service Area** | **~275,000 residents** | |
 
-The combined metro area gives Fanta access to a service area of 265,000+ people with a sizable Black and mixed-race population. The median income supports the $40-$200 price range.
+*Sources: [Data USA - Pawtucket](https://datausa.io/profile/geo/pawtucket-ri), [Data USA - Providence](https://datausa.io/profile/geo/providence-ri/), [Census QuickFacts](https://www.census.gov/quickfacts/pawtucketcityrhodeisland)*
+
+Pawtucket has the largest Black population percentage of any RI city and is home to a significant West African immigrant community, particularly from Liberia, Ghana, and Nigeria. Rhode Island has the **highest per-capita Liberian population** in the U.S. ([Brown University](https://www.brown.edu/news/2017-01-23/immigrants)). The young median age (32.8 in Providence) and high diversity create strong demand for African braiding services.
+
+The combined metro area gives Fanta access to 275,000+ people. The median household incomes ($63K-$68K) comfortably support the $40-$200+ price range.
 
 ### Search Demand
 
-Top search terms people use to find hair braiding services locally:
+Top search terms and their national monthly volumes:
 
-| Search Term | Intent |
-|-------------|--------|
-| "African hair braiding near me" | High purchase intent |
-| "knotless braids [city]" | Specific style search |
-| "box braids Pawtucket" | Local + style |
-| "hair braiding Providence RI" | Local discovery |
-| "best braider near me" | Review-driven search |
-| "braiding salon open today" | Walk-in intent |
-| "how much do knotless braids cost" | Price comparison |
+| Search Term | Monthly Volume | Intent |
+|-------------|---------------|--------|
+| "hair braiding near me" | **135,000** | High purchase intent |
+| "braids near me" | **74,000** | General discovery |
+| "african hair braiding" | **74,000** | Category search |
+| "african hair braiding near me" | **49,500** | Local + category |
+| "box braids [city]" | Varies | Specific style + local |
+| "knotless braids near me" | Varies | Style-specific |
+| "how much do knotless braids cost" | Varies | Price comparison |
 
-Fanta's website already ranks for "Pawtucket" braiding terms. The opportunity is capturing Providence searches and specific style searches.
+*Source: [KeySearch](https://www.keysearch.co/top-keywords/hair-salon-keywords)*
+
+**Recommended local SEO keywords to target:**
+- "African hair braiding Pawtucket RI"
+- "box braids Providence RI"
+- "knotless braids near me Rhode Island"
+- "braids near me Pawtucket"
+- "Senegalese twists Rhode Island"
+- "boho braids Providence RI"
+
+Fanta's website already ranks for Pawtucket braiding terms. The opportunity is capturing Providence searches and the trending "boho braids" term.
 
 ---
 
 ## 4. Competitive Landscape
 
-### Direct Competitors (Pawtucket/Providence Area)
+### Direct Competitors
 
-The African hair braiding market in Pawtucket/Providence has several established salons. Key competitive factors:
+We identified **10+ African hair braiding salons** in the Pawtucket-Providence-North Providence corridor.
 
-| Factor | Fanta's Position |
-|--------|-----------------|
-| **Rating** | 4.7 stars - strong |
-| **Hours** | 7 days/week - best availability |
-| **Walk-ins** | Accepted - competitive advantage |
-| **Online presence** | Website by ElevareStudio - professional |
-| **Social media** | Opportunity for growth |
-| **Pricing** | Competitive with market ($40-$200+) |
+#### Pawtucket (Direct Competition)
 
-### Competitive Advantages
+| Salon | Rating | Reviews | Pricing | Hours | Notes |
+|-------|--------|---------|---------|-------|-------|
+| **Fanta African Hair Braiding** | 4.7 | 48 (Yelp) + 37 (Google) | $40-$200+ | Mon-Sun 9-7 | 20+ years. Professional website. Walk-ins. |
+| **Binta African Hair Braiding** | N/A | N/A | Not published | Mon-Fri 9-7, Sat 9-8, Sun 10-4 | 580 Newport Ave. On Fresha. Instagram: @bintaafricanbraiding |
 
-1. **Open 7 days a week.** Many competitors close on Mondays or Sundays. Fanta captures clients who need weekend or last-minute availability.
-2. **Walk-ins accepted.** Reduces friction for first-time clients who don't want to commit without seeing the salon.
-3. **$50 deposit (not full prepay).** Low commitment to book, high enough to reduce no-shows.
-4. **Professional website.** Most braiding salons rely only on Instagram or Facebook. Having a dedicated site builds trust.
-5. **4.7-star rating.** Strong social proof, but needs more reviews to dominate local search.
+#### North Providence (Adjacent Market)
 
-### Weaknesses to Address
+| Salon | Rating | Reviews | Pricing | Notes |
+|-------|--------|---------|---------|-------|
+| **Sona's African Hair Braiding** | High | 62+ Yelp photos | Not published | 1048 Mineral Spring Ave. Multilingual. Mon-Sat 9-5. |
+| **Kenzo's African Hair Braiding** | N/A | N/A | Not published | 1362 Mineral Spring Ave. Full service + supplies store. Daily 9-10. |
+| **Slayed By Zene** | 5.0 | 4 | $220-$320 | Premium pricing. Small boho knotless $320. |
 
-1. **37 reviews is too few.** Competitors with 100+ reviews rank higher in Google Maps. Every satisfied client should be asked to leave a review.
-2. **Social media presence needs growth.** Transformation content (before/after) is the #1 growth driver for braiding salons on Instagram and TikTok.
-3. **No visible referral program.** Braiding clients talk to friends. Formalize it.
+#### Greater Providence
+
+| Salon | Rating | Reviews | Pricing | Notes |
+|-------|--------|---------|---------|-------|
+| **Pretty Luxury** | 4.9 | 63 | $60-$200+ | Charles St. Also offers braiding classes ($200). |
+| **Dee's Endless Beauty Supply & Salon** | 4.9 | 12 | $40-$140 | N Main St. Kinky twist $140+. |
+| **BEAUTY BY ANANAH** | N/A | N/A | $120-$185+ | Mobile service available. |
+| **SOSO SALON Y HAIR CENTER** | 4.9 | 11 | $25-$160+ | Braids $160+ (5.5 hrs). |
+| **Braiding with Yenni** | 4.7 | 10 | Varies | Johnston. Mobile service. |
+
+*Sources: [Yelp](https://www.yelp.com/biz/fanta-african-hair-braiding-pawtucket), [Fresha](https://www.fresha.com/lvp/binta-african-hair-braiding-newport-avenue-pawtucket-58lW3R), [Booksy](https://booksy.com/en-us/s/african-braiding/34845_pawtucket)*
+
+### Where Fanta Wins
+
+1. **Only 2 dedicated braiding salons in Pawtucket.** Fanta and Binta. That's it. Fanta has more reviews and a professional website.
+2. **Open 7 days a week.** Binta closes early Sunday (4pm). Sona's is closed Sundays. Fanta is the only option for full Sunday availability.
+3. **Walk-ins accepted.** Several competitors require appointments only.
+4. **$50 deposit (not full prepay).** Lower friction than competitors charging full price upfront.
+5. **Professional website.** Most competitors rely only on Yelp, Instagram, or booking platforms. Fanta has a dedicated site.
+6. **20+ years in business.** Longevity builds trust in a market where many braiders come and go.
+7. **Pricing advantage.** Fanta's $80-$200+ range undercuts premium competitors like Slayed By Zene ($220-$320) while competing head-to-head with mid-market salons.
+
+### Where Fanta Needs to Improve
+
+1. **Review count.** Pretty Luxury has 63 reviews with a 4.9 rating. Fanta needs to push from 48/37 to 100+ to dominate Google Maps for "braiding near me."
+2. **Social media content.** 9 out of 10 salon professionals say social media influences client choice ([Vagaro](https://www.vagaro.com/learn/social-media-tips-for-salons)). Transformation videos on TikTok/Instagram are the #1 growth driver.
+3. **Online booking.** Competitors like Binta use Fresha, Kenzo's uses Fresha. Fanta should consider adding a booking platform integration.
+4. **Boho braids.** Search demand spiked 150% YoY. If Fanta offers this style, it should be prominently marketed.
+5. **No visible referral program.** Braiding clients talk to friends. Formalize it with a "$15 off for both" incentive.
 
 ---
 
@@ -197,10 +241,13 @@ The African hair braiding market in Pawtucket/Providence has several established
 - **Captions:** 1-2 sentences max. Let the photo do the work. Include price + style name.
 
 #### TikTok
-- **Format:** Short transformation reveals (15-30 seconds), trending audio
+- **Format:** Short transformation reveals (15-30 seconds), trending audio. Time-lapse videos get **78% higher completion rates** than longer content.
 - **Hook:** First 2 seconds must show the "after" or a dramatic moment
-- **Hashtags:** #knotlessbraids #boxbraids #africanbraiding #protectivestyles #braidingpawtucket #providenceri
-- **Frequency:** 3-5x/week minimum. TikTok rewards consistency.
+- **Hashtags (3-tier strategy per [Salon Guru](https://www.salonguru.net/seo-for-salon-search-engines-keywords/)):**
+  - Broad (1M+ posts): #braids #protectivestyle #boxbraids
+  - Mid-range (100K-1M): #knotlessbraids #africanbraiding #bohobraids
+  - Local/niche (10K-100K): #PawtucketBraids #RhodeIslandBraids #ProvidenceHair
+- **Frequency:** 3-5x/week minimum. Salons posting at this cadence see **50% higher follower growth** than sporadic posters.
 
 ### Content Production Workflow
 
@@ -364,6 +411,26 @@ All social media graphics are available in the `/social-media-graphics/` directo
 | `article-writing` | affaan-m/everything-claude-code | Report writing: lead with concrete things, no AI filler |
 | `humanizer` | blader/humanizer | Final pass: removed AI writing patterns from all copy |
 | `stop-slop` | hardikpandya/stop-slop | Scored prose on directness, rhythm, trust, authenticity, density |
+
+---
+
+## Sources
+
+| Source | URL |
+|--------|-----|
+| Hair Braiding Market Size | businessresearchinsights.com/market-reports/hair-braiding-market-118864 |
+| Rising Costs of Braiding | dallasweekly.com/2025/03/braiding-culture-costs-black-women/ |
+| Pawtucket Demographics | datausa.io/profile/geo/pawtucket-ri |
+| Providence Demographics | datausa.io/profile/geo/providence-ri/ |
+| Census QuickFacts | census.gov/quickfacts/pawtucketcityrhodeisland |
+| West African Immigrants Study | brown.edu/news/2017-01-23/immigrants |
+| Hair Salon Keywords | keysearch.co/top-keywords/hair-salon-keywords |
+| Boho Braids Trends 2026 | ywigs.com/blogs/hot/long-braiding-hair-30-inch-boho-braids-dominate-2026-trends |
+| Social Media for Salons | vagaro.com/learn/social-media-tips-for-salons |
+| SEO for Salons | salonguru.net/seo-for-salon-search-engines-keywords/ |
+| Fanta on Yelp | yelp.com/biz/fanta-african-hair-braiding-pawtucket |
+| Competitor - Binta (Fresha) | fresha.com/lvp/binta-african-hair-braiding-newport-avenue-pawtucket-58lW3R |
+| African Braiding Pawtucket (Booksy) | booksy.com/en-us/s/african-braiding/34845_pawtucket |
 
 ---
 
