@@ -3,216 +3,180 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fanta African Hair - Style Menu</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Fanta African Hair - Style Menu Carousel</title>
+<!--
+  Design System (via UI UX Pro Max skill):
+  - Palette: Luxury/Premium Brand (#1C1917 primary, #A16207 accent)
+  - Typography: Classic Elegant (Playfair Display + Inter)
+  - Style: Exaggerated Minimalism + Dark Mode/Moody
+  - Accessibility: 4.5:1 contrast ratio, no emoji icons (SVG only)
+  - Platform: Instagram Post 1080x1080
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  :root {
+    /* Design Tokens — Luxury/Premium Brand palette */
+    --color-primary: #1C1917;
+    --color-on-primary: #FFFFFF;
+    --color-secondary: #44403C;
+    --color-accent: #A16207;
+    --color-on-accent: #FFFFFF;
+    --color-bg: #0C0A09;
+    --color-fg: #FAFAF9;
+    --color-muted: #64748B;
+    --color-border: rgba(161,98,7,0.15);
+    --color-subtle: rgba(250,250,249,0.06);
+
+    /* Typography — Classic Elegant */
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+
+    /* Spacing */
+    --space-xs: 8px;
+    --space-sm: 16px;
+    --space-md: 24px;
+    --space-lg: 40px;
+    --space-xl: 64px;
+    --space-2xl: 100px;
+
+    /* Sizes */
+    --slide-w: 1080px;
+    --slide-h: 1080px;
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     display: flex;
     gap: 40px;
     padding: 40px;
-    background: #1a1a1a;
+    background: #111;
     flex-wrap: wrap;
     justify-content: center;
   }
 
   .slide {
-    width: 1080px;
-    height: 1080px;
+    width: var(--slide-w);
+    height: var(--slide-h);
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
+    color: var(--color-fg);
   }
 
-  /* SLIDE 1 - Cover */
+  /* ── SLIDE 1: COVER ── */
   .slide-cover {
-    background: linear-gradient(145deg, #1B0A00 0%, #3D1C00 40%, #C17F3E 100%);
+    background: var(--color-bg);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #fff;
   }
 
+  /* Subtle radial glow — moody atmosphere */
   .slide-cover::before {
     content: '';
     position: absolute;
-    top: -200px;
-    right: -200px;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(193,127,62,0.3) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(161,98,7,0.08) 0%, transparent 70%);
     border-radius: 50%;
   }
 
-  .slide-cover::after {
-    content: '';
-    position: absolute;
-    bottom: -150px;
-    left: -150px;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(193,127,62,0.15) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-
-  .cover-accent {
-    width: 60px;
-    height: 3px;
-    background: #C17F3E;
-    margin-bottom: 30px;
+  .cover-rule {
+    width: 48px;
+    height: 2px;
+    background: var(--color-accent);
+    margin-bottom: var(--space-lg);
     position: relative;
     z-index: 1;
   }
 
-  .cover-subtitle {
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    font-size: 22px;
+  .cover-brand {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 18px;
     letter-spacing: 8px;
     text-transform: uppercase;
-    color: #C17F3E;
-    margin-bottom: 20px;
+    color: var(--color-accent);
+    margin-bottom: var(--space-md);
     position: relative;
     z-index: 1;
   }
 
   .cover-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 82px;
-    font-weight: 800;
-    line-height: 1.05;
-    margin-bottom: 15px;
+    font-family: var(--font-heading);
+    font-size: 76px;
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
     position: relative;
     z-index: 1;
   }
 
-  .cover-title span {
+  .cover-title em {
     display: block;
-    font-size: 38px;
+    font-size: 36px;
     font-weight: 400;
     font-style: italic;
-    color: #C17F3E;
-    margin-top: 10px;
+    color: var(--color-accent);
+    margin-top: var(--space-xs);
+    letter-spacing: 0;
   }
 
-  .cover-tagline {
-    font-family: 'Inter', sans-serif;
+  .cover-sub {
+    font-family: var(--font-body);
     font-weight: 300;
     font-size: 20px;
-    color: rgba(255,255,255,0.7);
-    margin-top: 25px;
+    color: var(--color-muted);
+    margin-top: var(--space-lg);
     position: relative;
     z-index: 1;
   }
 
   .cover-location {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-body);
     font-weight: 400;
-    font-size: 16px;
-    color: rgba(255,255,255,0.5);
-    margin-top: 50px;
-    letter-spacing: 3px;
+    font-size: 14px;
+    color: var(--color-secondary);
+    margin-top: var(--space-xl);
+    letter-spacing: 4px;
     text-transform: uppercase;
     position: relative;
     z-index: 1;
   }
 
-  .swipe-hint {
+  .swipe {
     position: absolute;
-    bottom: 40px;
+    bottom: 44px;
     right: 50px;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 2px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .swipe-hint::after {
-    content: '\2192';
-    font-size: 20px;
-  }
-
-  /* SLIDE 2-6 - Style Cards */
-  .slide-style {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    text-align: center;
-    padding: 80px;
-  }
-
-  .style-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 180px;
-    font-weight: 800;
-    opacity: 0.06;
-    position: absolute;
-    top: 40px;
-    right: 60px;
-    line-height: 1;
-  }
-
-  .style-icon {
-    width: 100px;
-    height: 100px;
-    border: 2px solid #C17F3E;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 40px;
-    font-size: 42px;
-  }
-
-  .style-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 58px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    line-height: 1.1;
-  }
-
-  .style-desc {
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    font-size: 22px;
-    color: rgba(255,255,255,0.65);
-    max-width: 700px;
-    line-height: 1.7;
-    margin-bottom: 45px;
-  }
-
-  .style-price {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 32px;
-    color: #C17F3E;
-    padding: 15px 50px;
-    border: 2px solid rgba(193,127,62,0.4);
-    border-radius: 50px;
-  }
-
-  .style-time {
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    color: rgba(255,255,255,0.4);
-    margin-top: 20px;
-    letter-spacing: 2px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-secondary);
+    letter-spacing: 3px;
     text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
-  .slide-dots {
+  .swipe svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--color-secondary);
+    fill: none;
+    stroke-width: 2;
+  }
+
+  /* Dots nav */
+  .dots {
     position: absolute;
-    bottom: 45px;
+    bottom: 44px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -220,136 +184,190 @@
   }
 
   .dot {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.2);
+    background: var(--color-secondary);
   }
 
-  .dot.active {
-    background: #C17F3E;
-    width: 24px;
-    border-radius: 4px;
+  .dot.on {
+    background: var(--color-accent);
+    width: 22px;
+    border-radius: 3px;
   }
 
-  /* Color variations */
-  .bg-1 { background: linear-gradient(145deg, #1B0A00 0%, #2A1200 50%, #1B0A00 100%); }
-  .bg-2 { background: linear-gradient(145deg, #0A0A1B 0%, #1A1230 50%, #0A0A1B 100%); }
-  .bg-3 { background: linear-gradient(145deg, #0A1B0A 0%, #12301A 50%, #0A1B0A 100%); }
-  .bg-4 { background: linear-gradient(145deg, #1B0A0A 0%, #301212 50%, #1B0A0A 100%); }
-  .bg-5 { background: linear-gradient(145deg, #1B1B0A 0%, #302A12 50%, #1B1B0A 100%); }
+  /* ── SLIDES 2-6: STYLE CARDS ── */
+  .slide-style {
+    background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-2xl);
+  }
+
+  .style-num {
+    font-family: var(--font-heading);
+    font-size: 200px;
+    font-weight: 700;
+    color: var(--color-subtle);
+    position: absolute;
+    top: 20px;
+    right: 50px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .style-icon-ring {
+    width: 88px;
+    height: 88px;
+    border: 1.5px solid var(--color-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .style-icon-ring svg {
+    width: 32px;
+    height: 32px;
+    stroke: var(--color-accent);
+    fill: none;
+    stroke-width: 1.5;
+  }
+
+  .style-name {
+    font-family: var(--font-heading);
+    font-size: 54px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-sm);
+    line-height: 1.1;
+  }
+
+  .style-desc {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 20px;
+    color: var(--color-muted);
+    max-width: 640px;
+    line-height: 1.7;
+    margin-bottom: var(--space-lg);
+  }
+
+  .style-price-pill {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 28px;
+    color: var(--color-accent);
+    padding: 14px 48px;
+    border: 1.5px solid rgba(161,98,7,0.35);
+    border-radius: 48px;
+  }
+
+  .style-meta {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--color-secondary);
+    margin-top: var(--space-sm);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
 </style>
 </head>
 <body>
 
 <!-- SLIDE 1: Cover -->
 <div class="slide slide-cover">
-  <div class="cover-accent"></div>
-  <div class="cover-subtitle">Fanta African Hair</div>
+  <div class="cover-rule"></div>
+  <div class="cover-brand">Fanta African Hair</div>
   <div class="cover-title">
     Our Styles
-    <span>& What We Offer</span>
+    <em>& What We Offer</em>
   </div>
-  <div class="cover-tagline">Protective styling crafted with care</div>
-  <div class="cover-location">Pawtucket &bull; Providence, RI</div>
-  <div class="swipe-hint">SWIPE</div>
-  <div class="slide-dots">
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+  <div class="cover-sub">Protective styling crafted with care</div>
+  <div class="cover-location">Pawtucket &middot; Providence, RI</div>
+  <div class="swipe">Swipe <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+  <div class="dots">
+    <div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
   </div>
 </div>
 
 <!-- SLIDE 2: Knotless Braids -->
-<div class="slide slide-style bg-1">
-  <div class="style-number">01</div>
-  <div class="style-icon">&#10022;</div>
+<div class="slide slide-style">
+  <div class="style-num">01</div>
+  <div class="style-icon-ring">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+  </div>
   <div class="style-name">Knotless Braids</div>
-  <div class="style-desc">Lightweight, tension-free braids that start with your natural hair for a seamless, pain-free look. Gentle on your edges and lasts 6-8 weeks.</div>
-  <div class="style-price">Starting at $120+</div>
-  <div class="style-time">3 - 5 hours</div>
-  <div class="slide-dots">
-    <div class="dot"></div>
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+  <div class="style-desc">Lightweight, tension-free braids that start with your natural hair. Gentle on your edges, seamless finish, lasts 6-8 weeks.</div>
+  <div class="style-price-pill">Starting at $120+</div>
+  <div class="style-meta">3 - 5 hours</div>
+  <div class="dots">
+    <div class="dot"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
   </div>
 </div>
 
 <!-- SLIDE 3: Box Braids -->
-<div class="slide slide-style bg-2">
-  <div class="style-number">02</div>
-  <div class="style-icon">&#9830;</div>
+<div class="slide slide-style">
+  <div class="style-num">02</div>
+  <div class="style-icon-ring">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+  </div>
   <div class="style-name">Box Braids</div>
-  <div class="style-desc">The timeless classic. Versatile, protective, and always in style. Available in any length, size, and color you desire.</div>
-  <div class="style-price">Starting at $100+</div>
-  <div class="style-time">4 - 7 hours</div>
-  <div class="slide-dots">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+  <div class="style-desc">The timeless classic. Versatile, protective, and always in style. Any length, size, and color you want.</div>
+  <div class="style-price-pill">Starting at $100+</div>
+  <div class="style-meta">4 - 7 hours</div>
+  <div class="dots">
+    <div class="dot"></div><div class="dot"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
   </div>
 </div>
 
 <!-- SLIDE 4: Senegalese Twists -->
-<div class="slide slide-style bg-3">
-  <div class="style-number">03</div>
-  <div class="style-icon">&#8734;</div>
+<div class="slide slide-style">
+  <div class="style-num">03</div>
+  <div class="style-icon-ring">
+    <svg viewBox="0 0 24 24"><path d="M2 12c2-4 6-4 8 0s6 4 8 0"/><path d="M2 16c2-4 6-4 8 0s6 4 8 0"/><path d="M2 8c2-4 6-4 8 0s6 4 8 0"/></svg>
+  </div>
   <div class="style-name">Senegalese Twists</div>
-  <div class="style-desc">Silky, rope-like twists that give you an elegant, polished look. Lightweight and low-maintenance for weeks of effortless style.</div>
-  <div class="style-price">Starting at $100+</div>
-  <div class="style-time">3 - 5 hours</div>
-  <div class="slide-dots">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+  <div class="style-desc">Silky, rope-like twists for an elegant, polished look. Lightweight and low-maintenance for weeks of effortless beauty.</div>
+  <div class="style-price-pill">Starting at $100+</div>
+  <div class="style-meta">3 - 5 hours</div>
+  <div class="dots">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div>
   </div>
 </div>
 
 <!-- SLIDE 5: Goddess Braids -->
-<div class="slide slide-style bg-4">
-  <div class="style-number">04</div>
-  <div class="style-icon">&#9733;</div>
+<div class="slide slide-style">
+  <div class="style-num">04</div>
+  <div class="style-icon-ring">
+    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+  </div>
   <div class="style-name">Goddess Braids</div>
-  <div class="style-desc">Bold, chunky cornrow-style braids that hug the scalp. A regal, statement look perfect for any occasion.</div>
-  <div class="style-price">Starting at $80+</div>
-  <div class="style-time">2 - 4 hours</div>
-  <div class="slide-dots">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot active"></div>
-    <div class="dot"></div>
+  <div class="style-desc">Bold, chunky cornrow-style braids that hug the scalp. A regal, statement look for any occasion.</div>
+  <div class="style-price-pill">Starting at $80+</div>
+  <div class="style-meta">2 - 4 hours</div>
+  <div class="dots">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot on"></div><div class="dot"></div>
   </div>
 </div>
 
 <!-- SLIDE 6: Weaves -->
-<div class="slide slide-style bg-5">
-  <div class="style-number">05</div>
-  <div class="style-icon">&#9827;</div>
+<div class="slide slide-style">
+  <div class="style-num">05</div>
+  <div class="style-icon-ring">
+    <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v12M6 12h12"/></svg>
+  </div>
   <div class="style-name">Weaves</div>
-  <div class="style-desc">Full, voluminous installs that give you the length and body you want. Sew-in or quick weave options available for every lifestyle.</div>
-  <div class="style-price">Starting at $100+</div>
-  <div class="style-time">2 - 4 hours</div>
-  <div class="slide-dots">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot active"></div>
+  <div class="style-desc">Full, voluminous installs for the length and body you want. Sew-in or quick weave options for every lifestyle.</div>
+  <div class="style-price-pill">Starting at $100+</div>
+  <div class="style-meta">2 - 4 hours</div>
+  <div class="dots">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot on"></div>
   </div>
 </div>
 

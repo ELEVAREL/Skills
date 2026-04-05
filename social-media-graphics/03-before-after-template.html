@@ -4,64 +4,74 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fanta African Hair - Before & After</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!--
+  Design System (via UI UX Pro Max skill):
+  - Palette: Luxury/Premium Brand (#1C1917, #A16207)
+  - Typography: Classic Elegant (Playfair Display + Inter)
+  - Style: Exaggerated Minimalism + Dark Mode/Moody
+  - Platforms: Instagram Post 1080x1080 + TikTok/Reels 1080x1920
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    display: flex;
-    gap: 40px;
-    padding: 40px;
-    background: #1a1a1a;
-    flex-wrap: wrap;
-    justify-content: center;
+  :root {
+    --color-primary: #1C1917;
+    --color-secondary: #44403C;
+    --color-accent: #A16207;
+    --color-on-accent: #FFFFFF;
+    --color-bg: #0C0A09;
+    --color-fg: #FAFAF9;
+    --color-muted: #64748B;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
   }
 
-  /* Instagram Post */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { display: flex; gap: 40px; padding: 40px; background: #111; flex-wrap: wrap; justify-content: center; }
+
+  /* ── INSTAGRAM POST 1080x1080 ── */
   .post {
     width: 1080px;
     height: 1080px;
-    background: #0D0604;
+    background: var(--color-bg);
     position: relative;
     overflow: hidden;
-    color: #fff;
+    color: var(--color-fg);
   }
 
   .post-header {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 35px 45px;
+    top: 0; left: 0; right: 0;
+    padding: 32px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 10;
-    background: linear-gradient(180deg, rgba(13,6,4,0.95) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(12,10,9,0.92) 0%, transparent 100%);
   }
 
-  .brand-name {
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
+  .brand {
+    font-family: var(--font-body);
+    font-size: 14px;
     font-weight: 500;
-    letter-spacing: 4px;
+    letter-spacing: 5px;
     text-transform: uppercase;
-    color: #C17F3E;
+    color: var(--color-accent);
   }
 
-  .transformation-label {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
+  .tag {
+    font-family: var(--font-heading);
+    font-size: 16px;
     font-style: italic;
-    color: rgba(255,255,255,0.5);
+    color: var(--color-muted);
   }
 
-  .split-container {
+  .split {
     width: 100%;
     height: 100%;
     display: flex;
   }
 
-  .split-side {
+  .side {
     flex: 1;
     position: relative;
     display: flex;
@@ -70,160 +80,160 @@
     overflow: hidden;
   }
 
-  .split-side.before {
-    background: linear-gradient(135deg, #1a1210 0%, #2a1c14 100%);
-  }
+  .side-before { background: linear-gradient(135deg, #14110f, #1c1714); }
+  .side-after { background: linear-gradient(135deg, #1c1714, #14110f); }
 
-  .split-side.after {
-    background: linear-gradient(135deg, #1a1614 0%, #2a2018 100%);
-  }
-
-  .split-divider {
+  .divider {
     position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 4px;
+    width: 3px;
     height: 100%;
-    background: linear-gradient(180deg, transparent 5%, #C17F3E 30%, #C17F3E 70%, transparent 95%);
+    background: linear-gradient(180deg, transparent 8%, var(--color-accent) 30%, var(--color-accent) 70%, transparent 92%);
     z-index: 5;
   }
 
-  .split-divider::before {
-    content: '';
+  .divider-circle {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    background: #C17F3E;
+    width: 52px;
+    height: 52px;
+    background: var(--color-accent);
     border-radius: 50%;
-    box-shadow: 0 0 30px rgba(193,127,62,0.4);
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .split-divider::after {
-    content: '\2194';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 26px;
-    color: #fff;
-    z-index: 1;
+  .divider-circle svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--color-on-accent);
+    fill: none;
+    stroke-width: 2;
   }
 
-  .photo-placeholder {
-    width: 90%;
-    height: 70%;
-    border: 2px dashed rgba(193,127,62,0.25);
-    border-radius: 8px;
+  .placeholder {
+    width: 88%;
+    height: 65%;
+    border: 1.5px dashed rgba(161,98,7,0.2);
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
   }
 
-  .photo-placeholder-icon {
-    font-size: 48px;
-    color: rgba(193,127,62,0.3);
+  .placeholder svg {
+    width: 40px;
+    height: 40px;
+    stroke: rgba(161,98,7,0.25);
+    fill: none;
+    stroke-width: 1.5;
   }
 
-  .photo-placeholder-text {
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    color: rgba(255,255,255,0.25);
+  .placeholder-text {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-secondary);
     letter-spacing: 2px;
     text-transform: uppercase;
   }
 
   .side-label {
     position: absolute;
-    bottom: 70px;
+    bottom: 68px;
     left: 50%;
     transform: translateX(-50%);
-    font-family: 'Playfair Display', serif;
-    font-size: 36px;
+    font-family: var(--font-heading);
+    font-size: 32px;
     font-weight: 700;
     z-index: 3;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+    text-shadow: 0 2px 16px rgba(0,0,0,0.8);
   }
 
-  .side-label.before-label { color: rgba(255,255,255,0.5); }
-  .side-label.after-label { color: #C17F3E; }
+  .side-label.lbl-before { color: var(--color-muted); }
+  .side-label.lbl-after { color: var(--color-accent); }
 
-  .post-footer-bar {
+  .post-footer {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px 45px;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(0deg, rgba(13,6,4,0.95) 0%, transparent 100%);
+    background: linear-gradient(0deg, rgba(12,10,9,0.92) 0%, transparent 100%);
     z-index: 10;
   }
 
   .footer-style {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.4);
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-secondary);
     letter-spacing: 2px;
     text-transform: uppercase;
   }
 
   .footer-cta {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
+    font-family: var(--font-body);
+    font-size: 13px;
     font-weight: 600;
-    color: #C17F3E;
+    color: var(--color-accent);
     letter-spacing: 2px;
     text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
-  /* TikTok/Reel Version - Vertical Split */
+  .footer-cta svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--color-accent);
+    fill: none;
+    stroke-width: 2;
+  }
+
+  /* ── TIKTOK / REEL 1080x1920 ── */
   .reel {
     width: 1080px;
     height: 1920px;
-    background: #0D0604;
+    background: var(--color-bg);
     position: relative;
     overflow: hidden;
-    color: #fff;
+    color: var(--color-fg);
   }
 
   .reel-header {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 60px 50px 40px;
+    top: 0; left: 0; right: 0;
+    padding: 56px 50px 40px;
     text-align: center;
     z-index: 10;
-    background: linear-gradient(180deg, rgba(13,6,4,0.98) 0%, rgba(13,6,4,0.7) 70%, transparent 100%);
+    background: linear-gradient(180deg, rgba(12,10,9,0.96) 0%, rgba(12,10,9,0.6) 70%, transparent 100%);
   }
 
   .reel-brand {
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    letter-spacing: 6px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    letter-spacing: 7px;
     text-transform: uppercase;
-    color: #C17F3E;
-    margin-bottom: 15px;
+    color: var(--color-accent);
+    margin-bottom: 14px;
   }
 
   .reel-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 52px;
-    font-weight: 800;
+    font-family: var(--font-heading);
+    font-size: 48px;
+    font-weight: 700;
   }
 
-  .reel-title em {
-    font-style: italic;
-    color: #C17F3E;
-  }
+  .reel-title em { font-style: italic; color: var(--color-accent); }
 
   .reel-split {
     width: 100%;
@@ -232,7 +242,7 @@
     flex-direction: column;
   }
 
-  .reel-split-side {
+  .reel-side {
     flex: 1;
     position: relative;
     display: flex;
@@ -240,123 +250,122 @@
     justify-content: center;
   }
 
-  .reel-split-side.before { background: linear-gradient(180deg, #1a1210, #1f1512); }
-  .reel-split-side.after { background: linear-gradient(180deg, #1f1512, #1a1210); }
+  .reel-side.r-before { background: linear-gradient(180deg, #14110f, #18140f); }
+  .reel-side.r-after { background: linear-gradient(180deg, #18140f, #14110f); }
 
   .reel-divider {
     position: absolute;
     top: 50%;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, transparent 5%, #C17F3E 30%, #C17F3E 70%, transparent 95%);
+    left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 8%, var(--color-accent) 30%, var(--color-accent) 70%, transparent 92%);
     z-index: 5;
   }
 
-  .reel-divider::before {
-    content: '';
+  .reel-divider-circle {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 70px;
-    height: 70px;
-    background: #C17F3E;
+    width: 60px;
+    height: 60px;
+    background: var(--color-accent);
     border-radius: 50%;
-    box-shadow: 0 0 40px rgba(193,127,62,0.4);
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .reel-divider::after {
-    content: '\2195';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 30px;
-    color: #fff;
-    z-index: 1;
+  .reel-divider-circle svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--color-on-accent);
+    fill: none;
+    stroke-width: 2;
   }
 
   .reel-side-label {
     position: absolute;
     z-index: 3;
-    font-family: 'Playfair Display', serif;
-    font-size: 40px;
+    font-family: var(--font-heading);
+    font-size: 36px;
     font-weight: 700;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+    text-shadow: 0 2px 16px rgba(0,0,0,0.8);
   }
 
-  .reel-side-label.top { top: 220px; }
-  .reel-side-label.bottom { bottom: 220px; color: #C17F3E; }
+  .reel-side-label.top { top: 210px; color: var(--color-muted); }
+  .reel-side-label.bottom { bottom: 210px; color: var(--color-accent); }
 
-  .reel .photo-placeholder {
-    width: 85%;
-    height: 55%;
+  .reel .placeholder {
+    width: 82%;
+    height: 50%;
   }
 
-  .reel-bottom-bar {
+  .reel-bottom {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 50px;
+    bottom: 0; left: 0; right: 0;
+    padding: 44px 50px;
     text-align: center;
-    background: linear-gradient(0deg, rgba(13,6,4,0.98) 0%, rgba(13,6,4,0.6) 70%, transparent 100%);
+    background: linear-gradient(0deg, rgba(12,10,9,0.96) 0%, rgba(12,10,9,0.5) 70%, transparent 100%);
     z-index: 10;
   }
 
   .reel-bottom-cta {
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
+    font-family: var(--font-body);
+    font-size: 18px;
     font-weight: 600;
-    letter-spacing: 3px;
+    color: var(--color-accent);
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: #C17F3E;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .reel-bottom-detail {
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    color: rgba(255,255,255,0.35);
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-secondary);
   }
 </style>
 </head>
 <body>
 
-<!-- Instagram Post - Before & After -->
+<!-- Instagram Post -->
 <div class="post">
   <div class="post-header">
-    <div class="brand-name">Fanta African Hair</div>
-    <div class="transformation-label">Transformation</div>
+    <div class="brand">Fanta African Hair</div>
+    <div class="tag">Transformation</div>
   </div>
 
-  <div class="split-container">
-    <div class="split-side before">
-      <div class="photo-placeholder">
-        <div class="photo-placeholder-icon">&#128247;</div>
-        <div class="photo-placeholder-text">Before Photo</div>
+  <div class="split">
+    <div class="side side-before">
+      <div class="placeholder">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <div class="placeholder-text">Before Photo</div>
       </div>
-      <div class="side-label before-label">Before</div>
+      <div class="side-label lbl-before">Before</div>
     </div>
-    <div class="split-side after">
-      <div class="photo-placeholder">
-        <div class="photo-placeholder-icon">&#128247;</div>
-        <div class="photo-placeholder-text">After Photo</div>
+    <div class="side side-after">
+      <div class="placeholder">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <div class="placeholder-text">After Photo</div>
       </div>
-      <div class="side-label after-label">After</div>
+      <div class="side-label lbl-after">After</div>
     </div>
   </div>
 
-  <div class="split-divider"></div>
+  <div class="divider"></div>
+  <div class="divider-circle">
+    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </div>
 
-  <div class="post-footer-bar">
-    <div class="footer-style">Knotless Braids &bull; 4 Hours</div>
-    <div class="footer-cta">Book Your Transformation &#8594;</div>
+  <div class="post-footer">
+    <div class="footer-style">Knotless Braids &middot; 4 Hours</div>
+    <div class="footer-cta">Book Your Transformation <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
   </div>
 </div>
 
-<!-- TikTok/Reel - Before & After -->
+<!-- TikTok / Reel -->
 <div class="reel">
   <div class="reel-header">
     <div class="reel-brand">Fanta African Hair</div>
@@ -364,27 +373,30 @@
   </div>
 
   <div class="reel-split">
-    <div class="reel-split-side before">
-      <div class="photo-placeholder">
-        <div class="photo-placeholder-icon">&#128247;</div>
-        <div class="photo-placeholder-text">Before Photo</div>
+    <div class="reel-side r-before">
+      <div class="placeholder">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <div class="placeholder-text">Before Photo</div>
       </div>
-      <div class="reel-side-label top" style="color: rgba(255,255,255,0.5);">Before</div>
+      <div class="reel-side-label top">Before</div>
     </div>
-    <div class="reel-split-side after">
-      <div class="photo-placeholder">
-        <div class="photo-placeholder-icon">&#128247;</div>
-        <div class="photo-placeholder-text">After Photo</div>
+    <div class="reel-side r-after">
+      <div class="placeholder">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <div class="placeholder-text">After Photo</div>
       </div>
       <div class="reel-side-label bottom">After</div>
     </div>
   </div>
 
   <div class="reel-divider"></div>
+  <div class="reel-divider-circle">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
 
-  <div class="reel-bottom-bar">
-    <div class="reel-bottom-cta">Walk-Ins Welcome &bull; $50 Deposit to Book</div>
-    <div class="reel-bottom-detail">639 Cottage St, Pawtucket RI &bull; Open Daily 9AM-7PM</div>
+  <div class="reel-bottom">
+    <div class="reel-bottom-cta">Walk-Ins Welcome &middot; $50 Deposit to Book</div>
+    <div class="reel-bottom-detail">639 Cottage St, Pawtucket RI &middot; Open Daily 9AM-7PM</div>
   </div>
 </div>
 
