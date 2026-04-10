@@ -111,6 +111,89 @@ TOOLS = [
             "required": ["path"],
         },
     },
+    {
+        "name": "organize_files",
+        "description": "Organize files in a directory by categorizing them into folders (Documents, Images, Code, etc.). Returns a plan of what would be moved.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "directory": {"type": "string", "description": "Directory to organize"},
+                "execute": {"type": "boolean", "description": "Actually move files (true) or just preview (false)", "default": False},
+            },
+            "required": ["directory"],
+        },
+    },
+    {
+        "name": "analyze_directory",
+        "description": "Analyze a directory for file statistics, categories, largest files, duplicates, and old files.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "directory": {"type": "string", "description": "Directory to analyze"},
+            },
+            "required": ["directory"],
+        },
+    },
+    {
+        "name": "check_network",
+        "description": "Check network connectivity, scan ports, or get bandwidth info.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "action": {"type": "string", "enum": ["connectivity", "ports", "bandwidth", "interfaces"], "description": "Network check type"},
+                "host": {"type": "string", "description": "Host for port scan (default: localhost)"},
+            },
+            "required": ["action"],
+        },
+    },
+    {
+        "name": "git_status",
+        "description": "Get git repository status, find all repos, or show git statistics.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "action": {"type": "string", "enum": ["status", "find_repos", "stats"], "description": "Git action"},
+                "directory": {"type": "string", "description": "Repository or search directory"},
+            },
+            "required": ["action"],
+        },
+    },
+    {
+        "name": "search_content",
+        "description": "Search for text patterns inside files (like grep).",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "pattern": {"type": "string", "description": "Text pattern to search for"},
+                "directory": {"type": "string", "description": "Directory to search in"},
+            },
+            "required": ["pattern"],
+        },
+    },
+    {
+        "name": "find_duplicates",
+        "description": "Find duplicate files by content hash in a directory.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "directory": {"type": "string", "description": "Directory to scan for duplicates"},
+            },
+            "required": ["directory"],
+        },
+    },
+    {
+        "name": "manage_notes",
+        "description": "Add, list, or search quick notes.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "action": {"type": "string", "enum": ["add", "list", "search"], "description": "Note action"},
+                "content": {"type": "string", "description": "Note content (for add) or search query"},
+                "tags": {"type": "array", "items": {"type": "string"}, "description": "Tags for the note"},
+            },
+            "required": ["action"],
+        },
+    },
 ]
 
 
@@ -187,6 +270,110 @@ def execute_tool(name: str, input_data: dict) -> str:
             dirpath = Path(input_data["path"]).expanduser().resolve()
             dirpath.mkdir(parents=True, exist_ok=True)
             return f"Created directory: {dirpath}"
+
+        elif name == "organize_files":
+            from nova.modules.organizer import organize_files
+            actions = organize_files(
+                input_data["directory"],
+                dry_run=not input_data.get("execute", False),
+            )
+            mode = "EXECUTED" if input_data.get("execute") else "DRY RUN"
+            lines = [f"Organization plan ({mode}):"]
+            for a in actions[:30]:
+                lines.append(f"  {a['name']} ({a.get('size_human','')}) — {a.get('action','')}")
+            moved = sum(1 for a in actions if "→" in a.get("action", ""))
+            lines.append(f"\nTotal: {len(actions)} files, {moved} would be moved")
+            return "\n".join(lines)
+
+        elif name == "analyze_directory":
+            from nova.modules.organizer import analyze_directory, humanize_size
+            stats = analyze_directory(input_data["directory"])
+            lines = [f"Directory Analysis:"]
+            lines.append(f"  Total files: {stats['total_files']}")
+            lines.append(f"  Total size: {stats['total_size']}")
+            lines.append(f"  Categories:")
+            for cat, data in sorted(stats["categories"].items(), key=lambda x: x[1]["size"], reverse=True):
+                lines.append(f"    {cat}: {data['count']} files ({humanize_size(data['size'])})")
+            if stats["duplicates"]:
+                lines.append(f"  Duplicates: {len(stats['duplicates'])} files with same names")
+            if stats["old_files"]:
+                lines.append(f"  Old files (90+ days): {len(stats['old_files'])}")
+            return "\n".join(lines)
+
+        elif name == "check_network":
+            action = input_data["action"]
+            if action == "connectivity":
+                from nova.modules.network import check_connectivity
+                results = check_connectivity()
+                return "\n".join(f"  {k}: {v}" for k, v in results.items())
+            elif action == "ports":
+                from nova.modules.network import scan_ports
+                results = scan_ports(input_data.get("host", "localhost"))
+                open_ports = [r for r in results if r["status"] == "open"]
+                return "\n".join(f"  Port {r['port']}: OPEN ({r['service']})" for r in open_ports) or "No open ports"
+            elif action == "bandwidth":
+                from nova.modules.network import get_bandwidth
+                bw = get_bandwidth()
+                return "\n".join(f"  {k}: {v}" for k, v in bw.items())
+            elif action == "interfaces":
+                from nova.modules.network import get_network_info
+                info_data = get_network_info()
+                return "\n".join(f"  {k}: {v.get('ipv4', 'N/A')} ({v['status']})" for k, v in info_data.items())
+            return "Unknown network action"
+
+        elif name == "git_status":
+            action = input_data["action"]
+            directory = input_data.get("directory", ".")
+            if action == "status":
+                from nova.modules.git_manager import get_repo_status
+                s = get_repo_status(directory)
+                return f"Repo: {s['name']}\nBranch: {s['branch']}\nChanges: {s['changes']}\nLast commit: {s['last_commit']}"
+            elif action == "find_repos":
+                from nova.modules.git_manager import find_repos
+                repos = find_repos(directory)
+                return f"Found {len(repos)} repos:\n" + "\n".join(f"  {r}" for r in repos[:20])
+            elif action == "stats":
+                from nova.modules.git_manager import get_repo_status
+                s = get_repo_status(directory)
+                return f"Repo: {s['name']}, Branch: {s['branch']}, Uncommitted: {s['changes']}, Ahead: {s['ahead']}, Behind: {s['behind']}"
+            return "Unknown git action"
+
+        elif name == "search_content":
+            from nova.modules.search import search_content
+            results = search_content(input_data["pattern"], input_data.get("directory", "."))
+            if not results:
+                return "No matches found"
+            return "\n".join(f"  {r['file']}: {r['match']}" for r in results[:20])
+
+        elif name == "find_duplicates":
+            from nova.modules.duplicates import find_duplicates
+            dupes = find_duplicates(input_data["directory"])
+            if not dupes:
+                return "No duplicate files found"
+            lines = [f"Found {len(dupes)} duplicate groups:"]
+            for d in dupes[:10]:
+                lines.append(f"  {d['count']} copies of {d['size_each']} file ({d['wasted']} wasted):")
+                for f in d["files"][:3]:
+                    lines.append(f"    {f}")
+            return "\n".join(lines)
+
+        elif name == "manage_notes":
+            action = input_data["action"]
+            if action == "add":
+                from nova.modules.notes import add_note
+                add_note(input_data.get("content", ""), input_data.get("tags", []))
+                return "Note saved"
+            elif action == "list":
+                from nova.modules.notes import _load_json, NOTES_FILE
+                notes = _load_json(NOTES_FILE)
+                if not notes:
+                    return "No notes"
+                return "\n".join(f"  #{n['id']}: {n['content'][:80]}" for n in notes[-20:])
+            elif action == "search":
+                from nova.modules.notes import search_notes
+                results = search_notes(input_data.get("content", ""))
+                return "\n".join(f"  #{n['id']}: {n['content'][:80]}" for n in results) or "No matches"
+            return "Unknown note action"
 
         else:
             return f"Unknown tool: {name}"
