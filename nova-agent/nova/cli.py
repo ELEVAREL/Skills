@@ -5,7 +5,7 @@ import click
 from pathlib import Path
 
 from nova.utils.display import (
-    console, banner, success, error, warning, info, muted, ai_response,
+    console, banner, welcome_dashboard, success, error, warning, info, muted, ai_response,
 )
 
 
@@ -29,16 +29,18 @@ def interactive_mode():
 
     from nova.config import ensure_config_dir, DEFAULT_CONFIG_DIR
     from nova.modules.ai_brain import AIBrain
+    from nova.modules.productivity import track_session_start, track_command
 
     banner()
-    console.print("[dim]Type a command or ask me anything. Type /help for commands, /quit to exit.[/]")
-    console.print()
+    welcome_dashboard()
 
     ensure_config_dir()
+    track_session_start()
     history_file = DEFAULT_CONFIG_DIR / "history"
 
     style = Style.from_dict({
-        "prompt": "cyan bold",
+        "prompt": "#7b68ee bold",
+        "prompt.arrow": "#00d4ff bold",
     })
 
     session = PromptSession(
@@ -52,11 +54,13 @@ def interactive_mode():
     while True:
         try:
             user_input = session.prompt(
-                [("class:prompt", "nova > ")],
+                [("class:prompt.arrow", "◆ "), ("class:prompt", "nova "), ("class:prompt.arrow", "› ")],
             ).strip()
 
             if not user_input:
                 continue
+
+            track_command()
 
             # Handle slash commands
             if user_input.startswith("/"):
@@ -93,18 +97,36 @@ def handle_slash_command(command: str, brain) -> str | None:
         from nova.utils.display import section_header
 
         sections = {
-            "File Management": {
+            "Files": {
                 "/organize <dir>": "Organize files into categorized folders",
-                "/analyze <dir>": "Analyze directory contents and statistics",
-                "/watch <dir>": "Auto-organize new files as they arrive",
-                "/large [dir]": "Find large files (>50MB)",
-                "/duplicates [dir]": "Find duplicate files by content hash",
-                "/recent [dir]": "Show recently modified files",
+                "/analyze <dir>": "Analyze directory statistics",
+                "/watch <dir>": "Auto-organize new files",
+                "/large [dir]": "Find large files",
+                "/duplicates [dir]": "Find duplicates by content hash",
             },
             "Search": {
-                "/find <name>": "Search for files by name",
+                "/find <name>": "Search files by name",
                 "/grep <pattern>": "Search file contents",
                 "/recent [dir]": "Recently modified files",
+            },
+            "Code": {
+                "/code [dir]": "Full codebase analysis (security + debt + complexity)",
+                "/scaffold <template> <name>": "Create new project from template",
+                "/scaffold list": "Show available templates",
+                "/packages": "List installed packages",
+                "/outdated": "Check for outdated packages",
+                "/pm-detect": "Detect package managers in use",
+            },
+            "Services": {
+                "/dev-servers": "Find running dev servers",
+                "/listeners": "Show all listening ports",
+                "/hogs": "Show top CPU/memory consumers",
+                "/kill-pid <pid>": "Kill a process by PID",
+                "/kill-port <port>": "Kill process on a port",
+            },
+            "Productivity": {
+                "/dashboard": "Live system monitor (like htop)",
+                "/stats": "Productivity stats and streak",
             },
             "System": {
                 "/system": "Full system information",
@@ -229,6 +251,70 @@ def handle_slash_command(command: str, brain) -> str | None:
             info(f"Found {len(suggestions['large_files'])} files >500MB")
         info(f"Temp files: {suggestions['temp_files']}")
         console.print()
+
+    # ─── Code Analysis ───────────────────────────────────────────
+    elif cmd == "/code":
+        from nova.modules.code_analyzer import show_codebase_analysis
+        show_codebase_analysis(args or ".")
+
+    elif cmd == "/scaffold":
+        from nova.modules.scaffolder import scaffold_project, list_templates
+        if args == "list" or not args:
+            list_templates()
+        else:
+            parts = args.split(maxsplit=1)
+            if len(parts) == 2:
+                scaffold_project(parts[0], parts[1])
+            else:
+                warning("Usage: /scaffold <template> <name>")
+
+    elif cmd in ("/packages", "/pkgs"):
+        from nova.modules.packages import show_packages
+        show_packages(args or ".")
+
+    elif cmd == "/outdated":
+        from nova.modules.packages import check_outdated
+        check_outdated(args or ".")
+
+    elif cmd == "/pm-detect":
+        from nova.modules.packages import show_detected
+        show_detected(args or ".")
+
+    # ─── Services ────────────────────────────────────────────────
+    elif cmd == "/dev-servers":
+        from nova.modules.services import show_dev_servers
+        show_dev_servers()
+
+    elif cmd == "/listeners":
+        from nova.modules.services import show_listeners
+        show_listeners()
+
+    elif cmd == "/hogs":
+        from nova.modules.services import show_resource_hogs
+        show_resource_hogs()
+
+    elif cmd == "/kill-pid":
+        from nova.modules.services import kill_process
+        if args.isdigit():
+            kill_process(int(args))
+        else:
+            warning("Usage: /kill-pid <pid>")
+
+    elif cmd == "/kill-port":
+        from nova.modules.services import kill_port
+        if args.isdigit():
+            kill_port(int(args))
+        else:
+            warning("Usage: /kill-port <port>")
+
+    # ─── Productivity ────────────────────────────────────────────
+    elif cmd == "/dashboard":
+        from nova.modules.dashboard import run_dashboard
+        run_dashboard()
+
+    elif cmd == "/stats":
+        from nova.modules.productivity import show_stats
+        show_stats()
 
     # ─── Network ─────────────────────────────────────────────────
     elif cmd == "/ping":
@@ -571,6 +657,64 @@ def config():
     cfg = load_config()
     console.print(f"\n[dim]Config file: {DEFAULT_CONFIG_FILE}[/]\n")
     console.print(yaml.dump(cfg, default_flow_style=False))
+
+
+@main.command()
+def dashboard():
+    """Launch the live system dashboard."""
+    from nova.modules.dashboard import run_dashboard
+    run_dashboard()
+
+
+@main.command()
+@click.argument("directory", default=".")
+def code(directory: str):
+    """Analyze a codebase for security, debt, and complexity."""
+    from nova.modules.code_analyzer import show_codebase_analysis
+    show_codebase_analysis(directory)
+
+
+@main.command()
+@click.argument("template", required=False)
+@click.argument("name", required=False)
+def scaffold(template: str | None, name: str | None):
+    """Scaffold a new project from a template."""
+    from nova.modules.scaffolder import scaffold_project, list_templates
+    if not template:
+        list_templates()
+    elif not name:
+        warning("Usage: nova scaffold <template> <name>")
+    else:
+        scaffold_project(template, name)
+
+
+@main.command()
+@click.argument("directory", default=".")
+def packages(directory: str):
+    """List installed packages across managers."""
+    from nova.modules.packages import show_packages
+    show_packages(directory)
+
+
+@main.command()
+def dev_servers():
+    """Find running development servers."""
+    from nova.modules.services import show_dev_servers
+    show_dev_servers()
+
+
+@main.command()
+def hogs():
+    """Show top resource-consuming processes."""
+    from nova.modules.services import show_resource_hogs
+    show_resource_hogs()
+
+
+@main.command()
+def stats():
+    """Show productivity stats and streak."""
+    from nova.modules.productivity import show_stats
+    show_stats()
 
 
 if __name__ == "__main__":

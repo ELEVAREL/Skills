@@ -4,7 +4,7 @@ build-backend = "setuptools.backends._legacy:_Backend"
 
 [project]
 name = "nova-agent"
-version = "0.1.0"
+version = "0.2.0"
 description = "AI-powered CLI agent for organizing your computer and automating tasks"
 readme = "README.md"
 license = {text = "MIT"}

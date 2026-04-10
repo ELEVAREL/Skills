@@ -194,6 +194,53 @@ TOOLS = [
             "required": ["action"],
         },
     },
+    {
+        "name": "analyze_code",
+        "description": "Perform a full codebase analysis: languages, line counts, TODOs, security flags, large functions, test coverage estimate.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "directory": {"type": "string", "description": "Directory to analyze", "default": "."},
+            },
+        },
+    },
+    {
+        "name": "scaffold_project",
+        "description": "Create a new project from a template. Templates: python, node, react, api.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "template": {"type": "string", "enum": ["python", "node", "react", "api"]},
+                "name": {"type": "string", "description": "Project name"},
+                "directory": {"type": "string", "description": "Parent directory", "default": "."},
+            },
+            "required": ["template", "name"],
+        },
+    },
+    {
+        "name": "manage_packages",
+        "description": "List packages, detect package managers, or check for outdated dependencies.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "action": {"type": "string", "enum": ["list", "detect", "outdated"]},
+                "directory": {"type": "string", "description": "Project directory", "default": "."},
+            },
+            "required": ["action"],
+        },
+    },
+    {
+        "name": "manage_services",
+        "description": "Find dev servers, listening ports, resource hogs, or kill processes.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "action": {"type": "string", "enum": ["dev_servers", "listeners", "hogs", "kill_pid", "kill_port"]},
+                "target": {"type": "integer", "description": "PID or port number (for kill actions)"},
+            },
+            "required": ["action"],
+        },
+    },
 ]
 
 
@@ -374,6 +421,102 @@ def execute_tool(name: str, input_data: dict) -> str:
                 results = search_notes(input_data.get("content", ""))
                 return "\n".join(f"  #{n['id']}: {n['content'][:80]}" for n in results) or "No matches"
             return "Unknown note action"
+
+        elif name == "analyze_code":
+            from nova.modules.code_analyzer import analyze_codebase
+            results = analyze_codebase(input_data.get("directory", "."))
+            total_files = sum(results["file_counts"].values())
+            total_lines = sum(results["line_counts"].values())
+            lines = [f"Codebase Analysis:"]
+            lines.append(f"  Total files: {total_files:,}")
+            lines.append(f"  Total lines: {total_lines:,}")
+            lines.append(f"  Languages: {len(results['languages'])}")
+            lines.append(f"  Top languages:")
+            for lang, count in results["line_counts"].most_common(5):
+                lines.append(f"    {lang}: {count:,} lines")
+            lines.append(f"  TODO/FIXME markers: {len(results['todos'])}")
+            lines.append(f"  Security flags: {len(results['security_flags'])}")
+            lines.append(f"  Large functions: {len(results['large_functions'])}")
+            tc = results["test_coverage"]
+            ratio = (tc["test_files"] / max(1, tc["source_files"])) * 100
+            lines.append(f"  Test ratio: {ratio:.0f}% ({tc['test_files']} test files)")
+            if results["security_flags"]:
+                lines.append("\n  Top security issues:")
+                for s in results["security_flags"][:5]:
+                    lines.append(f"    {s['file']}:{s['line']}  {s['issue']}")
+            return "\n".join(lines)
+
+        elif name == "scaffold_project":
+            from nova.modules.scaffolder import scaffold_project
+            scaffold_project(
+                input_data["template"],
+                input_data["name"],
+                input_data.get("directory", "."),
+            )
+            return f"Project '{input_data['name']}' scaffolded from '{input_data['template']}' template"
+
+        elif name == "manage_packages":
+            action = input_data["action"]
+            directory = input_data.get("directory", ".")
+            if action == "list":
+                from nova.modules.packages import list_packages
+                pkgs = list_packages(directory)
+                if not pkgs:
+                    return "No packages found"
+                lines = []
+                for pm, data in pkgs.items():
+                    lines.append(f"{pm}: {data['total']} packages")
+                    for pkg_name in list(data.get("dependencies", {}).keys())[:10]:
+                        lines.append(f"  {pkg_name}")
+                return "\n".join(lines)
+            elif action == "detect":
+                from nova.modules.packages import detect_package_manager
+                managers = detect_package_manager(directory)
+                if not managers:
+                    return "No package managers detected"
+                return "\n".join(f"{pm}: {d['config']}" for pm, d in managers.items())
+            elif action == "outdated":
+                from nova.modules.packages import check_outdated
+                check_outdated(directory)
+                return "Outdated check complete (see output above)"
+            return "Unknown package action"
+
+        elif name == "manage_services":
+            action = input_data["action"]
+            if action == "dev_servers":
+                from nova.modules.services import find_dev_servers
+                servers = find_dev_servers()
+                if not servers:
+                    return "No development servers running"
+                lines = [f"Found {len(servers)} dev servers:"]
+                for s in servers:
+                    ports = ",".join(str(p) for p in s["ports"]) or "?"
+                    lines.append(f"  PID {s['pid']}: {s['category']} on port(s) {ports}")
+                return "\n".join(lines)
+            elif action == "listeners":
+                from nova.modules.services import find_listening_ports
+                listeners = find_listening_ports()
+                return "\n".join(f"Port {l['port']}: {l['name']} (PID {l['pid']})" for l in listeners[:30])
+            elif action == "hogs":
+                import psutil
+                procs = sorted(
+                    [p.info for p in psutil.process_iter(["pid", "name", "cpu_percent", "memory_percent"])],
+                    key=lambda p: (p.get("cpu_percent") or 0) + (p.get("memory_percent") or 0),
+                    reverse=True,
+                )[:10]
+                return "\n".join(
+                    f"PID {p['pid']}: {p.get('name','?')} CPU:{p.get('cpu_percent',0):.1f}% MEM:{p.get('memory_percent',0):.1f}%"
+                    for p in procs
+                )
+            elif action == "kill_pid":
+                from nova.modules.services import kill_process
+                kill_process(input_data["target"])
+                return f"Killed PID {input_data['target']}"
+            elif action == "kill_port":
+                from nova.modules.services import kill_port
+                kill_port(input_data["target"])
+                return f"Killed process on port {input_data['target']}"
+            return "Unknown service action"
 
         else:
             return f"Unknown tool: {name}"
