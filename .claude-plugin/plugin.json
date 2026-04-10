@@ -1,0 +1,31 @@
+{
+  "name": "elevarel-skills",
+  "version": "1.0.0",
+  "description": "Comprehensive Claude Code toolkit: 198 skills, 45 agents, 82 commands, hooks, and Nova Agent CLI",
+  "author": {
+    "name": "Elevarel",
+    "url": "https://github.com/elevarel/skills"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/elevarel/skills",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elevarel/skills"
+  },
+  "keywords": [
+    "claude-code",
+    "skills",
+    "agents",
+    "commands",
+    "devops",
+    "security",
+    "ai",
+    "automation"
+  ],
+  "skillsPath": "./skills",
+  "agentsPath": "./agents",
+  "commandsPath": "./commands",
+  "hooksPath": "./hooks",
+  "contextsPath": "./contexts",
+  "rulesPath": "./rules"
+}
