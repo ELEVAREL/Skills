@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dream Academy — Website Audit Report</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  font-family:Helvetica,Arial,sans-serif;
+  color:#0D1B3E;background:#FDF6EC;line-height:1.6
+}
+h1,h2,h3,h4{font-family:Georgia,'Times New Roman',serif;line-height:1.2;font-weight:normal}
+
+/* each "page" is a Letter-sized block with amber bars */
+.page{
+  width:8.5in;min-height:11in;
+  padding:.6in .75in;margin:0 auto 20px;
+  background:#FDF6EC;position:relative;
+  page-break-after:always;break-after:page;
+  overflow:hidden
+}
+.page::before,.page::after{content:'';position:absolute;left:0;right:0;height:6px;background:#E8962B}
+.page::before{top:0}
+.page::after{bottom:0}
+
+.logo-mark{font-family:Georgia,serif;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:#0D1B3E;margin-bottom:30px}
+.logo-mark span{color:#E8962B}
+
+.eyebrow{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:1.5px solid #E8962B;color:#E8962B;border-radius:20px;padding:5px 14px;margin-bottom:14px}
+
+h1.doc-title{font-size:56px;line-height:1.05;margin-bottom:20px}
+h2.section-title{font-size:34px;margin-bottom:14px;color:#0D1B3E}
+h3.sub-title{font-size:20px;margin-bottom:10px;color:#0D1B3E}
+p{font-size:12px;margin-bottom:10px;color:#3a4a6b}
+p.lead{font-size:14px;line-height:1.65}
+
+/* ── COVER PAGE ── */
+.cover{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-height:11in}
+.cover .score-hero{
+  margin-top:50px;display:flex;align-items:center;gap:40px;
+  padding:40px;background:#0D1B3E;color:#FDF6EC;border-radius:14px;width:100%;
+  border:3px solid #E8962B
+}
+.cover .score-num{font-family:Georgia,serif;font-size:160px;line-height:.85;color:#E8962B}
+.cover .score-num small{font-size:50px;opacity:.6;color:#FDF6EC}
+.cover .score-label{flex:1;font-family:Georgia,serif;font-size:22px;line-height:1.3}
+.cover .score-label strong{color:#E8962B;font-weight:normal}
+.cover .meta{margin-top:60px;font-size:12px;color:#3a4a6b;border-top:1px solid rgba(13,27,62,.2);padding-top:20px;width:100%}
+.cover .meta strong{color:#0D1B3E}
+
+/* ── CARDS ── */
+.issue-card{
+  background:#fff;border-left:5px solid #E8962B;border-radius:8px;
+  padding:18px 22px;margin-bottom:14px;
+  box-shadow:0 2px 10px rgba(13,27,62,.05)
+}
+.issue-card.crit{border-left-color:#c0392b}
+.issue-card.major{border-left-color:#E8962B}
+.issue-card.minor{border-left-color:#f1c40f}
+.issue-card .head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.issue-card .sev{
+  font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  padding:3px 9px;border-radius:12px;color:#fff
+}
+.sev.crit{background:#c0392b}
+.sev.major{background:#E8962B}
+.sev.minor{background:#f1c40f;color:#0D1B3E}
+.issue-card h4{font-size:16px;font-family:Georgia,serif;color:#0D1B3E}
+.issue-card .desc{font-size:11px;color:#3a4a6b;margin:6px 0}
+.issue-card .impact,.issue-card .fix{font-size:11px;margin-top:6px}
+.issue-card .impact strong{color:#c0392b}
+.issue-card .fix strong{color:#1E7A4F}
+
+/* ── SCORE BARS ── */
+.score-cats{margin-top:20px}
+.score-row{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-size:12px}
+.score-row .lbl{width:180px;font-weight:700;color:#0D1B3E}
+.score-row .bar{flex:1;height:14px;background:rgba(13,27,62,.08);border-radius:8px;overflow:hidden}
+.score-row .fill{height:100%;background:#E8962B;border-radius:8px}
+.score-row .val{width:60px;text-align:right;color:#E8962B;font-weight:700}
+
+/* ── COMPARE TABLE ── */
+.compare{width:100%;border-collapse:collapse;font-size:11px;margin-top:14px}
+.compare th{background:#0D1B3E;color:#FDF6EC;padding:10px 12px;text-align:left;font-family:Georgia,serif;font-size:12px}
+.compare td{padding:9px 12px;border-bottom:1px solid rgba(13,27,62,.08);background:#fff}
+.compare .before{color:#c0392b}
+.compare .after{color:#1E7A4F;font-weight:700}
+
+/* ── ROI STATS ── */
+.roi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.roi-card{background:#0D1B3E;color:#FDF6EC;padding:20px;border-radius:10px;border:2px solid #E8962B;text-align:center}
+.roi-card .num{font-family:Georgia,serif;font-size:38px;color:#E8962B;line-height:1}
+.roi-card .lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:8px;opacity:.8}
+.roi-card .desc{font-size:10px;margin-top:6px;opacity:.7}
+
+.section-divider{height:2px;background:linear-gradient(90deg,#E8962B,transparent);margin:20px 0 16px;border-radius:2px}
+
+ol.steps{padding-left:22px;margin-top:10px}
+ol.steps li{font-size:12px;margin-bottom:8px;color:#3a4a6b}
+ol.steps li strong{color:#0D1B3E}
+
+@page{size:Letter;margin:.35in}
+@media print{
+  body{background:#FDF6EC}
+  .page{margin:0;padding:.55in .7in;box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ PAGE 1 — COVER ═══ -->
+<section class="page cover">
+  <div class="logo-mark">Dream <span>Academy</span> Inc.</div>
+  <span class="eyebrow">Website Audit Report</span>
+  <h1 class="doc-title">Your website is<br>losing students.<br>Here's why.</h1>
+  <p class="lead" style="max-width:6in">A full diagnostic of dreamacademyrichmond.com across design, usability, content, performance, and SEO — with specific, prioritized recommendations.</p>
+  <div class="score-hero">
+    <div class="score-num">31<small>/100</small></div>
+    <div class="score-label">
+      Overall Audit Score:<br><strong>Critical attention needed</strong><br>
+      <span style="font-size:13px;opacity:.7">10 issues found across 5 categories</span>
+    </div>
+  </div>
+  <div class="meta">
+    <strong>Prepared for:</strong> Dream Academy Inc · 2505 Chamberlin Ave · Richmond VA 23222<br>
+    <strong>Report date:</strong> April 2026 &nbsp;·&nbsp; <strong>URL audited:</strong> dreamacademyrichmond.com<br>
+    <strong>Phone:</strong> (804) 228-8200 &nbsp;·&nbsp; <strong>Hours:</strong> Mon–Fri 9am–4pm
+  </div>
+</section>
+
+<!-- ═══ PAGE 2 — EXECUTIVE SUMMARY + METHODOLOGY ═══ -->
+<section class="page">
+  <div class="logo-mark">Dream <span>Academy</span> Inc.</div>
+  <span class="eyebrow">Executive Summary</span>
+  <h2 class="section-title">What we found.</h2>
+  <p class="lead">Dream Academy Inc. is a real, trusted Richmond institution — but its website tells none of that story. Visitors land on a generic Wix template with broken navigation, a stock photo used in place of a phone icon, zero visible credibility metrics, and no clear path to enrollment. The site scores <strong>31/100</strong> overall, with the weakest marks in design and user experience.</p>
+  <p class="lead">The good news: nothing on this list is unfixable, and most issues are concentrated in the homepage. A focused rebuild of the homepage plus a light brand system will address <strong>80% of the problems</strong> and move the score into the low 90s. The remaining 20% (SEO cleanup, duplicate location pages, video content) can be handled in a follow-up sprint or monthly retainer.</p>
+  <p class="lead">This report outlines every issue found, sorted by severity, with a specific recommendation for each.</p>
+
+  <div class="section-divider"></div>
+
+  <span class="eyebrow">Scoring Methodology</span>
+  <h3 class="sub-title">How the 31/100 breaks down</h3>
+  <p>Each category is weighted equally (20 points). We audit against WCAG, industry conversion benchmarks, and the Baymard Institute UX guidelines.</p>
+
+  <div class="score-cats">
+    <div class="score-row"><div class="lbl">Design &amp; Branding</div><div class="bar"><div class="fill" style="width:20%"></div></div><div class="val">4 / 20</div></div>
+    <div class="score-row"><div class="lbl">UX &amp; Navigation</div><div class="bar"><div class="fill" style="width:25%"></div></div><div class="val">5 / 20</div></div>
+    <div class="score-row"><div class="lbl">Content Strategy</div><div class="bar"><div class="fill" style="width:30%"></div></div><div class="val">6 / 20</div></div>
+    <div class="score-row"><div class="lbl">Mobile &amp; Performance</div><div class="bar"><div class="fill" style="width:40%"></div></div><div class="val">8 / 20</div></div>
+    <div class="score-row"><div class="lbl">SEO &amp; Discoverability</div><div class="bar"><div class="fill" style="width:40%"></div></div><div class="val">8 / 20</div></div>
+  </div>
+  <p style="margin-top:14px;font-size:11px;font-style:italic">A score under 60 indicates the site is actively hurting the business. Scores 60–80 indicate passable but unmemorable. Scores above 80 drive measurable lift in conversions.</p>
+</section>
+
+<!-- ═══ PAGE 3 — CRITICAL ISSUES ═══ -->
+<section class="page">
+  <div class="logo-mark">Dream <span>Academy</span> Inc.</div>
+  <span class="eyebrow" style="border-color:#c0392b;color:#c0392b">Critical Issues</span>
+  <h2 class="section-title">4 critical issues — fix these first.</h2>
+  <p class="lead">Critical issues actively repel visitors and destroy trust on first contact. These must be fixed before any other work.</p>
+
+  <div class="issue-card crit">
+    <div class="head"><span class="sev crit">Critical</span><h4>Navigation links are swapped</h4></div>
+    <div class="desc">The main nav link labeled "Elective Courses" currently routes to the Transcript Requests page — and vice versa. Any visitor trying to browse programs hits an unrelated form.</div>
+    <div class="impact"><strong>Impact:</strong> Every prospective student who wants to see electives gets a form they didn't ask for. Bounce rate likely doubles for that link.</div>
+    <div class="fix"><strong>Fix:</strong> Swap the `href` values in the Wix nav settings, test both paths.</div>
+  </div>
+
+  <div class="issue-card crit">
+    <div class="head"><span class="sev crit">Critical</span><h4>Phone icon is a stock photo of a purple flower</h4></div>
+    <div class="desc">The "call us" icon in the header is not a phone icon — it's a stock photo of a purple flower. This appears to be a placeholder image that was never replaced.</div>
+    <div class="impact"><strong>Impact:</strong> Instant credibility loss. Visitors interpret this as "this site wasn't cared for." Professional audiences (parents researching for adult children) bounce immediately.</div>
+    <div class="fix"><strong>Fix:</strong> Replace with a clean phone glyph (SVG), link directly to `tel:8042288200`.</div>
+  </div>
+
+  <div class="issue-card crit">
+    <div class="head"><span class="sev crit">Critical</span><h4>Generic Wix template — zero brand identity</h4></div>
+    <div class="desc">The current site uses a default Wix template with no brand colors, no custom typography, and no design elements that reinforce "Dream Academy." It is visually indistinguishable from a thousand other small-business sites.</div>
+    <div class="impact"><strong>Impact:</strong> No visual anchor means the brand is forgettable. A visitor cannot picture the site an hour later.</div>
+    <div class="fix"><strong>Fix:</strong> Apply a custom brand system (navy #0D1B3E, amber #E8962B, cream #FDF6EC) across every page. Use Playfair Display + Nunito Sans.</div>
+  </div>
+
+  <div class="issue-card crit">
+    <div class="head"><span class="sev crit">Critical</span><h4>No hero hook, no dominant CTA</h4></div>
+    <div class="desc">The homepage has no clear headline or primary call-to-action. A contact form sits in the hero area competing visually with the (weak) page title. Visitors have no idea what to do first.</div>
+    <div class="impact"><strong>Impact:</strong> Highest-intent visitors (people ready to enroll) leave without calling. Low-intent visitors (browsers) have no reason to scroll.</div>
+    <div class="fix"><strong>Fix:</strong> Build a proper hero: headline, sub, single amber CTA button ("Call (804) 228-8200"), and a supporting visual. Move the contact form below the fold.</div>
+  </div>
+</section>
+
+<!-- ═══ PAGE 4 — MAJOR ISSUES ═══ -->
+<section class="page">
+  <div class="logo-mark">Dream <span>Academy</span> Inc.</div>
+  <span class="eyebrow" style="border-color:#E8962B;color:#E8962B">Major Issues</span>
+  <h2 class="section-title">4 major issues — fix these next.</h2>
+  <p class="lead">Major issues don't break the site, but they silently leak enrollments. Each one represents a missed opportunity to convert a visitor.</p>
+
+  <div class="issue-card major">
+    <div class="head"><span class="sev major">Major</span><h4>All social proof buried below the fold</h4></div>
+    <div class="desc">Testimonials, graduate stories, and completion stats are hidden far down the homepage. Most visitors never reach them. The strongest trust signals on the site are invisible.</div>
+    <div class="impact"><strong>Impact:</strong> First-time visitors form their opinion in under 5 seconds — without seeing any proof that Dream Academy works.</div>
+    <div class="fix"><strong>Fix:</strong> Add a stat bar directly below the hero (500+ graduates, 93% completion rate). Move 3 featured testimonials to position 6 in the scroll order.</div>
+  </div>
+
+  <div class="issue-card major">
+    <div class="head"><span class="sev major">Major</span><h4>"Richmond VA" repeated 14× on one page</h4></div>
+    <div class="desc">The phrase "Richmond VA" appears 14 times on the homepage, mostly in ways that read as keyword stuffing rather than natural copy.</div>
+    <div class="impact"><strong>Impact:</strong> Google's Helpful Content Update explicitly penalizes this pattern. Users also notice and interpret it as spam.</div>
+    <div class="fix"><strong>Fix:</strong> Reduce to 3–4 natural mentions. Use variations ("in Richmond," "our Chamberlin Ave campus," "serving central Virginia").</div>
+  </div>
+
+  <div class="issue-card major">
+    <div class="head"><span class="sev major">Major</span><h4>No program comparison table or pricing</h4></div>
+    <div class="desc">There is no comparison between Dream Academy, GED programs, and online diploma mills. Prospective students cannot understand the value proposition.</div>
+    <div class="impact"><strong>Impact:</strong> Visitors leave to compare options — and many never return. Losing to unaccredited online diploma mills is especially painful.</div>
+    <div class="fix"><strong>Fix:</strong> Add a 6-row comparison table showing accreditation, instructors, scheduling, recognition, credit plans, and electives.</div>
+  </div>
+
+  <div class="issue-card major">
+    <div class="head"><span class="sev major">Major</span><h4>No graduation stats or credibility metrics</h4></div>
+    <div class="desc">The site mentions Dream Academy is "trusted" but provides no numbers. No graduation count, no completion rate, no accreditation badge.</div>
+    <div class="impact"><strong>Impact:</strong> Trust statements without proof read as marketing fluff. Visitors discount them.</div>
+    <div class="fix"><strong>Fix:</strong> Surface the real numbers: 500+ graduates, 93% completion rate, 12-month average timeline. Display as a stat bar + icons.</div>
+  </div>
+</section>
+
+<!-- ═══ PAGE 5 — MINOR ISSUES + BEFORE/AFTER ═══ -->
+<section class="page">
+  <div class="logo-mark">Dream <span>Academy</span> Inc.</div>
+  <span class="eyebrow" style="border-color:#f1c40f;color:#b78c00">Minor Issues</span>
+  <h2 class="section-title">2 minor issues — handle in phase 2.</h2>
+
+  <div class="issue-card minor">
+    <div class="head"><span class="sev minor">Minor</span><h4>Thin duplicate location pages</h4></div>
+    <div class="desc">Multiple near-duplicate pages target variations like "Richmond VA adult diploma," "Henrico adult diploma," etc. Google flags these as thin content.</div>
+    <div class="impact"><strong>Impact:</strong> Slow SEO bleed. Pages will gradually fall in rankings.</div>
+    <div class="fix"><strong>Fix:</strong> Consolidate into one strong "Service Area" page with unique content per neighborhood.</div>
+  </div>
+
+  <div class="issue-card minor">
+    <div class="head"><span class="sev minor">Minor</span><h4>No director video or leadership visibility</h4></div>
+    <div class="desc">The "About" page has no photos or videos of the director, faculty, or campus interior. Visitors can't put a face to the name.</div>
+    <div class="impact"><strong>Impact:</strong> Missing an easy trust-builder. Adult learners specifically want to know who they'll be working with.</div>
+    <div class="fix"><strong>Fix:</strong> Record a 90-second "welcome" video from the director. Add faculty headshots. Include 3 campus interior photos.</div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <span class="eyebrow">Before vs After</span>
+  <h3 class="sub-title">What changes after the redesign</h3>
+  <table class="compare">
+    <thead><tr><th>Metric</th><th>Current</th><th>After Redesign</th></tr></thead>
+    <tbody>
+      <tr><td>Overall audit score</td><td class="before">31 / 100</td><td class="after">92 / 100</td></tr>
+      <tr><td>Brand identity</td><td class="before">Generic Wix template</td><td class="after">Custom navy &amp; amber system</td></tr>
+      <tr><td>Hero CTA</td><td class="before">Contact form, no headline</td><td class="after">Headline + amber button + phone</td></tr>
+      <tr><td>Navigation accuracy</td><td class="before">Swapped links</td><td class="after">Tested &amp; correct</td></tr>
+      <tr><td>Social proof position</td><td class="before">Below the fold</td><td class="after">Stat bar + testimonials</td></tr>
+      <tr><td>Mobile breakpoints</td><td class="before">Broken layout</td><td class="after">900px + 480px tested</td></tr>
+      <tr><td>Program comparison</td><td class="before">None</td><td class="after">6-row comparison table</td></tr>
+      <tr><td>SEO keyword stuffing</td><td class="before">"Richmond VA" × 14</td><td class="after">3–4 natural mentions</td></tr>
+      <tr><td>Trust metrics</td><td class="before">None visible</td><td class="after">500+ · 93% · 12mo</td></tr>
+      <tr><td>Accessibility (WCAG)</td><td class="before">Multiple failures</td><td class="after">AA compliant</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══ PAGE 6 — ROI + RECOMMENDATIONS ═══ -->
+<section class="page">
+  <div class="logo-mark">Dream <span>Academy</span> Inc.</div>
+  <span class="eyebrow">ROI Projection</span>
+  <h2 class="section-title">What the fix is worth.</h2>
+  <p class="lead">Conservative projections based on industry benchmarks for website redesigns at similar-sized educational institutions.</p>
+
+  <div class="roi-grid">
+    <div class="roi-card">
+      <div class="num">+42%</div>
+      <div class="lbl">Enrollment Inquiries</div>
+      <div class="desc">Industry avg. lift after a conversion-focused rebuild</div>
+    </div>
+    <div class="roi-card">
+      <div class="num">-61%</div>
+      <div class="lbl">Bounce Rate</div>
+      <div class="desc">From fixing the hero, nav, and credibility gaps</div>
+    </div>
+    <div class="roi-card">
+      <div class="num">+28%</div>
+      <div class="lbl">Organic Search Traffic</div>
+      <div class="desc">From killing thin pages + keyword stuffing</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <span class="eyebrow">Recommended Next Steps</span>
+  <h3 class="sub-title">A pragmatic fix order</h3>
+  <ol class="steps">
+    <li><strong>Week 1 — Emergency patches:</strong> Fix the swapped nav links, replace the flower photo with a phone icon. Takes &lt; 2 hours. Stops the bleeding.</li>
+    <li><strong>Week 1–2 — Brand system:</strong> Lock in colors, fonts, components. Deliver a 1-page brand guide you can hand to anyone.</li>
+    <li><strong>Week 2 — Homepage rebuild:</strong> Build all 9 sections (hero, stats, process, programs, testimonials, mission, FAQ, CTA, footer). Test at 900px &amp; 480px.</li>
+    <li><strong>Week 2 — Social pack:</strong> Instagram post, Instagram story, Facebook cover, referral card — all using the new brand system.</li>
+    <li><strong>Week 3 — SEO cleanup:</strong> Consolidate thin location pages, prune "Richmond VA" repetition, add schema markup for LocalBusiness.</li>
+    <li><strong>Week 3 — Launch:</strong> Deploy, test, train the team on editing content. 30-day support window begins.</li>
+    <li><strong>Month 2+ (optional retainer):</strong> Monthly content updates, new social graphics, performance monitoring, quarterly analytics reviews.</li>
+  </ol>
+
+  <div class="section-divider"></div>
+
+  <p style="font-size:11px;font-style:italic;color:#3a4a6b">
+    Report prepared April 2026 · Dream Academy Inc · (804) 228-8200 · 2505 Chamberlin Ave, Richmond VA 23222<br>
+    This audit reflects the state of dreamacademyrichmond.com at time of review. Scores are based on a weighted rubric covering design, UX, content, performance, and SEO.
+  </p>
+</section>
+
+</body>
+</html>

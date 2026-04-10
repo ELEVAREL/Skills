@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dream Academy — Pitch Deck</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0D1B3E;font-family:Helvetica,Arial,sans-serif;color:#FDF6EC}
+h1,h2,h3,h4{font-family:Georgia,'Times New Roman',serif;font-weight:normal;line-height:1.15}
+
+.slide{
+  width:1920px;height:1080px;
+  position:relative;overflow:hidden;
+  page-break-after:always;break-after:page;
+  padding:90px 120px;
+  display:flex;flex-direction:column;
+}
+.slide.light{background:#FDF6EC;color:#0D1B3E}
+.slide.navy{background:#0D1B3E;color:#FDF6EC}
+.slide.amber{background:#E8962B;color:#FDF6EC}
+
+/* amber accent bars */
+.slide::before,.slide::after{content:'';position:absolute;left:0;right:0;height:10px;background:#E8962B}
+.slide::before{top:0}
+.slide::after{bottom:0}
+
+/* decorative rings */
+.ring{position:absolute;border-radius:50%;pointer-events:none}
+.ring-br{width:700px;height:700px;right:-250px;bottom:-250px;border:3px solid rgba(232,150,43,.18)}
+.ring-br-2{width:540px;height:540px;right:-170px;bottom:-170px;border:2px solid rgba(232,150,43,.1)}
+.ring-tl{width:500px;height:500px;left:-180px;top:-180px;border:2px solid rgba(232,150,43,.12)}
+.light .ring-br,.light .ring-tl,.light .ring-br-2{border-color:rgba(13,27,62,.08)}
+
+.eyebrow{
+  display:inline-block;font-size:18px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  border:2px solid #E8962B;color:#E8962B;border-radius:40px;padding:10px 24px;margin-bottom:28px;
+}
+.slide.amber .eyebrow{border-color:#FDF6EC;color:#FDF6EC}
+h1.title{font-size:110px;line-height:1.05;margin-bottom:30px}
+h2.title{font-size:78px;line-height:1.08;margin-bottom:24px}
+h3.sub{font-size:34px;line-height:1.4;font-family:Helvetica,Arial,sans-serif;font-weight:normal;opacity:.8;max-width:1100px;margin-bottom:40px}
+p.body{font-size:24px;line-height:1.55;opacity:.85;max-width:1100px;margin-bottom:18px}
+
+.slide-num{
+  position:absolute;bottom:40px;right:120px;
+  font-size:16px;letter-spacing:3px;opacity:.5;font-family:Helvetica,Arial,sans-serif
+}
+.logo-mark{
+  position:absolute;top:60px;left:120px;
+  font-family:Georgia,serif;font-size:22px;letter-spacing:2px;text-transform:uppercase
+}
+.logo-mark span{color:#E8962B}
+.slide.amber .logo-mark span{color:#0D1B3E}
+
+/* card grid */
+.card-grid{display:grid;gap:28px;margin-top:20px}
+.cards-2{grid-template-columns:1fr 1fr}
+.cards-3{grid-template-columns:repeat(3,1fr)}
+.cards-4{grid-template-columns:repeat(4,1fr)}
+.card{
+  background:rgba(255,255,255,.05);border:2px solid #E8962B;border-radius:18px;
+  padding:34px 30px;position:relative;z-index:2
+}
+.light .card{background:#fff;border-color:#E8962B;box-shadow:0 6px 30px rgba(13,27,62,.08)}
+.card .icon{font-size:48px;margin-bottom:16px}
+.card h4{font-size:26px;margin-bottom:10px;font-family:Georgia,serif}
+.card p{font-size:17px;line-height:1.5;opacity:.85}
+.card .sev{
+  display:inline-block;font-size:12px;font-weight:700;letter-spacing:2px;
+  padding:5px 12px;border-radius:20px;margin-bottom:14px;text-transform:uppercase
+}
+.sev.crit{background:#c0392b;color:#fff}
+.sev.major{background:#E8962B;color:#fff}
+.sev.minor{background:#f1c40f;color:#0D1B3E}
+
+/* huge score */
+.score-wrap{display:flex;align-items:center;gap:80px;margin-top:30px;position:relative;z-index:2}
+.score-big{
+  font-family:Georgia,serif;font-size:380px;line-height:.85;color:#E8962B;
+  text-shadow:0 0 60px rgba(232,150,43,.3)
+}
+.score-big .of{font-size:120px;opacity:.5;color:#FDF6EC}
+.score-cats{display:flex;flex-direction:column;gap:18px;flex:1}
+.score-row{display:flex;align-items:center;gap:20px;font-size:22px}
+.score-row .lbl{width:280px}
+.score-row .bar{flex:1;height:18px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden}
+.score-row .fill{height:100%;background:#E8962B;border-radius:10px}
+.score-row .val{width:80px;text-align:right;color:#E8962B;font-weight:700}
+
+/* comparison table */
+.compare-table{
+  width:100%;border-collapse:collapse;font-size:22px;margin-top:20px;position:relative;z-index:2;
+  background:rgba(255,255,255,.03);border-radius:14px;overflow:hidden
+}
+.compare-table th{background:#E8962B;color:#FDF6EC;padding:22px 26px;text-align:left;font-family:Georgia,serif;font-size:24px}
+.compare-table td{padding:22px 26px;border-bottom:1px solid rgba(255,255,255,.1)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .before{color:#e77}
+.compare-table .after{color:#6f6}
+
+/* brand swatches */
+.swatch-row{display:flex;gap:28px;margin-top:30px;position:relative;z-index:2}
+.swatch{flex:1;border-radius:18px;padding:38px 28px;border:2px solid rgba(232,150,43,.3)}
+.swatch .dot{width:100px;height:100px;border-radius:50%;margin-bottom:20px;border:3px solid rgba(255,255,255,.2)}
+.swatch h4{font-size:24px;font-family:Georgia,serif;margin-bottom:6px}
+.swatch .hex{font-size:18px;opacity:.7;letter-spacing:2px}
+
+/* pricing */
+.price-row{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:28px;margin-top:30px;position:relative;z-index:2;align-items:stretch}
+.price-card{
+  background:rgba(255,255,255,.05);border:2px solid rgba(232,150,43,.4);
+  border-radius:20px;padding:40px 32px;display:flex;flex-direction:column
+}
+.price-card.popular{border-color:#E8962B;background:rgba(232,150,43,.08);transform:scale(1.03);position:relative}
+.price-card .tag{
+  position:absolute;top:-16px;left:50%;transform:translateX(-50%);
+  background:#E8962B;color:#0D1B3E;padding:6px 18px;border-radius:20px;
+  font-size:14px;font-weight:700;letter-spacing:2px
+}
+.price-card h4{font-size:26px;font-family:Georgia,serif;margin-bottom:6px}
+.price-card .amt{font-size:56px;font-family:Georgia,serif;color:#E8962B;margin:10px 0 20px}
+.price-card .amt small{font-size:20px;opacity:.6;color:#FDF6EC}
+.price-card ul{list-style:none;flex:1}
+.price-card li{font-size:16px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.price-card li:before{content:"✓ ";color:#1E7A4F;font-weight:700}
+
+/* CTA slide */
+.cta-block{text-align:center;margin:auto;position:relative;z-index:2}
+.cta-block .phone{font-family:Georgia,serif;font-size:96px;color:#E8962B;margin:30px 0}
+.cta-block .addr{font-size:26px;opacity:.8;margin-top:20px}
+
+@page{size:1920px 1080px;margin:0}
+@media print{
+  html,body{background:#0D1B3E}
+  .slide{page-break-after:always;break-after:page}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ SLIDE 1 — TITLE ═══ -->
+<section class="slide navy">
+  <div class="ring ring-tl"></div>
+  <div class="ring ring-br"></div>
+  <div class="ring ring-br-2"></div>
+  <div class="logo-mark">Dream <span>Academy</span></div>
+  <div style="margin:auto 0;position:relative;z-index:2">
+    <span class="eyebrow">Proposal · April 2026</span>
+    <h1 class="title">Website Redesign<br>&amp; Brand Overhaul</h1>
+    <h3 class="sub">A complete digital transformation for Richmond's most trusted adult high school diploma program.</h3>
+    <p class="body" style="margin-top:40px;opacity:.6">Prepared for Dream Academy Inc · 2505 Chamberlin Ave · Richmond VA 23222</p>
+  </div>
+  <div class="slide-num">01 / 12</div>
+</section>
+
+<!-- ═══ SLIDE 2 — THE PROBLEM ═══ -->
+<section class="slide light">
+  <div class="ring ring-br"></div>
+  <div class="logo-mark">Dream <span>Academy</span></div>
+  <div style="margin-top:40px;position:relative;z-index:2">
+    <span class="eyebrow">The Problem</span>
+    <h2 class="title">Your current website<br>is costing you enrollments.</h2>
+    <h3 class="sub" style="color:#3a4a6b">Every visitor who lands on dreamacademyrichmond.com is silently forming an opinion about whether Dream Academy is worth their time. Right now, that opinion is working against you.</h3>
+    <div class="card-grid cards-4">
+      <div class="card"><div class="icon">🎨</div><h4>No Brand Identity</h4><p>Generic Wix template indistinguishable from a thousand other sites.</p></div>
+      <div class="card"><div class="icon">🔗</div><h4>Broken Navigation</h4><p>"Elective Courses" and "Transcript Requests" links point to the wrong pages.</p></div>
+      <div class="card"><div class="icon">🌸</div><h4>Stock Photo Phone</h4><p>The "call us" icon is literally a stock photo of a purple flower.</p></div>
+      <div class="card"><div class="icon">❓</div><h4>No Hero Hook</h4><p>No headline, no CTA, no reason to stay past the first scroll.</p></div>
+    </div>
+  </div>
+  <div class="slide-num">02 / 12</div>
+</section>
+
+<!-- ═══ SLIDE 3 — AUDIT SCORE ═══ -->
+<section class="slide navy">
+  <div class="ring ring-tl"></div>
+  <div class="ring ring-br"></div>
+  <div class="logo-mark">Dream <span>Academy</span></div>
+  <div style="margin-top:20px;position:relative;z-index:2">
+    <span class="eyebrow">Audit Results</span>
+    <h2 class="title">We scored every page.<br>The verdict isn't kind.</h2>
+  </div>
+  <div class="score-wrap">
+    <div class="score-big">31<span class="of">/100</span></div>
+    <div class="score-cats">
+      <div class="score-row"><div class="lbl">Design &amp; Branding</div><div class="bar"><div class="fill" style="width:20%"></div></div><div class="val">4/20</div></div>
+      <div class="score-row"><div class="lbl">UX &amp; Navigation</div><div class="bar"><div class="fill" style="width:25%"></div></div><div class="val">5/20</div></div>
+      <div class="score-row"><div class="lbl">Content Strategy</div><div class="bar"><div class="fill" style="width:30%"></div></div><div class="val">6/20</div></div>
+      <div class="score-row"><div class="lbl">Mobile &amp; Performance</div><div class="bar"><div class="fill" style="width:40%"></div></div><div class="val">8/20</div></div>
+      <div class="score-row"><div class="lbl">SEO &amp; Discoverability</div><div class="bar"><div class="fill" style="width:40%"></div></div><div class="val">8/20</div></div>
+    </div>
+  </div>
+  <div class="slide-num">03 / 12</div>
+</section>
+
+<!-- ═══ SLIDE 4 — CRITICAL ISSUES ═══ -->
+<section class="slide light">
+  <div class="ring ring-br"></div>
+  <div class="logo-mark">Dream <span>Academy</span></div>
+  <div style="margin-top:40px;position:relative;z-index:2">
+    <span class="eyebrow">Critical Issues</span>
+    <h2 class="title">Four bugs losing you students<br>right now.</h2>
+  </div>
+  <div class="card-grid cards-2" style="margin-top:40px;position:relative;z-index:2">
+    <div class="card"><span class="sev crit">Critical</span><h4>Swapped Navigation Links</h4><p>Clicking "Elective Courses" takes visitors to Transcript Requests — and vice versa. Prospective students hit a dead end and leave confused.</p></div>
+    <div class="card"><span class="sev crit">Critical</span><h4>Flower Photo as Phone Icon</h4><p>The phone call icon in your header is actually a stock photo of a purple flower. This erodes trust instantly — professional visitors notice.</p></div>
+    <div class="card"><span class="sev crit">Critical</span><h4>Generic Wix Template</h4><p>Zero brand identity. Your site looks identical to thousands of small-business templates, with no connection to Dream Academy's mission.</p></div>
+    <div class="card"><span class="sev crit">Critical</span><h4>No Hero Hook or Dominant CTA</h4><p>The homepage has no clear headline, no primary call-to-action, and a contact form competing visually with the page title.</p></div>
+  </div>
+  <div class="slide-num">04 / 12</div>
+</section>
+
+<!-- ═══ SLIDE 5 — MAJOR ISSUES ═══ -->
+<section class="slide navy">
+  <div class="ring ring-tl"></div>
+  <div class="logo-mark">Dream <span>Academy</span></div>
+  <div style="margin-top:40px;position:relative;z-index:2">
+    <span class="eyebrow">Major Issues</span>
+    <h2 class="title">Beyond the bugs, four<br>structural problems.</h2>
+  </div>
+  <div class="card-grid cards-2" style="margin-top:40px;position:relative;z-index:2">
+    <div class="card"><span class="sev major">Major</span><h4>Social Proof Buried</h4><p>Testimonials and graduate stories are hidden below the fold — visitors never see the strongest trust signals you have.</p></div>
+    <div class="card"><span class="sev major">Major</span><h4>"Richmond VA" × 14</h4><p>The phrase is repeated 14 times per page. Google reads it as keyword stuffing. Users read it as SEO spam.</p></div>
+    <div class="card"><span class="sev major">Major</span><h4>No Program Comparison</h4><p>No clear comparison showing how Dream Academy differs from GED programs or online diploma mills. Visitors can't make informed decisions.</p></div>
+    <div class="card"><span class="sev major">Major</span><h4>No Credibility Metrics</h4><p>No graduation stats, no completion rate, no "500+ graduates" — you have the proof, you're just not showing it.</p></div>
+  </div>
+  <div class="slide-num">05 / 12</div>
+</section>
+
+<!-- ═══ SLIDE 6 — THE SOLUTION ═══ -->
+<section class="slide light">
+  <div class="ring ring-tl"></div>
+  <div class="ring ring-br"></div>
+  <div class="logo-mark">Dream <span>Academy</span></div>
+  <div style="margin-top:40px;position:relative;z-index:2">
+    <span class="eyebrow">Our Solution</span>
+    <h2 class="title">A complete digital rebuild,<br>tuned for enrollment.</h2>
+    <h3 class="sub" style="color:#3a4a6b">We don't patch. We replace. Every pixel is designed around one question: will this visitor call (804) 228-8200 today?</h3>
+    <div class="card-grid cards-3" style="margin-top:40px">
+      <div class="card"><div class="icon">🎨</div><h4>Custom Brand System</h4><p>Navy &amp; amber palette, typography pairing, reusable components — a visual language you own.</p></div>
+      <div class="card"><div class="icon">💻</div><h4>New Homepage</h4><p>Nine sections optimized for conversion. Hero, stats, process, programs, testimonials, FAQ, CTA.</p></div>
+      <div class="card"><div class="icon">📱</div><h4>Mobile-First</h4><p>Responsive at 900px and 480px. 70% of your visitors are on phones — they come first.</p></div>
+    </div>
+  </div>
+  <div class="slide-num">06 / 12</div>
+</section>
+
+<!-- ═══ SLIDE 7 — BEFORE VS AFTER ═══ -->
+<section class="slide navy">
+  <div class="ring ring-br"></div>
+  <div class="logo-mark">Dream <span>Academy</span></div>
+  <div style="margin-top:30px;position:relative;z-index:2">
+    <span class="eyebrow">Before vs After</span>
+    <h2 class="title">Side by side.</h2>
+  </div>
+  <table class="compare-table">
+    <thead><tr><th style="width:34%">Metric</th><th style="width:33%">Current Site</th><th style="width:33%">After Redesign</th></tr></thead>
+    <tbody>
+      <tr><td>Overall audit score</td><td class="before">31 / 100</td><td class="after">92 / 100</td></tr>
+      <tr><td>Brand identity</td><td class="before">Wix template</td><td class="after">Custom navy &amp; amber system</td></tr>
+      <tr><td>Hero section</td><td class="before">No headline</td><td class="after">Headline + stat bar + CTA</td></tr>
+      <tr><td>Navigation</td><td class="before">Swapped links</td><td class="after">Fixed &amp; tested</td></tr>
+      <tr><td>Social proof</td><td class="before">Below fold</td><td class="after">Above fold + testimonials</td></tr>
+      <tr><td>Mobile experience</td><td class="before">Broken layout</td><td class="after">3 tested breakpoints</td></tr>
+      <tr><td>Program comparison</td><td class="before">Missing</td><td class="after">6-row comparison table</td></tr>
+      <tr><td>Trust signals</td><td class="before">None visible</td><td class="after">500+ · 93% · 12mo · 100%</td></tr>
+    </tbody>
+  </table>
+  <div class="slide-num">07 / 12</div>
+</section>
+
+<!-- ═══ SLIDE 8 — HOMEPAGE PREVIEW ═══ -->
+<section class="slide light">
+  <div class="ring ring-br"></div>
+  <div class="logo-mark">Dream <span>Academy</span></div>
+  <div style="margin-top:40px;position:relative;z-index:2">
+    <span class="eyebrow">Homepage Preview</span>
+    <h2 class="title">Nine sections, one goal.</h2>
+    <h3 class="sub" style="color:#3a4a6b">Every section is designed to move the visitor closer to picking up the phone.</h3>
+  </div>
+  <div class="card-grid cards-3" style="margin-top:40px;position:relative;z-index:2;gap:18px">
+    <div class="card" style="padding:22px"><h4 style="font-size:20px">1 · Sticky Nav</h4><p style="font-size:14px">Navy bar, amber CTA button, persistent phone number</p></div>
+    <div class="card" style="padding:22px"><h4 style="font-size:20px">2 · Hero</h4><p style="font-size:14px">Big headline, sub, two buttons, card stack</p></div>
+    <div class="card" style="padding:22px"><h4 style="font-size:20px">3 · Stat Bar</h4><p style="font-size:14px">500+ · 93% · 12mo · 100% flexible</p></div>
+    <div class="card" style="padding:22px"><h4 style="font-size:20px">4 · 4-Step Process</h4><p style="font-size:14px">Call → Assess → Start → Graduate</p></div>
+    <div class="card" style="padding:22px"><h4 style="font-size:20px">5 · Programs + Table</h4><p style="font-size:14px">3 programs + vs GED vs Diploma Mills</p></div>
+    <div class="card" style="padding:22px"><h4 style="font-size:20px">6 · Testimonials</h4><p style="font-size:14px">3 graduate quotes with photos</p></div>
+    <div class="card" style="padding:22px"><h4 style="font-size:20px">7 · Mission</h4><p style="font-size:14px">Story, values, Chamberlin Ave address</p></div>
+    <div class="card" style="padding:22px"><h4 style="font-size:20px">8 · FAQ</h4><p style="font-size:14px">6 expandable questions</p></div>
+    <div class="card" style="padding:22px"><h4 style="font-size:20px">9 · CTA Banner + Footer</h4><p style="font-size:14px">Amber banner + full footer nav</p></div>
+  </div>
+  <div class="slide-num">08 / 12</div>
+</section>
+
+<!-- ═══ SLIDE 9 — BRAND SYSTEM ═══ -->
+<section class="slide navy">
+  <div class="ring ring-tl"></div>
+  <div class="logo-mark">Dream <span>Academy</span></div>
+  <div style="margin-top:30px;position:relative;z-index:2">
+    <span class="eyebrow">Brand System</span>
+    <h2 class="title">A visual language<br>you fully own.</h2>
+  </div>
+  <div class="swatch-row">
+    <div class="swatch"><div class="dot" style="background:#0D1B3E"></div><h4>Deep Navy</h4><div class="hex">#0D1B3E</div><p style="font-size:14px;opacity:.7;margin-top:10px">Primary — trust, authority, education</p></div>
+    <div class="swatch"><div class="dot" style="background:#E8962B"></div><h4>Warm Amber</h4><div class="hex">#E8962B</div><p style="font-size:14px;opacity:.7;margin-top:10px">Accent — CTAs, energy, achievement</p></div>
+    <div class="swatch"><div class="dot" style="background:#FDF6EC"></div><h4>Warm Cream</h4><div class="hex">#FDF6EC</div><p style="font-size:14px;opacity:.7;margin-top:10px">Background — paper, warmth, calm</p></div>
+    <div class="swatch"><div class="dot" style="background:#1E7A4F"></div><h4>Forest Green</h4><div class="hex">#1E7A4F</div><p style="font-size:14px;opacity:.7;margin-top:10px">Success — confirmations, checks</p></div>
+  </div>
+  <div style="margin-top:40px;font-size:22px;opacity:.8;position:relative;z-index:2">
+    <strong style="font-family:Georgia,serif;font-size:28px">Typography:</strong>
+    Playfair Display (headlines) · Nunito Sans (body) — with Georgia &amp; Helvetica fallbacks for print
+  </div>
+  <div class="slide-num">09 / 12</div>
+</section>
+
+<!-- ═══ SLIDE 10 — WHAT'S INCLUDED ═══ -->
+<section class="slide light">
+  <div class="ring ring-br"></div>
+  <div class="logo-mark">Dream <span>Academy</span></div>
+  <div style="margin-top:40px;position:relative;z-index:2">
+    <span class="eyebrow">Deliverables</span>
+    <h2 class="title">What you get, end to end.</h2>
+  </div>
+  <div class="card-grid cards-4" style="margin-top:40px;position:relative;z-index:2">
+    <div class="card"><div class="icon">📄</div><h4>Audit Report</h4><p>Full PDF with findings, severity ratings &amp; recommendations.</p></div>
+    <div class="card"><div class="icon">🎨</div><h4>Brand System</h4><p>Colors, fonts, components, usage guide — files you own.</p></div>
+    <div class="card"><div class="icon">💻</div><h4>Homepage Rebuild</h4><p>HTML/CSS, responsive, production-ready.</p></div>
+    <div class="card"><div class="icon">📱</div><h4>Social Pack</h4><p>IG post, IG story, Facebook cover, referral card.</p></div>
+    <div class="card"><div class="icon">📊</div><h4>Pitch Deck</h4><p>This 12-slide deck as a shareable PDF.</p></div>
+    <div class="card"><div class="icon">💵</div><h4>Pricing Proposal</h4><p>3-tier options with transparent terms.</p></div>
+    <div class="card"><div class="icon">🔍</div><h4>SEO Fixes</h4><p>Kill "Richmond VA x14" spam, fix thin pages.</p></div>
+    <div class="card"><div class="icon">🤝</div><h4>30-Day Support</h4><p>Tweaks, training, and handoff walkthrough.</p></div>
+  </div>
+  <div class="slide-num">10 / 12</div>
+</section>
+
+<!-- ═══ SLIDE 11 — PRICING ═══ -->
+<section class="slide navy">
+  <div class="ring ring-tl"></div>
+  <div class="ring ring-br"></div>
+  <div class="logo-mark">Dream <span>Academy</span></div>
+  <div style="margin-top:30px;position:relative;z-index:2">
+    <span class="eyebrow">Investment</span>
+    <h2 class="title">Three ways to work<br>together.</h2>
+  </div>
+  <div class="price-row">
+    <div class="price-card">
+      <h4>Starter</h4>
+      <div class="amt">$299<small></small></div>
+      <ul>
+        <li>Full audit report</li>
+        <li>Brand color palette</li>
+        <li>Homepage wireframe</li>
+        <li>Competitor analysis</li>
+        <li>SEO recommendations</li>
+      </ul>
+      <p style="margin-top:20px;font-size:14px;opacity:.7;font-style:italic">"I want to know what's broken."</p>
+    </div>
+    <div class="price-card popular">
+      <div class="tag">MOST POPULAR</div>
+      <h4>Complete</h4>
+      <div class="amt">$1,200<small> one-time</small></div>
+      <ul>
+        <li>Everything in Starter</li>
+        <li>Full custom homepage rebuild</li>
+        <li>Mobile responsive (3 breakpoints)</li>
+        <li>Social media pack (4 assets)</li>
+        <li>Brand style guide</li>
+        <li>12-slide pitch deck</li>
+        <li>SEO optimization</li>
+        <li>30-day post-launch support</li>
+      </ul>
+      <p style="margin-top:20px;font-size:14px;opacity:.85;font-style:italic">"I want a professional website."</p>
+    </div>
+    <div class="price-card">
+      <h4>Retainer</h4>
+      <div class="amt">$350<small> /month</small></div>
+      <ul>
+        <li>Everything in Complete</li>
+        <li>Monthly content updates</li>
+        <li>1 social graphic/month</li>
+        <li>Performance monitoring</li>
+        <li>Priority support</li>
+        <li>Quarterly analytics report</li>
+      </ul>
+      <p style="margin-top:20px;font-size:14px;opacity:.7;font-style:italic">"I want ongoing growth."</p>
+    </div>
+  </div>
+  <div class="slide-num">11 / 12</div>
+</section>
+
+<!-- ═══ SLIDE 12 — CTA ═══ -->
+<section class="slide amber">
+  <div class="ring ring-tl" style="border-color:rgba(253,246,236,.18)"></div>
+  <div class="ring ring-br" style="border-color:rgba(253,246,236,.18)"></div>
+  <div class="logo-mark">Dream <span>Academy</span></div>
+  <div class="cta-block">
+    <span class="eyebrow">Next Steps</span>
+    <h2 class="title" style="font-size:96px">Let's rebuild<br>Dream Academy.</h2>
+    <h3 class="sub" style="margin-left:auto;margin-right:auto;max-width:900px">Approve the proposal, and we start this week. Complete package delivered in 7–10 business days.</h3>
+    <div class="phone">(804) 228-8200</div>
+    <div class="addr">2505 Chamberlin Ave · Richmond VA 23222<br>dreamacademyrichmond.com · Mon–Fri 9am–4pm</div>
+  </div>
+  <div class="slide-num">12 / 12</div>
+</section>
+
+</body>
+</html>

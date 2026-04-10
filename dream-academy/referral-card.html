@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dream Academy — Referral Card</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{margin:0;padding:0;background:#e0d8cc;font-family:Helvetica,Arial,sans-serif;display:flex;flex-direction:column;align-items:center;padding:20px 0}
+
+.card{width:672px;height:384px;border-radius:16px;overflow:hidden;position:relative;margin-bottom:24px}
+.card .bar-top,.card .bar-bot{position:absolute;left:0;right:0;height:6px;background:#E8962B;z-index:10}
+.card .bar-top{top:0}
+.card .bar-bot{bottom:0}
+
+/* ══ FRONT ══ */
+.front{background:linear-gradient(135deg,#0D1B3E 0%,#162d5a 100%);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:40px 48px}
+.front .ring{position:absolute;top:-30px;right:-30px;width:200px;height:200px;border:2px solid rgba(232,150,43,.12);border-radius:50%}
+.front .ring2{position:absolute;bottom:-40px;left:40px;width:140px;height:140px;border:2px solid rgba(232,150,43,.08);border-radius:50%}
+.front-left{position:relative;z-index:2}
+.front-left .logo{font-family:Georgia,'Times New Roman',serif;font-size:36px;font-weight:700;margin-bottom:6px}
+.front-left .logo span{color:#E8962B}
+.front-left .tagline{font-size:16px;color:rgba(255,255,255,.7);margin-bottom:28px}
+.front-left .divider{width:60px;height:3px;background:#E8962B;margin-bottom:20px;border-radius:2px}
+.front-left .info{font-size:14px;color:rgba(255,255,255,.8);line-height:1.8}
+.front-left .info strong{color:#E8962B}
+
+.front-right{text-align:right;position:relative;z-index:2}
+.front-right .hours-label{font-size:12px;text-transform:uppercase;letter-spacing:2px;color:#E8962B;font-weight:700;margin-bottom:6px}
+.front-right .hours{font-size:15px;color:rgba(255,255,255,.75);margin-bottom:24px;line-height:1.6}
+.front-right .website{font-size:14px;color:#E8962B;font-weight:700;margin-top:8px}
+.front-right .stat{margin-top:20px;background:rgba(255,255,255,.06);border:1px solid rgba(232,150,43,.25);border-radius:12px;padding:14px 20px;display:inline-block}
+.front-right .stat .num{font-family:Georgia,'Times New Roman',serif;font-size:28px;font-weight:700;color:#E8962B}
+.front-right .stat .label{font-size:11px;color:rgba(255,255,255,.6)}
+
+/* ══ BACK ══ */
+.back{background:#FDF6EC;color:#0D1B3E;padding:40px 48px;display:flex;flex-direction:column;justify-content:space-between}
+.back .ring{position:absolute;top:20px;right:-20px;width:160px;height:160px;border:2px solid rgba(232,150,43,.1);border-radius:50%}
+.back-header{text-align:center;position:relative;z-index:2}
+.back-header .eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;border:2px solid #E8962B;border-radius:30px;padding:5px 18px;color:#E8962B;margin-bottom:10px}
+.back-header h2{font-family:Georgia,'Times New Roman',serif;font-size:28px;color:#0D1B3E;margin-bottom:4px}
+.back-header p{font-size:13px;color:#5a6a8b}
+
+.back-form{position:relative;z-index:2;margin:16px 0}
+.field{margin-bottom:14px}
+.field label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#7a8aab;font-weight:700;display:block;margin-bottom:4px}
+.field .line{border-bottom:2px solid #0D1B3E;height:28px}
+
+.back-offer{background:#0D1B3E;color:#fff;text-align:center;padding:14px 24px;border-radius:10px;position:relative;z-index:2}
+.back-offer strong{color:#E8962B}
+.back-offer{font-size:14px}
+
+.back-footer{text-align:center;font-size:11px;color:#7a8aab;position:relative;z-index:2;margin-top:8px}
+</style>
+</head>
+<body>
+
+<!-- ══ FRONT ══ -->
+<div class="card front">
+  <div class="bar-top"></div>
+  <div class="bar-bot"></div>
+  <div class="ring"></div>
+  <div class="ring2"></div>
+
+  <div class="front-left">
+    <div class="logo">Dream <span>Academy</span></div>
+    <div class="tagline">Adult High School Diploma Program</div>
+    <div class="divider"></div>
+    <div class="info">
+      <strong>📞</strong> (804) 228-8200<br>
+      <strong>📍</strong> 2505 Chamberlin Ave<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Richmond, VA 23222
+    </div>
+  </div>
+
+  <div class="front-right">
+    <div class="hours-label">Hours</div>
+    <div class="hours">Monday – Friday<br>9:00 AM – 4:00 PM</div>
+    <div class="website">dreamacademyrichmond.com</div>
+    <div class="stat">
+      <div class="num">500+</div>
+      <div class="label">Graduates</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BACK ══ -->
+<div class="card back">
+  <div class="bar-top"></div>
+  <div class="bar-bot"></div>
+  <div class="ring"></div>
+
+  <div class="back-header">
+    <span class="eyebrow">Referral Program</span>
+    <h2>Refer a Friend</h2>
+    <p>Share the gift of education — and earn a reward.</p>
+  </div>
+
+  <div class="back-form">
+    <div class="field">
+      <label>Your Name (Referrer)</label>
+      <div class="line"></div>
+    </div>
+    <div class="field">
+      <label>Friend's Name (Referred)</label>
+      <div class="line"></div>
+    </div>
+  </div>
+
+  <div class="back-offer">
+    Earn a <strong>$50 tuition credit</strong> for every referral who enrolls!
+  </div>
+
+  <div class="back-footer">
+    Present this card at enrollment &nbsp;|&nbsp; Dream Academy Inc. &nbsp;|&nbsp; (804) 228-8200
+  </div>
+</div>
+
+</body>
+</html>

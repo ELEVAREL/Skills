@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dream Academy Inc — Adult High School Diploma Program | Richmond VA</title>
+<style>
+/* ── RESET & BASE ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Nunito Sans',Helvetica,Arial,sans-serif;color:#0D1B3E;background:#FDF6EC;line-height:1.6}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+h1,h2,h3,h4{font-family:'Playfair Display',Georgia,'Times New Roman',serif;line-height:1.2}
+
+/* ── ACCENT BARS ── */
+body::before,body::after{content:'';display:block;height:6px;background:#E8962B;width:100%}
+body::before{position:fixed;top:0;z-index:9999}
+body::after{position:relative}
+
+/* ── UTILITY ── */
+.container{max-width:1140px;margin:0 auto;padding:0 24px}
+.eyebrow{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:2px solid #E8962B;border-radius:30px;padding:6px 18px;color:#E8962B;margin-bottom:16px}
+.section-title{font-size:2.2rem;margin-bottom:12px}
+.section-sub{font-size:1.05rem;color:#3a4a6b;max-width:600px;margin-bottom:40px}
+.btn-amber{display:inline-block;background:#E8962B;color:#fff;font-weight:700;font-size:1rem;padding:14px 36px;border-radius:8px;border:none;cursor:pointer;transition:background .2s,transform .15s}
+.btn-amber:hover{background:#cf7e1e;transform:translateY(-2px)}
+.btn-outline{display:inline-block;border:2px solid #E8962B;color:#E8962B;font-weight:700;font-size:1rem;padding:12px 32px;border-radius:8px;transition:background .2s}
+.btn-outline:hover{background:#E8962B;color:#fff}
+
+/* ── FADE-UP ANIMATION ── */
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.fade-up.visible{opacity:1;transform:none}
+
+/* ── 1. STICKY NAV ── */
+.nav{position:fixed;top:6px;left:0;right:0;z-index:999;background:rgba(13,27,62,.97);backdrop-filter:blur(8px);padding:0 24px}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;color:#fff;font-weight:700}
+.nav-logo span{color:#E8962B}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:#fff;font-size:.9rem;font-weight:600;transition:color .2s}
+.nav-links a:hover{color:#E8962B}
+.nav-cta{background:#E8962B;color:#fff;font-weight:700;font-size:.85rem;padding:10px 24px;border-radius:6px;border:none;cursor:pointer}
+.nav-cta:hover{background:#cf7e1e}
+.mobile-toggle{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer}
+
+/* ── 2. HERO ── */
+.hero{padding:120px 0 80px;background:linear-gradient(135deg,#0D1B3E 0%,#162d5a 100%);color:#fff;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:-80px;top:50%;transform:translateY(-50%);width:420px;height:420px;border:3px solid rgba(232,150,43,.25);border-radius:50%;pointer-events:none}
+.hero::before{content:'';position:absolute;right:-40px;top:50%;transform:translateY(-50%);width:340px;height:340px;border:2px solid rgba(232,150,43,.15);border-radius:50%;pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-content .eyebrow{color:#E8962B;border-color:rgba(232,150,43,.5)}
+.hero h1{font-size:3rem;margin-bottom:20px;line-height:1.15}
+.hero h1 span{color:#E8962B}
+.hero p{font-size:1.15rem;color:rgba(255,255,255,.8);margin-bottom:32px;max-width:480px}
+.hero-buttons{display:flex;gap:16px;flex-wrap:wrap}
+.hero-visual{display:flex;flex-direction:column;gap:20px}
+.hero-card{background:rgba(255,255,255,.08);border:1px solid rgba(232,150,43,.3);border-radius:16px;padding:28px;backdrop-filter:blur(4px)}
+.hero-card h3{font-size:1.1rem;margin-bottom:8px}
+.hero-card p{font-size:.95rem;color:rgba(255,255,255,.7);margin:0}
+.hero-card .stat{font-size:2.4rem;font-weight:700;color:#E8962B;font-family:'Playfair Display',Georgia,serif}
+
+/* ── 3. STAT BAR ── */
+.stat-bar{background:#E8962B;padding:28px 0}
+.stat-bar .container{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+.stat-item .num{font-family:'Playfair Display',Georgia,serif;font-size:2.2rem;font-weight:700;color:#fff}
+.stat-item .label{font-size:.85rem;color:rgba(255,255,255,.85);margin-top:4px}
+
+/* ── 4. HOW IT WORKS (4-step) ── */
+.how-it-works{padding:80px 0;text-align:center}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:20px}
+.step-card{background:#fff;border:2px solid #E8962B;border-radius:16px;padding:36px 24px;position:relative;transition:transform .2s}
+.step-card:hover{transform:translateY(-4px)}
+.step-num{position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:#E8962B;color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem}
+.step-icon{font-size:2.4rem;margin-bottom:16px;margin-top:8px}
+.step-card h3{font-size:1.1rem;margin-bottom:8px}
+.step-card p{font-size:.9rem;color:#3a4a6b}
+
+/* ── 5. PROGRAMS GRID + COMPARISON ── */
+.programs{padding:80px 0;background:#0D1B3E;color:#fff}
+.programs .eyebrow{border-color:rgba(232,150,43,.5)}
+.programs .section-sub{color:rgba(255,255,255,.7)}
+.programs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:60px}
+.program-card{background:rgba(255,255,255,.06);border:2px solid rgba(232,150,43,.35);border-radius:16px;padding:32px 24px;transition:border-color .2s,transform .2s}
+.program-card:hover{border-color:#E8962B;transform:translateY(-4px)}
+.program-card .icon{font-size:2rem;margin-bottom:16px}
+.program-card h3{font-size:1.15rem;margin-bottom:8px}
+.program-card p{font-size:.9rem;color:rgba(255,255,255,.65)}
+
+.comparison-table{width:100%;border-collapse:collapse;margin-top:20px;border-radius:12px;overflow:hidden}
+.comparison-table th{background:#E8962B;color:#fff;padding:14px 20px;text-align:left;font-size:.9rem;font-weight:700}
+.comparison-table td{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1);font-size:.9rem}
+.comparison-table tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+.comparison-table .check{color:#1E7A4F;font-weight:700;font-size:1.1rem}
+.comparison-table .x{color:#c0392b;font-weight:700;font-size:1.1rem}
+
+/* ── 6. TESTIMONIALS ── */
+.testimonials{padding:80px 0;text-align:center}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:20px}
+.testimonial-card{background:#fff;border-radius:16px;padding:32px 24px;box-shadow:0 4px 24px rgba(13,27,62,.06);border-top:4px solid #E8962B;text-align:left}
+.testimonial-card .quote{font-size:1rem;color:#3a4a6b;font-style:italic;margin-bottom:20px;line-height:1.7}
+.testimonial-card .author{font-weight:700;font-size:.95rem}
+.testimonial-card .role{font-size:.8rem;color:#7a8aab}
+.stars{color:#E8962B;font-size:1rem;margin-bottom:12px}
+
+/* ── 7. MISSION / ABOUT ── */
+.mission{padding:80px 0;background:linear-gradient(135deg,#0D1B3E,#1a3567);color:#fff;position:relative;overflow:hidden}
+.mission::after{content:'';position:absolute;left:-60px;bottom:-60px;width:300px;height:300px;border:2px solid rgba(232,150,43,.15);border-radius:50%}
+.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.mission h2{font-size:2.2rem;margin-bottom:20px}
+.mission p{color:rgba(255,255,255,.8);margin-bottom:16px;font-size:1.05rem}
+.mission-values{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+.value-item{background:rgba(255,255,255,.06);border:1px solid rgba(232,150,43,.25);border-radius:12px;padding:20px;text-align:center}
+.value-item .v-icon{font-size:1.8rem;margin-bottom:8px}
+.value-item h4{font-size:.95rem;margin-bottom:4px}
+.value-item p{font-size:.8rem;color:rgba(255,255,255,.6);margin:0}
+
+/* ── 8. FAQ ── */
+.faq{padding:80px 0;text-align:center}
+.faq-list{max-width:720px;margin:0 auto;text-align:left}
+.faq-item{border-bottom:1px solid #e0d8cc;padding:20px 0}
+.faq-item summary{font-weight:700;font-size:1.05rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.faq-item summary::after{content:'+';font-size:1.4rem;color:#E8962B;font-weight:700;transition:transform .2s}
+.faq-item[open] summary::after{content:'−'}
+.faq-item p{margin-top:12px;color:#3a4a6b;font-size:.95rem;line-height:1.7}
+
+/* ── 9. CTA BANNER ── */
+.cta-banner{background:#E8962B;padding:60px 0;text-align:center;color:#fff}
+.cta-banner h2{font-size:2.2rem;margin-bottom:12px}
+.cta-banner p{font-size:1.1rem;margin-bottom:28px;opacity:.9}
+.cta-banner .btn-white{background:#fff;color:#0D1B3E;font-weight:700;padding:16px 40px;border-radius:8px;font-size:1.05rem;border:none;cursor:pointer;transition:transform .15s}
+.cta-banner .btn-white:hover{transform:translateY(-2px)}
+
+/* ── FOOTER ── */
+.footer{background:#0D1B3E;color:rgba(255,255,255,.7);padding:48px 0 24px;font-size:.85rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:32px}
+.footer h4{color:#fff;font-family:'Playfair Display',Georgia,serif;margin-bottom:16px;font-size:1rem}
+.footer-brand p{margin-bottom:12px}
+.footer ul{list-style:none}
+.footer li{margin-bottom:8px}
+.footer a:hover{color:#E8962B}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;text-align:center;font-size:.8rem}
+
+/* ── RESPONSIVE: 900px ── */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;text-align:center}
+  .hero h1{font-size:2.2rem}
+  .hero p{margin-left:auto;margin-right:auto}
+  .hero-buttons{justify-content:center}
+  .hero-visual{display:none}
+  .stat-bar .container{grid-template-columns:repeat(2,1fr)}
+  .steps-grid{grid-template-columns:repeat(2,1fr)}
+  .programs-grid{grid-template-columns:1fr}
+  .testimonials-grid{grid-template-columns:1fr}
+  .mission-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+}
+/* ── RESPONSIVE: 480px ── */
+@media(max-width:480px){
+  .hero{padding:100px 0 50px}
+  .hero h1{font-size:1.7rem}
+  .section-title{font-size:1.6rem}
+  .stat-bar .container{grid-template-columns:1fr 1fr}
+  .steps-grid{grid-template-columns:1fr}
+  .comparison-table{font-size:.8rem}
+  .comparison-table th,.comparison-table td{padding:10px 12px}
+  .footer-grid{grid-template-columns:1fr}
+  .mobile-toggle{display:block}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ 1. STICKY NAV ═══════════ -->
+<nav class="nav">
+  <div class="container">
+    <a href="#" class="nav-logo">Dream <span>Academy</span></a>
+    <ul class="nav-links">
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#testimonials">Success Stories</a></li>
+      <li><a href="#mission">About</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="tel:8042288200" class="nav-cta">Call (804) 228-8200</a>
+    <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- ═══════════ 2. HERO ═══════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content fade-up">
+        <span class="eyebrow">Adult High School Diploma</span>
+        <h1>Your Diploma.<br><span>Your Timeline.</span><br>Your Future.</h1>
+        <p>Dream Academy helps adults in Richmond earn an accredited high school diploma — on a schedule that fits your life. Flexible classes, real support, zero judgment.</p>
+        <div class="hero-buttons">
+          <a href="tel:8042288200" class="btn-amber">Enroll Now — Call Today</a>
+          <a href="#programs" class="btn-outline" style="color:#fff;border-color:rgba(255,255,255,.4)">View Programs ↓</a>
+        </div>
+      </div>
+      <div class="hero-visual fade-up">
+        <div class="hero-card">
+          <div class="stat">500+</div>
+          <h3>Graduates &amp; Counting</h3>
+          <p>Adults who earned their diploma and changed their trajectory</p>
+        </div>
+        <div class="hero-card">
+          <div class="stat">93%</div>
+          <h3>Completion Rate</h3>
+          <p>Students who start our program finish — because we don't let you quit</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3. STAT BAR ═══════════ -->
+<section class="stat-bar">
+  <div class="container">
+    <div class="stat-item fade-up">
+      <div class="num">500+</div>
+      <div class="label">Graduates</div>
+    </div>
+    <div class="stat-item fade-up">
+      <div class="num">93%</div>
+      <div class="label">Completion Rate</div>
+    </div>
+    <div class="stat-item fade-up">
+      <div class="num">12</div>
+      <div class="label">Months Avg.</div>
+    </div>
+    <div class="stat-item fade-up">
+      <div class="num">100%</div>
+      <div class="label">Flexible Schedule</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4. HOW IT WORKS ═══════════ -->
+<section class="how-it-works" id="how-it-works">
+  <div class="container">
+    <span class="eyebrow">How It Works</span>
+    <h2 class="section-title fade-up">Four Steps to Your Diploma</h2>
+    <p class="section-sub fade-up" style="margin-left:auto;margin-right:auto">No red tape. No waiting lists. Just a clear path forward.</p>
+    <div class="steps-grid">
+      <div class="step-card fade-up">
+        <div class="step-num">1</div>
+        <div class="step-icon">📞</div>
+        <h3>Call or Visit</h3>
+        <p>Reach us at (804) 228-8200 or stop by our campus on Chamberlin Ave.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">2</div>
+        <div class="step-icon">📋</div>
+        <h3>Get Assessed</h3>
+        <p>We review your transcripts and credits to build a personalized graduation plan.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">3</div>
+        <div class="step-icon">📚</div>
+        <h3>Start Classes</h3>
+        <p>Flexible morning and afternoon sessions. Work at your own pace with real instructors.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">4</div>
+        <div class="step-icon">🎓</div>
+        <h3>Graduate</h3>
+        <p>Walk across the stage with a real, accredited high school diploma in hand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 5. PROGRAMS + COMPARISON ═══════════ -->
+<section class="programs" id="programs">
+  <div class="container">
+    <span class="eyebrow">Our Programs</span>
+    <h2 class="section-title fade-up">Pathways Built for Adult Learners</h2>
+    <p class="section-sub fade-up">Every program is designed around your life — not the other way around.</p>
+    <div class="programs-grid">
+      <div class="program-card fade-up">
+        <div class="icon">📖</div>
+        <h3>Core Diploma Track</h3>
+        <p>Complete your remaining credits in English, Math, Science, and Social Studies with flexible scheduling.</p>
+      </div>
+      <div class="program-card fade-up">
+        <div class="icon">💼</div>
+        <h3>Career-Ready Electives</h3>
+        <p>Add job-ready skills like business fundamentals, digital literacy, and workplace communication.</p>
+      </div>
+      <div class="program-card fade-up">
+        <div class="icon">🌐</div>
+        <h3>Hybrid Learning</h3>
+        <p>Mix in-person and online coursework. Ideal for working adults who need maximum flexibility.</p>
+      </div>
+    </div>
+
+    <h3 class="fade-up" style="margin-bottom:20px;font-size:1.3rem">Dream Academy vs. GED vs. Online Diploma Mills</h3>
+    <table class="comparison-table fade-up">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Dream Academy</th>
+          <th>GED Program</th>
+          <th>Online Diploma Mills</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Accredited diploma</td>
+          <td class="check">✓</td>
+          <td>Certificate only</td>
+          <td class="x">✗ Often unaccredited</td>
+        </tr>
+        <tr>
+          <td>In-person instructors</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="x">✗</td>
+        </tr>
+        <tr>
+          <td>Flexible scheduling</td>
+          <td class="check">✓</td>
+          <td>Limited</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Employer recognition</td>
+          <td class="check">✓ Full diploma</td>
+          <td>Varies</td>
+          <td class="x">✗ Low trust</td>
+        </tr>
+        <tr>
+          <td>Personalized credit plan</td>
+          <td class="check">✓</td>
+          <td class="x">✗</td>
+          <td class="x">✗</td>
+        </tr>
+        <tr>
+          <td>Career-ready electives</td>
+          <td class="check">✓</td>
+          <td class="x">✗</td>
+          <td>Limited</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ 6. TESTIMONIALS ═══════════ -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <span class="eyebrow">Success Stories</span>
+    <h2 class="section-title fade-up">Real People. Real Diplomas.</h2>
+    <p class="section-sub fade-up" style="margin-left:auto;margin-right:auto">Hear from graduates who walked the same path you're about to start.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"I dropped out at 16 and spent years thinking it was too late. Dream Academy showed me it wasn't. I graduated at 34 and now I'm in community college."</p>
+        <div class="author">Marcus T.</div>
+        <div class="role">Class of 2024</div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"The teachers actually care. They worked around my job schedule and helped me catch up on credits I missed 20 years ago. Best decision I ever made."</p>
+        <div class="author">Denise R.</div>
+        <div class="role">Class of 2023</div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"My kids saw me walk across that stage. That moment changed everything for my family. Dream Academy gave me that."</p>
+        <div class="author">James W.</div>
+        <div class="role">Class of 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 7. MISSION / ABOUT ═══════════ -->
+<section class="mission" id="mission">
+  <div class="container">
+    <div class="mission-grid">
+      <div class="fade-up">
+        <span class="eyebrow" style="border-color:rgba(232,150,43,.5)">Our Mission</span>
+        <h2>Education Has No Expiration Date</h2>
+        <p>Dream Academy Inc. was founded on a simple belief: every adult deserves the chance to finish what they started. We meet students where they are — with flexible schedules, real instructors, and zero judgment.</p>
+        <p>Located at <strong>2505 Chamberlin Ave, Richmond VA 23222</strong>, we've helped hundreds of adults earn their accredited high school diploma and unlock new career paths.</p>
+      </div>
+      <div class="mission-values fade-up">
+        <div class="value-item">
+          <div class="v-icon">🎯</div>
+          <h4>Personalized</h4>
+          <p>Custom credit plans for each student</p>
+        </div>
+        <div class="value-item">
+          <div class="v-icon">🤝</div>
+          <h4>Supportive</h4>
+          <p>Mentors who won't let you give up</p>
+        </div>
+        <div class="value-item">
+          <div class="v-icon">⏰</div>
+          <h4>Flexible</h4>
+          <p>Classes around your work schedule</p>
+        </div>
+        <div class="value-item">
+          <div class="v-icon">✅</div>
+          <h4>Accredited</h4>
+          <p>Real diploma, real recognition</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 8. FAQ ═══════════ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <span class="eyebrow">FAQ</span>
+    <h2 class="section-title fade-up">Common Questions</h2>
+    <p class="section-sub fade-up" style="margin-left:auto;margin-right:auto">Everything you need to know before you enroll.</p>
+    <div class="faq-list">
+      <details class="faq-item fade-up">
+        <summary>How long does it take to get my diploma?</summary>
+        <p>Most students complete the program in 6–18 months, depending on how many credits you already have. We'll assess your transcripts and give you a clear timeline during your first visit.</p>
+      </details>
+      <details class="faq-item fade-up">
+        <summary>Is this a GED? What's the difference?</summary>
+        <p>No — Dream Academy awards an actual accredited high school diploma, not a GED certificate. A diploma is more widely recognized by employers and colleges.</p>
+      </details>
+      <details class="faq-item fade-up">
+        <summary>What are the class hours?</summary>
+        <p>We offer morning and afternoon sessions, Monday through Friday, 9 AM – 4 PM. We work with your schedule to find the best fit.</p>
+      </details>
+      <details class="faq-item fade-up">
+        <summary>How much does it cost?</summary>
+        <p>Contact us at (804) 228-8200 for current tuition information. We work to make education accessible and can discuss options during your assessment.</p>
+      </details>
+      <details class="faq-item fade-up">
+        <summary>Do I need my old transcripts?</summary>
+        <p>They help, but they're not required to get started. We can often retrieve your records or assess your level through placement testing.</p>
+      </details>
+      <details class="faq-item fade-up">
+        <summary>Can I attend if I have a job?</summary>
+        <p>Absolutely. Many of our students work full-time. We offer flexible scheduling and hybrid options to fit around your work life.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 9. CTA BANNER ═══════════ -->
+<section class="cta-banner">
+  <div class="container fade-up">
+    <h2>Ready to Finish What You Started?</h2>
+    <p>Your diploma is closer than you think. Call us today or stop by our campus.</p>
+    <a href="tel:8042288200" class="btn-white">Call (804) 228-8200</a>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Dream Academy Inc.</h4>
+        <p>Adult high school diploma program helping Richmond adults earn their diploma on their own schedule.</p>
+        <p>2505 Chamberlin Ave<br>Richmond, VA 23222</p>
+      </div>
+      <div>
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="#programs">Core Diploma</a></li>
+          <li><a href="#programs">Career Electives</a></li>
+          <li><a href="#programs">Hybrid Learning</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#testimonials">Success Stories</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#mission">About Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:8042288200">📞 (804) 228-8200</a></li>
+          <li>Mon–Fri 9am–4pm</li>
+          <li><a href="https://dreamacademyrichmond.com">🌐 Website</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Dream Academy Inc. All rights reserved. | 2505 Chamberlin Ave, Richmond VA 23222
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
+<script>
+// Intersection Observer for fade-up
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

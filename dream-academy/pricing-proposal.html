@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dream Academy — Website Redesign Pricing Proposal</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px}
+body{font-family:Helvetica,Arial,sans-serif;color:#0D1B3E;background:#FDF6EC;line-height:1.6;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+h1,h2,h3,h4{font-family:Georgia,'Times New Roman',serif;line-height:1.2}
+.page{max-width:8.5in;margin:0 auto;padding:0.6in 0.7in;position:relative}
+.page::before,.page::after{content:'';display:block;height:6px;background:#E8962B;position:absolute;left:0;right:0}
+.page::before{top:0}
+.page::after{bottom:0}
+.break{page-break-after:always}
+.eyebrow{display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:2px solid #E8962B;border-radius:30px;padding:5px 16px;color:#E8962B;margin-bottom:12px}
+.amber{color:#E8962B}
+.green{color:#1E7A4F}
+
+/* ── COVER ── */
+.cover{min-height:100vh;background:#0D1B3E;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border:3px solid rgba(232,150,43,.15);border-radius:50%}
+.cover::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:380px;height:380px;border:2px solid rgba(232,150,43,.1);border-radius:50%}
+.cover .bar-top,.cover .bar-bot{position:absolute;left:0;right:0;height:6px;background:#E8962B}
+.cover .bar-top{top:0}
+.cover .bar-bot{bottom:0}
+.cover h1{font-size:2.8rem;margin-bottom:12px;position:relative;z-index:1}
+.cover h1 span{color:#E8962B}
+.cover .sub{font-size:1.1rem;opacity:.75;margin-bottom:32px;position:relative;z-index:1}
+.cover .meta{font-size:.85rem;opacity:.5;position:relative;z-index:1}
+.cover .logo{font-family:Georgia,'Times New Roman',serif;font-size:1.8rem;font-weight:700;margin-bottom:40px;position:relative;z-index:1}
+.cover .logo span{color:#E8962B}
+
+/* ── SECTION HEADERS ── */
+.sh{font-size:1.8rem;margin-bottom:8px}
+.sh-sub{font-size:.95rem;color:#5a6a8b;margin-bottom:32px}
+
+/* ── PRICING CARDS ── */
+.tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:32px 0}
+.tier{background:#fff;border:2px solid #ddd;border-radius:16px;padding:32px 24px;text-align:center;position:relative;transition:transform .2s}
+.tier.featured{border-color:#E8962B;transform:scale(1.04);box-shadow:0 8px 32px rgba(232,150,43,.15)}
+.tier .badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#E8962B;color:#fff;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 18px;border-radius:20px}
+.tier h3{font-size:1.2rem;margin-bottom:4px;margin-top:8px}
+.tier .price{font-family:Georgia,'Times New Roman',serif;font-size:2.8rem;font-weight:700;color:#0D1B3E;margin:12px 0 4px}
+.tier .price span{font-size:1rem;font-weight:400;color:#7a8aab}
+.tier .best-for{font-size:.8rem;color:#7a8aab;font-style:italic;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #eee}
+.tier ul{list-style:none;text-align:left;margin-bottom:24px}
+.tier li{padding:8px 0;font-size:.85rem;border-bottom:1px solid #f5f0e8}
+.tier li::before{content:'✓';color:#1E7A4F;font-weight:700;margin-right:10px}
+.tier .cta{display:inline-block;padding:12px 28px;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;text-decoration:none}
+.tier .cta-amber{background:#E8962B;color:#fff}
+.tier .cta-outline{border:2px solid #E8962B;color:#E8962B;background:none}
+
+/* ── VALUE COMPARISON ── */
+.compare-box{background:#0D1B3E;color:#fff;border-radius:16px;padding:36px;margin:32px 0;display:grid;grid-template-columns:1fr auto 1fr;gap:32px;align-items:center;text-align:center}
+.compare-box .vs{font-family:Georgia,'Times New Roman',serif;font-size:1.4rem;color:#E8962B;font-weight:700}
+.compare-box .comp-price{font-family:Georgia,'Times New Roman',serif;font-size:2.2rem;font-weight:700}
+.compare-box .comp-label{font-size:.85rem;opacity:.7;margin-top:4px}
+.compare-box .savings{background:#1E7A4F;color:#fff;display:inline-block;padding:8px 20px;border-radius:8px;font-weight:700;font-size:.9rem;margin-top:12px}
+
+/* ── DELIVERABLES ── */
+.del-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}
+.del-item{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fff;border-radius:10px;border:1px solid #e8dfd0;font-size:.88rem}
+.del-item .check{color:#1E7A4F;font-weight:700;font-size:1.1rem;flex-shrink:0}
+
+/* ── TIMELINE ── */
+.timeline{margin:24px 0}
+.tl-row{display:grid;grid-template-columns:140px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid #e8dfd0;align-items:center}
+.tl-row:last-child{border-bottom:none}
+.tl-label{font-weight:700;font-size:.9rem}
+.tl-bar{background:#0D1B3E;height:8px;border-radius:4px;position:relative}
+.tl-bar span{position:absolute;right:0;top:-20px;font-size:.75rem;color:#7a8aab}
+
+/* ── TERMS ── */
+.terms-list{list-style:none;counter-reset:term}
+.terms-list li{counter-increment:term;padding:10px 0;border-bottom:1px solid #e8dfd0;font-size:.88rem;padding-left:28px;position:relative}
+.terms-list li::before{content:counter(term)'.';position:absolute;left:0;font-weight:700;color:#E8962B}
+
+/* ── SIGNATURE ── */
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin:40px 0}
+.sig-block{border-top:2px solid #0D1B3E;padding-top:12px}
+.sig-block .label{font-size:.75rem;color:#7a8aab;text-transform:uppercase;letter-spacing:1px}
+.sig-block .line{border-bottom:1px solid #ccc;height:40px;margin:16px 0 8px}
+
+/* ── CTA FOOTER ── */
+.cta-foot{background:#E8962B;color:#fff;text-align:center;padding:32px;border-radius:16px;margin-top:32px}
+.cta-foot h3{font-size:1.4rem;margin-bottom:8px}
+.cta-foot p{opacity:.9;font-size:.95rem}
+
+/* ── PRINT ── */
+@media print{
+  .page{padding:0.4in 0.5in}
+  .break{page-break-after:always}
+  .tier.featured{transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ COVER ═══ -->
+<div class="cover break">
+  <div class="bar-top"></div>
+  <div class="logo">Dream <span>Academy</span></div>
+  <h1>Website Redesign <span>Proposal</span></h1>
+  <p class="sub">A complete digital transformation package — custom-designed for Dream Academy Inc.</p>
+  <p class="meta">Prepared by Elevarel &nbsp;|&nbsp; April 2025</p>
+  <div class="bar-bot"></div>
+</div>
+
+<!-- ═══ PACKAGE OVERVIEW ═══ -->
+<div class="page break">
+  <span class="eyebrow">Overview</span>
+  <h2 class="sh">What This Proposal Includes</h2>
+  <p class="sh-sub">A transparent, one-time investment that replaces your outdated website with a professional, conversion-focused digital presence.</p>
+
+  <p style="margin-bottom:16px;font-size:.95rem">Dream Academy's current website scored <strong>31 out of 100</strong> in our comprehensive audit. Critical navigation errors, missing brand identity, and zero conversion optimization are actively costing you potential enrollments.</p>
+  <p style="margin-bottom:32px;font-size:.95rem">This proposal offers three flexible packages — from a focused audit to a complete digital overhaul — so you can choose the level of transformation that fits your budget and goals.</p>
+
+  <!-- PRICING CARDS -->
+  <div class="tier-grid">
+    <div class="tier">
+      <h3>Starter</h3>
+      <div class="price">$299</div>
+      <div class="best-for">"I want to know what's broken"</div>
+      <ul>
+        <li>Full audit report with findings</li>
+        <li>Brand color palette</li>
+        <li>Homepage wireframe mockup</li>
+        <li>Competitor analysis</li>
+        <li>SEO recommendations list</li>
+      </ul>
+      <a class="cta cta-outline">Get Started</a>
+    </div>
+    <div class="tier featured">
+      <div class="badge">Most Popular</div>
+      <h3>Complete</h3>
+      <div class="price">$1,200</div>
+      <div class="best-for">"I want a professional website"</div>
+      <ul>
+        <li>Everything in Starter</li>
+        <li>Full custom homepage redesign</li>
+        <li>Mobile-responsive (3 breakpoints)</li>
+        <li>Social media graphics (4 assets)</li>
+        <li>Brand style guide</li>
+        <li>12-slide pitch deck</li>
+        <li>SEO optimization</li>
+        <li>30-day post-launch support</li>
+      </ul>
+      <a class="cta cta-amber">Choose Complete</a>
+    </div>
+    <div class="tier">
+      <h3>Retainer</h3>
+      <div class="price">$350<span>/mo</span></div>
+      <div class="best-for">"I want ongoing growth"</div>
+      <ul>
+        <li>Everything in Complete (one-time)</li>
+        <li>Monthly content updates</li>
+        <li>1 social media graphic/month</li>
+        <li>Performance monitoring</li>
+        <li>Priority support</li>
+        <li>Quarterly analytics report</li>
+      </ul>
+      <a class="cta cta-outline">Start Retainer</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VALUE COMPARISON ═══ -->
+<div class="page break">
+  <span class="eyebrow">Value</span>
+  <h2 class="sh">Why This Is a Smart Investment</h2>
+  <p class="sh-sub">Compare our pricing to what you'd pay elsewhere — or what you're already paying.</p>
+
+  <div class="compare-box">
+    <div>
+      <div style="font-size:.85rem;opacity:.7;margin-bottom:8px">Competitor Pricing</div>
+      <div class="comp-price" style="color:#c0392b">$400<span style="font-size:1rem;opacity:.6">/mo</span></div>
+      <div class="comp-label">= $4,800 per year<br>+ setup fee</div>
+    </div>
+    <div class="vs">VS</div>
+    <div>
+      <div style="font-size:.85rem;opacity:.7;margin-bottom:8px">Our Complete Package</div>
+      <div class="comp-price" style="color:#1E7A4F">$1,200</div>
+      <div class="comp-label">One-time investment<br>No setup fee</div>
+      <div class="savings">Save $3,600+ in Year 1</div>
+    </div>
+  </div>
+
+  <h3 style="font-size:1.2rem;margin:32px 0 12px">Estimated Market Value</h3>
+  <p style="font-size:.92rem;margin-bottom:24px">Based on industry pricing for comparable services, this package has an estimated market value of <strong>$2,400–$4,700</strong>. Our Complete package at $1,200 represents a 50–74% discount from market rates.</p>
+
+  <table style="width:100%;border-collapse:collapse;font-size:.85rem">
+    <thead>
+      <tr style="background:#0D1B3E;color:#fff">
+        <th style="padding:12px 16px;text-align:left;border-radius:8px 0 0 0">Deliverable</th>
+        <th style="padding:12px 16px;text-align:right">Market Rate</th>
+        <th style="padding:12px 16px;text-align:right;border-radius:0 8px 0 0">Our Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding:10px 16px;border-bottom:1px solid #e8dfd0">Website Audit Report</td><td style="padding:10px 16px;text-align:right;border-bottom:1px solid #e8dfd0">$300–$500</td><td style="padding:10px 16px;text-align:right;border-bottom:1px solid #e8dfd0;color:#1E7A4F;font-weight:700">Included</td></tr>
+      <tr style="background:#faf6ee"><td style="padding:10px 16px;border-bottom:1px solid #e8dfd0">Custom Homepage Design</td><td style="padding:10px 16px;text-align:right;border-bottom:1px solid #e8dfd0">$800–$1,500</td><td style="padding:10px 16px;text-align:right;border-bottom:1px solid #e8dfd0;color:#1E7A4F;font-weight:700">Included</td></tr>
+      <tr><td style="padding:10px 16px;border-bottom:1px solid #e8dfd0">Brand Style Guide</td><td style="padding:10px 16px;text-align:right;border-bottom:1px solid #e8dfd0">$200–$400</td><td style="padding:10px 16px;text-align:right;border-bottom:1px solid #e8dfd0;color:#1E7A4F;font-weight:700">Included</td></tr>
+      <tr style="background:#faf6ee"><td style="padding:10px 16px;border-bottom:1px solid #e8dfd0">Social Media Graphics (4)</td><td style="padding:10px 16px;text-align:right;border-bottom:1px solid #e8dfd0">$200–$400</td><td style="padding:10px 16px;text-align:right;border-bottom:1px solid #e8dfd0;color:#1E7A4F;font-weight:700">Included</td></tr>
+      <tr><td style="padding:10px 16px;border-bottom:1px solid #e8dfd0">Sales Pitch Deck</td><td style="padding:10px 16px;text-align:right;border-bottom:1px solid #e8dfd0">$300–$600</td><td style="padding:10px 16px;text-align:right;border-bottom:1px solid #e8dfd0;color:#1E7A4F;font-weight:700">Included</td></tr>
+      <tr style="background:#faf6ee"><td style="padding:10px 16px;border-bottom:1px solid #e8dfd0">SEO Optimization</td><td style="padding:10px 16px;text-align:right;border-bottom:1px solid #e8dfd0">$300–$800</td><td style="padding:10px 16px;text-align:right;border-bottom:1px solid #e8dfd0;color:#1E7A4F;font-weight:700">Included</td></tr>
+      <tr><td style="padding:10px 16px;font-weight:700">Total Market Value</td><td style="padding:10px 16px;text-align:right;font-weight:700">$2,400–$4,700</td><td style="padding:10px 16px;text-align:right;font-weight:700;color:#E8962B;font-size:1.1rem">$1,200</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══ DELIVERABLES ═══ -->
+<div class="page break">
+  <span class="eyebrow">Deliverables</span>
+  <h2 class="sh">What You Get</h2>
+  <p class="sh-sub">Everything included in the Complete package.</p>
+
+  <div class="del-grid">
+    <div class="del-item"><span class="check">✓</span> Full website audit report (31/100 score breakdown)</div>
+    <div class="del-item"><span class="check">✓</span> Custom homepage redesign (HTML/CSS)</div>
+    <div class="del-item"><span class="check">✓</span> Mobile responsive (desktop + tablet + mobile)</div>
+    <div class="del-item"><span class="check">✓</span> Brand style guide (colors, fonts, elements)</div>
+    <div class="del-item"><span class="check">✓</span> 12-slide sales pitch deck</div>
+    <div class="del-item"><span class="check">✓</span> Instagram Post graphic (1080×1080)</div>
+    <div class="del-item"><span class="check">✓</span> Instagram Story graphic (1080×1920)</div>
+    <div class="del-item"><span class="check">✓</span> Facebook Cover graphic (1920×1005)</div>
+    <div class="del-item"><span class="check">✓</span> Referral Card (front + back)</div>
+    <div class="del-item"><span class="check">✓</span> SEO optimization &amp; recommendations</div>
+    <div class="del-item"><span class="check">✓</span> Competitor analysis</div>
+    <div class="del-item"><span class="check">✓</span> 30-day post-launch support</div>
+  </div>
+
+  <h3 style="font-size:1.2rem;margin:36px 0 16px">Estimated Timeline</h3>
+  <div class="timeline">
+    <div class="tl-row">
+      <div class="tl-label">Starter</div>
+      <div>
+        <div class="tl-bar" style="width:25%;background:#E8962B"><span>3 days</span></div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-label">Complete</div>
+      <div>
+        <div class="tl-bar" style="width:65%;background:#0D1B3E"><span>7–10 days</span></div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-label">Retainer</div>
+      <div>
+        <div class="tl-bar" style="width:100%;background:linear-gradient(90deg,#0D1B3E,#E8962B)"><span>Ongoing monthly</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TERMS & SIGNATURE ═══ -->
+<div class="page">
+  <span class="eyebrow">Terms</span>
+  <h2 class="sh">Terms &amp; Conditions</h2>
+  <p class="sh-sub">Simple, transparent terms with no hidden fees.</p>
+
+  <ol class="terms-list">
+    <li><strong>Payment:</strong> Starter and Complete packages require 50% deposit to begin, with the remaining balance due upon delivery. Retainer is billed monthly, cancel anytime with 30 days notice.</li>
+    <li><strong>Revisions:</strong> The Complete package includes up to 3 rounds of revisions on the homepage design. Additional revisions billed at $75/hour.</li>
+    <li><strong>Timeline:</strong> Estimated timelines begin from receipt of deposit and any required brand assets/photos from the client.</li>
+    <li><strong>Ownership:</strong> Upon final payment, all deliverables become the property of Dream Academy Inc. Source files included.</li>
+    <li><strong>Hosting:</strong> This proposal covers design and development only. Hosting, domain registration, and ongoing server costs are the client's responsibility.</li>
+    <li><strong>Cancellation:</strong> If the project is cancelled after work has begun, completed work will be billed proportionally.</li>
+  </ol>
+
+  <h3 style="font-size:1.2rem;margin:40px 0 8px">Agreement</h3>
+  <p style="font-size:.88rem;color:#5a6a8b;margin-bottom:24px">By signing below, both parties agree to the terms outlined in this proposal.</p>
+
+  <div class="sig-grid">
+    <div class="sig-block">
+      <div class="line"></div>
+      <div class="label">Client — Dream Academy Inc.</div>
+      <div class="line" style="height:20px"></div>
+      <div class="label">Date</div>
+    </div>
+    <div class="sig-block">
+      <div class="line"></div>
+      <div class="label">Provider — Elevarel</div>
+      <div class="line" style="height:20px"></div>
+      <div class="label">Date</div>
+    </div>
+  </div>
+
+  <div class="cta-foot">
+    <h3>Ready to Get Started?</h3>
+    <p>Call (804) 228-8200 or contact Elevarel to select your package and begin.</p>
+  </div>
+</div>
+
+</body>
+</html>
