@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Nova — a personal AI that lives on your computer</title>
+  <meta name="description" content="Stop renting your AI. Nova is a self-hosted agent with personas, skills and persistent memory. Text it from your phone. Pay once." />
+  <meta name="theme-color" content="#0b0b0e" />
+
+  <meta property="og:title" content="Nova — pay once, own your AI" />
+  <meta property="og:description" content="A self-hosted agent you text from your phone. Personas, skills, memory. $149 once, not $708 a year." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Animated mesh + grain backdrop -->
+  <div class="mesh" aria-hidden="true">
+    <div class="mesh-blob mesh-1"></div>
+    <div class="mesh-blob mesh-2"></div>
+    <div class="mesh-blob mesh-3"></div>
+  </div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark">◆</span>
+        <span class="brand-word">Nova</span>
+        <span class="brand-ver">v0.3</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#why">Why</a>
+        <a href="#works">How</a>
+        <a href="#compare">vs OpenClaw</a>
+        <a href="#buy">Buy</a>
+        <a href="https://github.com/ELEVAREL/Skills" class="nav-cta">GitHub →</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="hero">
+      <div class="hero-grid">
+
+        <div class="hero-left">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Self-hosted · Pay once · No subscription
+          </div>
+
+          <h1 class="display">
+            A personal <em>AI</em><br>
+            that lives on <em>your</em><br>
+            computer.
+          </h1>
+
+          <p class="lede">
+            Nova is an agent platform you install in five minutes.
+            Personas, skills, persistent memory, and a local gateway
+            your phone can text. Your hardware, your API key, nobody
+            in the middle.
+          </p>
+
+          <div class="hero-ctas">
+            <a class="btn btn-fill" href="#buy">
+              <span>Buy Nova — $149 once</span>
+              <span class="btn-arrow">→</span>
+            </a>
+            <a class="btn btn-line" href="#works">
+              See how it works
+            </a>
+          </div>
+
+          <div class="hero-prooflets">
+            <div class="prooflet">
+              <span class="prooflet-num">5<span class="prooflet-unit">min</span></span>
+              <span class="prooflet-lbl">setup</span>
+            </div>
+            <div class="prooflet">
+              <span class="prooflet-num">$0<span class="prooflet-unit">/mo</span></span>
+              <span class="prooflet-lbl">recurring</span>
+            </div>
+            <div class="prooflet">
+              <span class="prooflet-num">4</span>
+              <span class="prooflet-lbl">personas</span>
+            </div>
+            <div class="prooflet">
+              <span class="prooflet-num">MIT</span>
+              <span class="prooflet-lbl">licensed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminal mockup -->
+        <div class="hero-right">
+          <div class="terminal">
+            <div class="term-bar">
+              <div class="term-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="term-title">nova — zsh</div>
+            </div>
+            <div class="term-body">
+              <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">pip install nova-agent</span></div>
+              <div class="term-line term-dim">Successfully installed nova-agent-0.3.0</div>
+              <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">nova onboard</span></div>
+              <div class="term-line">
+                <span class="term-brand">◆ Nova Onboarding</span>
+              </div>
+              <div class="term-line term-dim">① Anthropic API key &nbsp;<span class="term-ok">✓</span></div>
+              <div class="term-line term-dim">② Persona &nbsp;<span class="term-kw">dev-sentinel</span> &nbsp;<span class="term-ok">✓</span></div>
+              <div class="term-line term-dim">③ Gateway &nbsp;<span class="term-kw">127.0.0.1:7878</span> &nbsp;<span class="term-ok">✓</span></div>
+              <div class="term-line term-dim">④ Telegram bot &nbsp;<span class="term-kw">@your_nova_bot</span> &nbsp;<span class="term-ok">✓</span></div>
+              <div class="term-line term-dim">⑤ Cloudflare Tunnel</div>
+              <div class="term-line">&nbsp;&nbsp;&nbsp;<span class="term-url">https://cyan-otter-42.trycloudflare.com</span> <span class="term-ok">✓</span></div>
+              <div class="term-line term-dim">⑥ Webhook registered &nbsp;<span class="term-ok">✓</span></div>
+              <div class="term-line term-dim">⑦ Auto-start service &nbsp;<span class="term-ok">✓</span></div>
+              <div class="term-line">
+                <span class="term-success">◆ Nova is live. Text @your_nova_bot from your phone.</span>
+                <span class="term-caret">▊</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════ MANIFESTO ═══════════ -->
+    <section class="manifesto" id="why">
+      <div class="container">
+        <div class="kicker">The problem</div>
+        <h2 class="h-serif">
+          Every cloud AI assistant is renting you <em>your own</em><br>
+          second brain. That's backwards.
+        </h2>
+
+        <div class="manifesto-body">
+          <p>
+            OpenClaw Cloud is $59 a month. That's
+            <strong>$708 a year, forever</strong>, for an agent that
+            runs on <em>their</em> servers, uses <em>their</em> bundled
+            tokens, and stores <em>your</em> context in <em>their</em> database.
+          </p>
+          <p>
+            You already own a computer that's on 16 hours a day.
+            You already pay Anthropic per token. There is no technical
+            reason an agent platform needs to be a subscription — only
+            a business-model reason.
+          </p>
+          <p>
+            <strong>Nova moves every recurring cost off your P&amp;L.</strong>
+            Your machine runs the agent. Your API key pays for tokens
+            at cost. Your own Telegram bot is the channel. Cloudflare's
+            free tunnel makes it reachable from anywhere. You pay once
+            for the software and you keep it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FEATURE LIST ═══════════ -->
+    <section class="features" id="what">
+      <div class="container">
+        <div class="kicker">What's inside</div>
+        <h2 class="h-serif">Not a chatbot wrapper.<br><em>An agent platform.</em></h2>
+
+        <div class="feature-list">
+
+          <article class="feature">
+            <div class="feature-num">01</div>
+            <div class="feature-body">
+              <h3>Personas</h3>
+              <p>
+                Swap between specialist AIs without restarting. Ships with
+                <code>nova-default</code>, <code>dev-sentinel</code>,
+                <code>researcher</code>, and <code>automator</code>. Each has
+                its own system prompt, model, and skill set. Drop a SPIRIT.md
+                file into <code>~/.nova/personas/</code> to add your own.
+              </p>
+            </div>
+            <div class="feature-code">SPIRIT.md</div>
+          </article>
+
+          <article class="feature">
+            <div class="feature-num">02</div>
+            <div class="feature-body">
+              <h3>Skills</h3>
+              <p>
+                Plugin architecture with dynamic tool loading. A skill is a
+                folder with a manifest and a Python file exposing a tool
+                schema. Hot-reload with <code>nova skills reload</code>.
+                Built-in: git-helper, web-fetch, screenshot. Community: infinite.
+              </p>
+            </div>
+            <div class="feature-code">SKILL.md</div>
+          </article>
+
+          <article class="feature">
+            <div class="feature-num">03</div>
+            <div class="feature-body">
+              <h3>Persistent memory</h3>
+              <p>
+                SQLite with FTS5 full-text search lives in
+                <code>~/.nova/memory.db</code>. Typed entries — user, feedback,
+                project, reference, fact — auto-inject into every system
+                prompt so Nova remembers who you are across every conversation.
+              </p>
+            </div>
+            <div class="feature-code">memory.db</div>
+          </article>
+
+          <article class="feature">
+            <div class="feature-num">04</div>
+            <div class="feature-body">
+              <h3>Local gateway</h3>
+              <p>
+                Embedded HTTP control plane on port 7878 with bearer-token
+                auth. REST endpoints for chat, personas, skills, and memory.
+                Your own scripts, your phone, or any channel adapter can talk
+                to Nova over the wire.
+              </p>
+            </div>
+            <div class="feature-code">:7878</div>
+          </article>
+
+          <article class="feature">
+            <div class="feature-num">05</div>
+            <div class="feature-body">
+              <h3>Channels</h3>
+              <p>
+                Terminal. HTTP client. Telegram (webhook, production-ready).
+                Slack, Discord, WhatsApp-Web next. Channels are thin
+                transports — one core brain, reachable everywhere you
+                already chat.
+              </p>
+            </div>
+            <div class="feature-code">telegram</div>
+          </article>
+
+          <article class="feature">
+            <div class="feature-num">06</div>
+            <div class="feature-body">
+              <h3>Five-minute install</h3>
+              <p>
+                <code>nova onboard</code> walks you from zero to
+                "my phone can text my computer" in eight guided steps.
+                API key, bot creation, Cloudflare Tunnel, webhook, service
+                install, round-trip test. No manual config.
+              </p>
+            </div>
+            <div class="feature-code">nova onboard</div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ HOW IT WORKS (3 steps) ═══════════ -->
+    <section class="works" id="works">
+      <div class="container">
+        <div class="kicker">How it works</div>
+        <h2 class="h-serif">One command.<br>Five minutes.<br><em>Yours forever.</em></h2>
+
+        <div class="works-steps">
+
+          <div class="work-step">
+            <div class="work-step-num">01</div>
+            <h3>Install</h3>
+            <pre class="mono-block"><span class="mono-dim">$</span> pip install nova-agent</pre>
+            <p>Python 3.10+. No Node, no Docker, no Kubernetes, no cloud account.</p>
+          </div>
+
+          <div class="work-step">
+            <div class="work-step-num">02</div>
+            <h3>Onboard</h3>
+            <pre class="mono-block"><span class="mono-dim">$</span> nova onboard</pre>
+            <p>Prompts for your Anthropic key, walks you through @BotFather, installs <code>cloudflared</code>, registers the Telegram webhook, and starts Nova as a background service.</p>
+          </div>
+
+          <div class="work-step">
+            <div class="work-step-num">03</div>
+            <h3>Text it</h3>
+            <pre class="mono-block"><span class="mono-dim">&gt;</span> hey, what's on my disk?</pre>
+            <p>Your phone → Cloudflare Tunnel → local gateway → Nova → reply. Your hardware does the work, your API key pays for tokens, nobody else is in the loop.</p>
+          </div>
+
+        </div>
+
+        <!-- Phone mockup showing the actual result -->
+        <div class="phone-demo">
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="phone-header">
+                <div class="phone-avatar">◆</div>
+                <div class="phone-name">
+                  <div class="phone-title">@your_nova_bot</div>
+                  <div class="phone-status">online</div>
+                </div>
+              </div>
+              <div class="phone-messages">
+                <div class="msg msg-out">
+                  hey, what's eating my disk?
+                  <span class="msg-time">9:42</span>
+                </div>
+                <div class="msg msg-in">
+                  Scanning <code>~/</code>… top offenders:
+                </div>
+                <div class="msg msg-in">
+                  <span class="msg-mono">
+                    iCloud cache   &nbsp; 42 GB<br>
+                    Docker volumes &nbsp;18 GB<br>
+                    node_modules ×37&nbsp;9 GB<br>
+                    Downloads    &nbsp;&nbsp; 6 GB
+                  </span>
+                  <span class="msg-time">9:42</span>
+                </div>
+                <div class="msg msg-in">
+                  Want me to stage the Docker volumes for deletion?
+                  <span class="msg-time">9:42</span>
+                </div>
+                <div class="msg msg-out">
+                  yeah but dry-run first
+                  <span class="msg-time">9:43</span>
+                </div>
+                <div class="msg msg-in msg-typing">
+                  <span class="dot-wave"></span>
+                  <span class="dot-wave"></span>
+                  <span class="dot-wave"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-caption">
+            <div class="kicker">Real output</div>
+            <h3>Your computer, <em>on your phone</em>.</h3>
+            <p>
+              Same brain as the terminal. Same skills. Same persona.
+              Same memory. A thin Telegram adapter is all that sits
+              between Nova and your pocket.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════ COMPARE / RECEIPT ═══════════ -->
+    <section class="compare" id="compare">
+      <div class="container">
+        <div class="kicker">The math</div>
+        <h2 class="h-serif">OpenClaw's monthly fee<br>isn't for the software.<br><em>It's for the consumables.</em></h2>
+
+        <div class="compare-grid">
+
+          <!-- OpenClaw receipt -->
+          <div class="receipt receipt-them">
+            <div class="receipt-head">
+              <div class="receipt-title">OpenClaw Cloud</div>
+              <div class="receipt-sub">Their hosted tier</div>
+            </div>
+            <div class="receipt-lines">
+              <div class="r-line"><span>Server always on</span><span>bundled</span></div>
+              <div class="r-line"><span>Telegram / WhatsApp infra</span><span>bundled</span></div>
+              <div class="r-line"><span>LLM tokens (marked up)</span><span>bundled</span></div>
+              <div class="r-line"><span>Setup labor</span><span>bundled</span></div>
+              <div class="r-line"><span>Vendor lock-in</span><span>included</span></div>
+            </div>
+            <div class="receipt-total">
+              <div class="total-label">Monthly</div>
+              <div class="total-value">$59</div>
+            </div>
+            <div class="receipt-lifetime">
+              <span class="life-lbl">Over 3 years</span>
+              <span class="life-val">$2,124</span>
+            </div>
+          </div>
+
+          <!-- Nova receipt -->
+          <div class="receipt receipt-us">
+            <div class="receipt-head">
+              <div class="receipt-title">Nova Home</div>
+              <div class="receipt-sub">One-time buy</div>
+            </div>
+            <div class="receipt-lines">
+              <div class="r-line"><span>Server always on</span><span>your machine</span></div>
+              <div class="r-line"><span>Telegram bot</span><span>your bot</span></div>
+              <div class="r-line"><span>LLM tokens</span><span>at cost, your key</span></div>
+              <div class="r-line"><span>Setup labor</span><span>5 min wizard</span></div>
+              <div class="r-line"><span>Vendor lock-in</span><span>MIT licensed</span></div>
+            </div>
+            <div class="receipt-total">
+              <div class="total-label">Once</div>
+              <div class="total-value"><span class="total-currency">$</span>149</div>
+            </div>
+            <div class="receipt-lifetime">
+              <span class="life-lbl">Over 3 years</span>
+              <span class="life-val life-good">$149</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="savings">
+          <div class="savings-label">You keep</div>
+          <div class="savings-amount">$1,975</div>
+          <div class="savings-sub">every three years, versus their cheapest tier</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════ PRICING ═══════════ -->
+    <section class="pricing" id="buy">
+      <div class="container">
+        <div class="kicker">Pricing</div>
+        <h2 class="h-serif">Pay once. <em>Keep forever.</em></h2>
+        <p class="section-lede">
+          No seats. No telemetry. No renewal emails. Your Anthropic API costs
+          are paid directly to Anthropic — Nova takes nothing off the top.
+        </p>
+
+        <div class="plans">
+
+          <div class="plan">
+            <div class="plan-name">Spark</div>
+            <div class="plan-price">$49</div>
+            <div class="plan-tag">Terminal only</div>
+            <ul>
+              <li>Full REPL experience</li>
+              <li>4 built-in personas</li>
+              <li>All built-in skills</li>
+              <li>SQLite memory</li>
+              <li>Hub access</li>
+            </ul>
+            <a class="plan-btn" href="mailto:hello@elevare.studio?subject=Nova%20Spark">Get Spark →</a>
+          </div>
+
+          <div class="plan plan-hero">
+            <div class="plan-badge">Most popular</div>
+            <div class="plan-name">Home</div>
+            <div class="plan-price">$149</div>
+            <div class="plan-tag">Textable from your phone</div>
+            <ul>
+              <li><strong>Everything in Spark</strong></li>
+              <li><strong>HTTP gateway</strong></li>
+              <li><strong>Telegram channel</strong></li>
+              <li><strong>Cloudflare Tunnel auto-setup</strong></li>
+              <li><strong>Auto-start service</strong></li>
+              <li><code>nova onboard</code> wizard</li>
+              <li>12 months of updates</li>
+            </ul>
+            <a class="plan-btn plan-btn-fill" href="mailto:hello@elevare.studio?subject=Nova%20Home">Get Home — $149 →</a>
+            <div class="plan-foot">Breaks even vs OpenClaw in 2.5 months</div>
+          </div>
+
+          <div class="plan">
+            <div class="plan-name">Pro</div>
+            <div class="plan-price">$299</div>
+            <div class="plan-tag">Every channel</div>
+            <ul>
+              <li>Everything in Home</li>
+              <li>Discord + Slack</li>
+              <li>WhatsApp-Web bridge</li>
+              <li>Priority persona pack</li>
+              <li>Private hub</li>
+              <li>Email support</li>
+            </ul>
+            <a class="plan-btn" href="mailto:hello@elevare.studio?subject=Nova%20Pro">Get Pro →</a>
+          </div>
+
+          <div class="plan plan-life">
+            <div class="plan-name">Lifetime</div>
+            <div class="plan-price">$499</div>
+            <div class="plan-tag">Forever updates</div>
+            <ul>
+              <li>Everything in Pro</li>
+              <li><strong>Lifetime updates</strong></li>
+              <li>1h custom tuning</li>
+              <li>Private hub premium</li>
+              <li>Priority requests</li>
+            </ul>
+            <a class="plan-btn" href="mailto:hello@elevare.studio?subject=Nova%20Lifetime">Get Lifetime →</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FAQ ═══════════ -->
+    <section class="faq">
+      <div class="container">
+        <div class="kicker">Questions people ask</div>
+        <h2 class="h-serif">The fine print,<br><em>in plain English.</em></h2>
+
+        <div class="faq-list">
+          <details>
+            <summary>
+              <span>Why is Nova cheaper than OpenClaw?</span>
+              <span class="faq-plus">+</span>
+            </summary>
+            <p>
+              OpenClaw's monthly fee covers three consumables: the server their
+              agent runs on, the messaging infrastructure, and bulk LLM tokens.
+              Nova pushes all three onto assets you already own — your computer,
+              your own Telegram bot, your own Anthropic key. That's why Nova can
+              be a one-time buy and OpenClaw can't.
+            </p>
+          </details>
+
+          <details>
+            <summary>
+              <span>Do I need a server or a domain?</span>
+              <span class="faq-plus">+</span>
+            </summary>
+            <p>
+              No. Nova runs on whatever computer you already use. Cloudflare
+              Tunnel gives you a free <code>*.trycloudflare.com</code> HTTPS URL
+              with no account, no domain, no port forwarding. The onboard wizard
+              sets all of this up for you automatically.
+            </p>
+          </details>
+
+          <details>
+            <summary>
+              <span>What if my computer sleeps?</span>
+              <span class="faq-plus">+</span>
+            </summary>
+            <p>
+              Nova can't reply if the machine is off. The onboard wizard
+              configures sleep prevention while Nova is running. For 24/7
+              availability, install Nova on a spare machine, a Mac mini, or a
+              $35 Raspberry Pi — it runs on 3 watts.
+            </p>
+          </details>
+
+          <details>
+            <summary>
+              <span>Is my data on your servers?</span>
+              <span class="faq-plus">+</span>
+            </summary>
+            <p>
+              No. Nothing touches Elevare servers. Nova stores its config,
+              memory, logs, and skills under <code>~/.nova/</code> on your
+              machine. Messages go directly from Telegram → your Cloudflare
+              Tunnel → your gateway → Anthropic → back to you. Zero
+              middleware, zero telemetry.
+            </p>
+          </details>
+
+          <details>
+            <summary>
+              <span>Can I write my own skills and personas?</span>
+              <span class="faq-plus">+</span>
+            </summary>
+            <p>
+              Yes — and it's the whole point. A skill is a folder with
+              <code>SKILL.md</code> and <code>tools.py</code>. A persona is a
+              <code>SPIRIT.md</code> with a system prompt body. Both hot-reload.
+              Full spec in <a href="https://github.com/ELEVAREL/Skills/blob/main/nova-agent/ARCHITECTURE.md">ARCHITECTURE.md</a>.
+            </p>
+          </details>
+
+          <details>
+            <summary>
+              <span>What about support?</span>
+              <span class="faq-plus">+</span>
+            </summary>
+            <p>
+              Spark: GitHub issues. Home and above: email. Pro and above:
+              priority email. Lifetime: priority plus one hour of custom
+              persona tuning from the Elevare studio team.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FINAL CTA ═══════════ -->
+    <section class="cta-final">
+      <div class="container">
+        <h2 class="h-serif">
+          Stop renting your <em>own</em> AI.
+        </h2>
+        <p class="cta-sub">Pay once. Install in five minutes. Keep it forever.</p>
+        <div class="cta-buttons">
+          <a class="btn btn-fill btn-big" href="#buy">Get Nova Home — $149 →</a>
+          <a class="btn btn-line btn-big" href="https://github.com/ELEVAREL/Skills">Read the code</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-lg">
+            <span class="brand-mark">◆</span>
+            <span>Nova</span>
+          </div>
+          <p class="footer-tagline">
+            A personal AI that lives on your computer.<br>
+            Built by <a href="#">Elevare Studio</a>.
+          </p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-label">Product</div>
+          <a href="#why">Why Nova</a>
+          <a href="#works">How it works</a>
+          <a href="#compare">vs OpenClaw</a>
+          <a href="#buy">Pricing</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-label">Code</div>
+          <a href="https://github.com/ELEVAREL/Skills">GitHub</a>
+          <a href="https://github.com/ELEVAREL/Skills/blob/main/nova-agent/ARCHITECTURE.md">Architecture</a>
+          <a href="https://github.com/ELEVAREL/Skills/blob/main/nova-agent/README.md">README</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-label">Studio</div>
+          <a href="mailto:hello@elevare.studio">Email</a>
+          <a href="#">License: MIT</a>
+          <a href="#">No telemetry</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © Elevare Studio — Nova doesn't phone home.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Gentle scroll-linked parallax on the mesh blobs
+    const blobs = document.querySelectorAll('.mesh-blob');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const y = window.scrollY;
+          blobs.forEach((b, i) => {
+            const speed = 0.15 + i * 0.08;
+            b.style.transform = `translate3d(0, ${y * speed}px, 0)`;
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Stagger features on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.feature, .work-step, .plan, .receipt').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>

@@ -10,28 +10,20 @@ from pathlib import Path
 from nova.config import load_config, get_api_key
 from nova.utils.display import console, ai_response, error, info, warning, ai_thinking, success
 
-SYSTEM_PROMPT = """\
-You are Nova, an AI assistant that lives in the user's terminal. You help organize files, \
-manage their system, and automate tasks on their computer.
+BASE_SYSTEM_PROMPT = """\
+You are Nova, an AI agent that lives in the user's terminal. You help organize files, \
+manage their system, automate tasks, and run skills across channels.
 
-You have access to these tools to interact with the user's computer:
-
-1. **run_command** — Execute a shell command and return the output
-2. **list_files** — List files in a directory with details
-3. **move_file** — Move a file from one location to another
-4. **get_system_info** — Get system information (CPU, memory, disk)
-5. **find_files** — Search for files by name pattern
-6. **read_file** — Read the contents of a text file
-7. **create_directory** — Create a new directory
-
-Important rules:
-- Always explain what you're doing before doing it
-- For destructive operations (delete, overwrite), ask for confirmation first
-- Be concise but helpful
-- Show file operations as a summary, not verbose logs
-- When organizing files, explain the categorization logic
-- If you're unsure, ask the user rather than guessing
+Core rules:
+- Call tools to answer questions; don't guess state of the machine.
+- Before destructive operations (delete, overwrite, kill, push), state the plan and wait.
+- Be concise. Show results before explanations.
+- Skills provide domain-specific tools. Prefer a skill tool over raw shell when both exist.
+- When the user asks you to remember something across sessions, use the memory_* tools.
 """
+
+# Legacy name retained for back-compat
+SYSTEM_PROMPT = BASE_SYSTEM_PROMPT
 
 TOOLS = [
     {
@@ -239,6 +231,56 @@ TOOLS = [
                 "target": {"type": "integer", "description": "PID or port number (for kill actions)"},
             },
             "required": ["action"],
+        },
+    },
+    {
+        "name": "memory_remember",
+        "description": (
+            "Save a persistent memory that will be available in future sessions. "
+            "Types: user (about the user), feedback (behavior rules), project (ongoing work), "
+            "reference (pointers to external systems), fact (general facts)."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "type": {"type": "string", "enum": ["user", "feedback", "project", "reference", "fact"]},
+                "title": {"type": "string", "description": "Short title"},
+                "body": {"type": "string", "description": "Full memory content"},
+                "tags": {"type": "array", "items": {"type": "string"}},
+            },
+            "required": ["type", "title", "body"],
+        },
+    },
+    {
+        "name": "memory_recall",
+        "description": "Search persistent memory across all stored memories by keyword.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {"type": "string"},
+                "limit": {"type": "integer", "default": 10},
+            },
+            "required": ["query"],
+        },
+    },
+    {
+        "name": "memory_list",
+        "description": "List recent memories, optionally filtered by type.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "type": {"type": "string", "enum": ["user", "feedback", "project", "reference", "fact"]},
+                "limit": {"type": "integer", "default": 20},
+            },
+        },
+    },
+    {
+        "name": "memory_forget",
+        "description": "Delete a memory by its id. Requires explicit user confirmation upstream.",
+        "input_schema": {
+            "type": "object",
+            "properties": {"id": {"type": "integer"}},
+            "required": ["id"],
         },
     },
 ]
@@ -518,8 +560,49 @@ def execute_tool(name: str, input_data: dict) -> str:
                 return f"Killed process on port {input_data['target']}"
             return "Unknown service action"
 
-        else:
-            return f"Unknown tool: {name}"
+        elif name == "memory_remember":
+            from nova.modules.memory import remember
+            mid = remember(
+                input_data["type"],
+                input_data["title"],
+                input_data["body"],
+                input_data.get("tags") or [],
+            )
+            return f"Remembered #{mid}: {input_data['title']}"
+
+        elif name == "memory_recall":
+            from nova.modules.memory import recall
+            results = recall(input_data["query"], int(input_data.get("limit", 10)))
+            if not results:
+                return "No memories matched."
+            lines = [f"Found {len(results)} memories:"]
+            for r in results:
+                tags = f" [{', '.join(r['tags'])}]" if r["tags"] else ""
+                lines.append(f"  #{r['id']} ({r['type']}){tags} {r['title']}: {r['body'][:160]}")
+            return "\n".join(lines)
+
+        elif name == "memory_list":
+            from nova.modules.memory import list_memories
+            results = list_memories(input_data.get("type"), int(input_data.get("limit", 20)))
+            if not results:
+                return "No memories stored."
+            lines = [f"{len(results)} memories:"]
+            for r in results:
+                lines.append(f"  #{r['id']} ({r['type']}) {r['title']}")
+            return "\n".join(lines)
+
+        elif name == "memory_forget":
+            from nova.modules.memory import forget
+            ok = forget(int(input_data["id"]))
+            return f"Deleted memory #{input_data['id']}" if ok else f"No memory with id {input_data['id']}"
+
+        # Dynamic skill tool dispatch
+        from nova.skills import get_registry
+        owning_skill = get_registry().find_tool(name)
+        if owning_skill and owning_skill.tool_executor:
+            return owning_skill.tool_executor(name, input_data)
+
+        return f"Unknown tool: {name}"
 
     except Exception as e:
         return f"Error: {e}"
@@ -534,12 +617,65 @@ def _humanize(size_bytes: int) -> str:
 
 
 class AIBrain:
-    """Claude-powered AI brain for Nova Agent."""
+    """Claude-powered AI brain for Nova Agent.
 
-    def __init__(self):
+    Accepts a persona_id; merges that persona's system prompt + memory context +
+    core tools + dynamic skill tools on every turn so skills installed mid-session
+    become available without a restart.
+    """
+
+    def __init__(self, persona_id: str | None = None):
         self.config = load_config()
         self.conversation: list[dict] = []
         self.client = None
+        self._persona_id = persona_id
+        # Activate the persona up front so greetings etc. can reference it
+        if persona_id:
+            try:
+                from nova.personas import get_persona_registry
+                get_persona_registry().activate(persona_id)
+            except Exception:
+                pass
+
+    def _active_persona(self):
+        try:
+            from nova.personas import get_persona_registry
+            reg = get_persona_registry()
+            if self._persona_id:
+                return reg.personas.get(self._persona_id) or reg.active()
+            return reg.active()
+        except Exception:
+            return None
+
+    def _build_system_prompt(self) -> str:
+        parts = [BASE_SYSTEM_PROMPT]
+        persona = self._active_persona()
+        if persona:
+            parts.append(f"## Persona: {persona.name}\n{persona.system_prompt}")
+
+        try:
+            from nova.modules.memory import get_store
+            mem_block = get_store().recent_context(limit=6)
+            if mem_block:
+                parts.append(mem_block)
+        except Exception:
+            pass
+
+        return "\n\n".join(parts)
+
+    def _build_tools(self) -> list[dict]:
+        """Merge core tools with enabled skill tools."""
+        tools: list[dict] = list(TOOLS)
+        seen = {t["name"] for t in tools}
+        try:
+            from nova.skills import get_registry
+            for skill_tool in get_registry().all_tools():
+                if skill_tool["name"] not in seen:
+                    tools.append(skill_tool)
+                    seen.add(skill_tool["name"])
+        except Exception:
+            pass
+        return tools
 
     def _ensure_client(self):
         """Initialize the Anthropic client."""
@@ -567,8 +703,11 @@ class AIBrain:
 
         self.conversation.append({"role": "user", "content": user_message})
 
-        model = self.config["ai"]["model"]
-        max_tokens = self.config["ai"]["max_tokens"]
+        persona = self._active_persona()
+        model = (persona.model if persona and persona.model else self.config["ai"]["model"])
+        max_tokens = (persona.max_tokens if persona and persona.max_tokens else self.config["ai"]["max_tokens"])
+        system_prompt = self._build_system_prompt()
+        tools = self._build_tools()
 
         # Show thinking animation while waiting for API
         with ai_thinking() as progress:
@@ -577,8 +716,8 @@ class AIBrain:
                 response = self.client.messages.create(
                     model=model,
                     max_tokens=max_tokens,
-                    system=SYSTEM_PROMPT,
-                    tools=TOOLS,
+                    system=system_prompt,
+                    tools=tools,
                     messages=self.conversation,
                 )
             except Exception as e:
@@ -626,8 +765,8 @@ class AIBrain:
                     follow_up = self.client.messages.create(
                         model=model,
                         max_tokens=max_tokens,
-                        system=SYSTEM_PROMPT,
-                        tools=TOOLS,
+                        system=self._build_system_prompt(),
+                        tools=self._build_tools(),
                         messages=self.conversation,
                     )
                 except Exception as e:

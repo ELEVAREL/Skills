@@ -38,6 +38,15 @@ def interactive_mode():
     track_session_start()
     history_file = DEFAULT_CONFIG_DIR / "history"
 
+    # Warm up the skill + persona registries so the first message is snappy
+    try:
+        from nova.skills import get_registry as _get_skills
+        from nova.personas import get_persona_registry as _get_personas
+        _get_skills()
+        _get_personas()
+    except Exception:
+        pass
+
     style = Style.from_dict({
         "prompt": "#7b68ee bold",
         "prompt.arrow": "#00d4ff bold",
@@ -166,6 +175,26 @@ def handle_slash_command(command: str, brain) -> str | None:
                 "/dotfiles backup": "Backup all dotfiles",
                 "/aliases": "Show shell aliases",
                 "/env [PREFIX]": "Show environment variables",
+            },
+            "Personas & Skills": {
+                "/persona list": "List available personas",
+                "/persona use <id>": "Switch active persona",
+                "/skills list": "List loaded skills",
+                "/skills reload": "Rescan skill directories",
+                "/skills enable/disable <id>": "Toggle a skill",
+                "/hub refresh": "Refresh hub index",
+                "/hub install <id>": "Install skill from hub",
+            },
+            "Memory": {
+                "/mem list": "Recent memories",
+                "/mem add <type> <title>::<body>": "Save a memory",
+                "/mem recall <query>": "Search memories",
+                "/mem forget <id>": "Delete a memory",
+            },
+            "Gateway": {
+                "/gateway start": "Start Nova gateway (HTTP API)",
+                "/gateway stop": "Stop gateway",
+                "/gateway status": "Check gateway health",
             },
             "Session": {
                 "/clear": "Clear AI conversation history",
@@ -487,6 +516,220 @@ def handle_slash_command(command: str, brain) -> str | None:
         from nova.modules.dotfiles import show_env
         show_env(args)
 
+    # ─── Persona ───────────────────────────────────────────────
+    elif cmd in ("/persona", "/personas"):
+        from nova.personas import get_persona_registry
+        reg = get_persona_registry()
+        if not args or args == "list":
+            from rich.table import Table
+            table = Table(title="[bold]Personas[/]", border_style="dim cyan",
+                          header_style="bold cyan")
+            table.add_column("ID", style="cyan")
+            table.add_column("Name", style="white")
+            table.add_column("Description", style="dim")
+            table.add_column("Active", style="green", justify="center")
+            for p in reg.list_all():
+                active = "◆" if reg.active_id == p.id else ""
+                table.add_row(p.id, p.name, p.description, active)
+            console.print()
+            console.print(table)
+            console.print()
+        else:
+            parts = args.split(maxsplit=1)
+            sub = parts[0]
+            if sub == "use" and len(parts) > 1:
+                target = parts[1]
+                p = reg.activate(target)
+                if p is None:
+                    warning(f"Unknown persona: {target}")
+                else:
+                    # Swap the current brain's persona on the fly
+                    brain._persona_id = p.id
+                    brain.reset()
+                    success(f"Persona activated: {p.name}")
+                    if p.greeting:
+                        muted(p.greeting)
+            elif sub == "show" and len(parts) > 1:
+                p = reg.personas.get(parts[1])
+                if p is None:
+                    warning(f"Unknown persona: {parts[1]}")
+                else:
+                    from nova.utils.display import summary_panel
+                    summary_panel(f"Persona: {p.name}", {
+                        "Version": p.version,
+                        "Description": p.description,
+                        "Tags": ", ".join(p.tags) or "—",
+                        "Skills": ", ".join(p.skills) or "—",
+                        "Model": p.model or "(default)",
+                    })
+            else:
+                warning("Usage: /persona [list|use <id>|show <id>]")
+
+    # ─── Skills ────────────────────────────────────────────────
+    elif cmd in ("/skill", "/skills"):
+        from nova.skills import get_registry
+        reg = get_registry()
+        if not args or args == "list":
+            from rich.table import Table
+            table = Table(title="[bold]Skills[/]", border_style="dim cyan",
+                          header_style="bold cyan")
+            table.add_column("ID", style="cyan")
+            table.add_column("Version", style="dim")
+            table.add_column("Tools", style="magenta")
+            table.add_column("Description", style="white")
+            table.add_column("On", style="green", justify="center")
+            for s in reg.skills.values():
+                table.add_row(
+                    s.id, s.version, str(len(s.tool_defs)),
+                    s.description, "◆" if s.enabled else "",
+                )
+            console.print()
+            console.print(table)
+            console.print()
+        else:
+            parts = args.split(maxsplit=1)
+            sub = parts[0]
+            if sub == "reload":
+                reg.discover()
+                success(f"Reloaded {len(reg.skills)} skills")
+            elif sub == "show" and len(parts) > 1:
+                s = reg.skills.get(parts[1])
+                if s is None:
+                    warning(f"Unknown skill: {parts[1]}")
+                else:
+                    info(s.describe())
+            elif sub == "enable" and len(parts) > 1:
+                if reg.enable(parts[1]):
+                    success(f"Enabled {parts[1]}")
+                else:
+                    warning(f"Unknown skill: {parts[1]}")
+            elif sub == "disable" and len(parts) > 1:
+                if reg.disable(parts[1]):
+                    success(f"Disabled {parts[1]}")
+                else:
+                    warning(f"Unknown skill: {parts[1]}")
+            elif sub == "search" and len(parts) > 1:
+                hits = reg.search(parts[1])
+                if not hits:
+                    info("No matches")
+                for s in hits:
+                    console.print(f"  [cyan]{s.id}[/] — {s.description}")
+            else:
+                warning("Usage: /skills [list|reload|show <id>|enable <id>|disable <id>|search <q>]")
+
+    # ─── Memory ────────────────────────────────────────────────
+    elif cmd in ("/memory", "/mem"):
+        from nova.modules.memory import get_store, memory_summary
+        store = get_store()
+        if not args or args == "list":
+            entries = store.list(limit=20)
+            if not entries:
+                info("No memories yet. Save some with /mem add <type> <title>::<body>")
+            else:
+                from rich.table import Table
+                table = Table(title="[bold]Memories[/]", border_style="dim cyan",
+                              header_style="bold cyan")
+                table.add_column("#", style="dim")
+                table.add_column("Type", style="magenta")
+                table.add_column("Title", style="cyan")
+                table.add_column("Body", style="white")
+                for e in entries:
+                    table.add_row(str(e.id), e.type, e.title, e.body[:60])
+                console.print()
+                console.print(table)
+                muted(memory_summary())
+                console.print()
+        else:
+            parts = args.split(maxsplit=1)
+            sub = parts[0]
+            rest = parts[1] if len(parts) > 1 else ""
+            if sub == "add" and rest:
+                bits = rest.split(maxsplit=1)
+                type_ = bits[0] if bits[0] in ("user", "feedback", "project", "reference", "fact") else "fact"
+                payload = bits[1] if len(bits) > 1 else ""
+                title, _, body = payload.partition("::")
+                if not title:
+                    warning("Usage: /mem add <type> <title>::<body>")
+                else:
+                    mid = store.add(type_, title.strip(), (body or title).strip())
+                    success(f"Saved #{mid}")
+            elif sub == "recall" and rest:
+                entries = store.search(rest)
+                if not entries:
+                    info("No matches")
+                for e in entries:
+                    console.print(f"  [cyan]#{e.id}[/] ({e.type}) [white]{e.title}[/]: [dim]{e.body[:80]}[/]")
+            elif sub == "forget" and rest.isdigit():
+                if store.delete(int(rest)):
+                    success(f"Forgot #{rest}")
+                else:
+                    warning(f"No memory #{rest}")
+            elif sub == "count":
+                info(memory_summary())
+            else:
+                warning("Usage: /mem [list|add <type> <title>::<body>|recall <q>|forget <id>|count]")
+
+    # ─── Hub ───────────────────────────────────────────────────
+    elif cmd == "/hub":
+        from nova.hub import get_hub
+        hub = get_hub()
+        parts = args.split(maxsplit=1) if args else ["list"]
+        sub = parts[0]
+        rest = parts[1] if len(parts) > 1 else ""
+        if sub == "refresh":
+            result = hub.refresh()
+            if result.get("ok"):
+                success(f"Hub refreshed ({result['source']}, {result['entries']} entries)")
+            else:
+                error(result.get("error", "refresh failed"))
+        elif sub == "list":
+            entries = hub.list()
+            if not entries:
+                info("Hub index empty — run /hub refresh")
+            for e in entries:
+                console.print(f"  [cyan]{e.id}[/] v{e.version} — {e.description}")
+        elif sub == "search" and rest:
+            for e in hub.search(rest):
+                console.print(f"  [cyan]{e.id}[/] — {e.description}")
+        elif sub == "install" and rest:
+            result = hub.install(rest)
+            if result.get("ok"):
+                success(f"Installed {rest} → {result['installed']}")
+                from nova.skills import get_registry
+                get_registry().discover()
+            else:
+                error(result.get("error", "install failed"))
+        elif sub == "uninstall" and rest:
+            result = hub.uninstall(rest)
+            if result.get("ok"):
+                success(f"Removed {rest}")
+            else:
+                error(result.get("error", "uninstall failed"))
+        else:
+            warning("Usage: /hub [refresh|list|search <q>|install <id>|uninstall <id>]")
+
+    # ─── Gateway ───────────────────────────────────────────────
+    elif cmd == "/gateway":
+        from nova.gateway import start_gateway, stop_gateway
+        parts = args.split() if args else ["status"]
+        sub = parts[0]
+        if sub == "start":
+            gw = start_gateway()
+            success(f"Gateway listening on {gw.url}")
+            muted(f"Token: ~/.nova/gateway.token")
+        elif sub == "stop":
+            stop_gateway()
+            success("Gateway stopped")
+        elif sub == "status":
+            from nova.channels import HttpClientChannel
+            result = HttpClientChannel().health()
+            if result.get("status") == "ok":
+                success("Gateway is running")
+            else:
+                info("Gateway not running (or unreachable)")
+        else:
+            warning("Usage: /gateway [start|stop|status]")
+
     # ─── Session ───────────────────────────────────────────────
     elif cmd == "/clear":
         brain.reset()
@@ -715,6 +958,350 @@ def stats():
     """Show productivity stats and streak."""
     from nova.modules.productivity import show_stats
     show_stats()
+
+
+# ─── Persona ───────────────────────────────────────────────────────
+@main.group()
+def persona():
+    """Manage Nova personas (SPIRIT.md)."""
+
+
+@persona.command("list")
+def persona_list():
+    """List available personas."""
+    from nova.personas import get_persona_registry
+    from rich.table import Table
+
+    reg = get_persona_registry()
+    table = Table(title="Personas", border_style="dim cyan", header_style="bold cyan")
+    table.add_column("ID", style="cyan")
+    table.add_column("Description", style="white")
+    table.add_column("Skills", style="magenta")
+    for p in reg.list_all():
+        table.add_row(p.id, p.description, ", ".join(p.skills) or "—")
+    console.print(table)
+
+
+@persona.command("show")
+@click.argument("persona_id")
+def persona_show(persona_id: str):
+    """Print a persona's full system prompt."""
+    from nova.personas import get_persona_registry
+    p = get_persona_registry().personas.get(persona_id)
+    if p is None:
+        error(f"Unknown persona: {persona_id}")
+        return
+    info(f"{p.name} v{p.version}")
+    muted(p.description)
+    console.print()
+    console.print(p.system_prompt)
+
+
+@main.command()
+def onboard():
+    """Run the interactive setup wizard (install-to-textable in 5 minutes)."""
+    from nova.onboard import run_onboard
+    run_onboard()
+
+
+# ─── Service (background/autostart) ───────────────────────────────
+@main.group()
+def service():
+    """Manage Nova as a background service (Windows/macOS/Linux)."""
+
+
+@service.command("install")
+def service_install():
+    """Install Nova to start on boot/login."""
+    from nova.service import install_service
+    result = install_service()
+    if result.get("ok"):
+        success(f"Installed ({result.get('method')})")
+    else:
+        error(result.get("error", "install failed"))
+
+
+@service.command("uninstall")
+def service_uninstall():
+    """Remove the Nova background service."""
+    from nova.service import uninstall_service
+    result = uninstall_service()
+    if result.get("ok"):
+        success("Service removed")
+    else:
+        error(result.get("error", "uninstall failed"))
+
+
+@service.command("status")
+def service_status_cmd():
+    """Show current service state."""
+    from nova.service import service_status
+    result = service_status()
+    if not result.get("installed"):
+        info("Service not installed")
+        return
+    info(f"State: {result.get('state', 'unknown')}")
+
+
+@service.command("start")
+def service_start_cmd():
+    """Start the Nova service."""
+    from nova.service import start_service
+    r = start_service()
+    success("Started") if r.get("ok") else error(r.get("error", "failed"))
+
+
+@service.command("stop")
+def service_stop_cmd():
+    """Stop the Nova service."""
+    from nova.service import stop_service
+    r = stop_service()
+    success("Stopped") if r.get("ok") else error(r.get("error", "failed"))
+
+
+# ─── Tunnel ───────────────────────────────────────────────────────
+@main.group()
+def tunnel():
+    """Expose the local gateway publicly via Cloudflare Tunnel."""
+
+
+@tunnel.command("start")
+@click.option("--port", default=7878, show_default=True, type=int)
+def tunnel_start(port: int):
+    """Start a quick tunnel to the local gateway."""
+    from nova.tunnel import CloudflareTunnel
+    t = CloudflareTunnel()
+    if not t.is_installed():
+        info("Installing cloudflared...")
+        r = t.install()
+        if not r.get("ok"):
+            error(r.get("error", "install failed"))
+            return
+    info("Starting tunnel — this can take ~10s...")
+    r = t.start(local_port=port)
+    if r.get("ok"):
+        success(f"Public URL: {r['url']}")
+        muted(f"PID: {r.get('pid')}")
+    else:
+        error(r.get("error", "tunnel failed"))
+
+
+@tunnel.command("stop")
+def tunnel_stop():
+    """Stop the running tunnel."""
+    from nova.tunnel import CloudflareTunnel
+    CloudflareTunnel().stop()
+    success("Tunnel stopped")
+
+
+@tunnel.command("status")
+def tunnel_status():
+    """Show tunnel state and public URL."""
+    from nova.tunnel import CloudflareTunnel
+    s = CloudflareTunnel().status()
+    if s.get("running"):
+        info(f"Running — {s.get('url')} (PID {s.get('pid')})")
+    else:
+        info("Not running")
+
+
+@tunnel.command("install")
+def tunnel_install():
+    """Download the cloudflared binary into ~/.nova/bin/."""
+    from nova.tunnel import CloudflareTunnel
+    r = CloudflareTunnel().install()
+    if r.get("ok"):
+        success(f"Installed: {r['path']}")
+    else:
+        error(r.get("error", "install failed"))
+
+
+@main.command("ask-as")
+@click.argument("persona_id")
+@click.argument("query", nargs=-1, required=True)
+def ask_as(persona_id: str, query: tuple):
+    """Ask Nova AI a question using a specific persona (non-interactive)."""
+    from nova.modules.ai_brain import AIBrain
+    brain = AIBrain(persona_id=persona_id)
+    response = brain.chat(" ".join(query))
+    if response:
+        ai_response(response)
+
+
+# ─── Skills ────────────────────────────────────────────────────────
+@main.group()
+def skills():
+    """Manage Nova skills."""
+
+
+@skills.command("list")
+def skills_list():
+    """List loaded skills."""
+    from nova.skills import get_registry
+    from rich.table import Table
+    reg = get_registry()
+    table = Table(title="Skills", border_style="dim cyan", header_style="bold cyan")
+    table.add_column("ID", style="cyan")
+    table.add_column("Version", style="dim")
+    table.add_column("Tools", style="magenta")
+    table.add_column("Description", style="white")
+    for s in reg.skills.values():
+        table.add_row(s.id, s.version, str(len(s.tool_defs)), s.description)
+    console.print(table)
+
+
+@skills.command("reload")
+def skills_reload():
+    """Re-scan skill directories."""
+    from nova.skills import get_registry
+    reg = get_registry()
+    reg.discover()
+    success(f"Reloaded {len(reg.skills)} skills")
+
+
+# ─── Memory ────────────────────────────────────────────────────────
+@main.group()
+def memory():
+    """Manage persistent memory."""
+
+
+@memory.command("list")
+@click.option("--type", "type_", default=None, help="Filter by type")
+def memory_list(type_: str | None):
+    """List stored memories."""
+    from nova.modules.memory import get_store
+    from rich.table import Table
+    entries = get_store().list(type_=type_, limit=50)
+    if not entries:
+        info("No memories stored.")
+        return
+    table = Table(title="Memories", border_style="dim cyan", header_style="bold cyan")
+    table.add_column("#", style="dim")
+    table.add_column("Type", style="magenta")
+    table.add_column("Title", style="cyan")
+    table.add_column("Body", style="white")
+    for e in entries:
+        table.add_row(str(e.id), e.type, e.title, e.body[:80])
+    console.print(table)
+
+
+@memory.command("add")
+@click.argument("type_", type=click.Choice(["user", "feedback", "project", "reference", "fact"]))
+@click.argument("title")
+@click.argument("body")
+def memory_add(type_: str, title: str, body: str):
+    """Save a new memory."""
+    from nova.modules.memory import remember
+    mid = remember(type_, title, body)
+    success(f"Saved memory #{mid}")
+
+
+@memory.command("recall")
+@click.argument("query", nargs=-1, required=True)
+def memory_recall(query: tuple):
+    """Search memory by keyword."""
+    from nova.modules.memory import recall
+    results = recall(" ".join(query))
+    if not results:
+        info("No matches")
+        return
+    for r in results:
+        console.print(f"  [cyan]#{r['id']}[/] ({r['type']}) [white]{r['title']}[/]: [dim]{r['body'][:100]}[/]")
+
+
+# ─── Hub ───────────────────────────────────────────────────────────
+@main.group()
+def hub():
+    """Nova Hub — browse and install skills."""
+
+
+@hub.command("refresh")
+def hub_refresh():
+    """Refresh the hub index."""
+    from nova.hub import get_hub
+    result = get_hub().refresh()
+    if result.get("ok"):
+        success(f"Hub refreshed ({result['source']}, {result['entries']} entries)")
+    else:
+        error(result.get("error", "refresh failed"))
+
+
+@hub.command("list")
+def hub_list():
+    """List hub entries."""
+    from nova.hub import get_hub
+    for e in get_hub().list():
+        console.print(f"  [cyan]{e.id}[/] v{e.version} — {e.description}")
+
+
+@hub.command("install")
+@click.argument("entry_id")
+def hub_install(entry_id: str):
+    """Install a skill from the hub."""
+    from nova.hub import get_hub
+    result = get_hub().install(entry_id)
+    if result.get("ok"):
+        success(f"Installed {entry_id}")
+    else:
+        error(result.get("error", "install failed"))
+
+
+# ─── Gateway ───────────────────────────────────────────────────────
+@main.group()
+def gateway():
+    """Manage the Nova gateway HTTP server."""
+
+
+@gateway.command("start")
+@click.option("--host", default="127.0.0.1", show_default=True)
+@click.option("--port", default=7878, show_default=True, type=int)
+@click.option("--foreground/--background", default=True)
+def gateway_start(host: str, port: int, foreground: bool):
+    """Start the Nova gateway."""
+    from nova.gateway import start_gateway
+    gw = start_gateway(host=host, port=port)
+    success(f"Gateway listening on {gw.url}")
+    muted(f"Token file: ~/.nova/gateway.token")
+    if foreground:
+        info("Running in foreground — Ctrl+C to stop")
+        try:
+            import time
+            while True:
+                time.sleep(3600)
+        except KeyboardInterrupt:
+            from nova.gateway import stop_gateway
+            stop_gateway()
+            success("Gateway stopped")
+
+
+@gateway.command("status")
+def gateway_status():
+    """Check gateway health."""
+    from nova.channels import HttpClientChannel
+    result = HttpClientChannel().health()
+    if result.get("status") == "ok":
+        success("Gateway is running")
+    else:
+        info(f"Gateway not reachable: {result.get('error', 'unknown')}")
+
+
+# ─── Channels ──────────────────────────────────────────────────────
+@main.group()
+def channel():
+    """Run a Nova channel adapter."""
+
+
+@channel.command("telegram")
+@click.option("--persona", default=None, help="Persona to use for replies")
+def channel_telegram(persona: str | None):
+    """Run the Telegram long-poll channel. Requires TELEGRAM_BOT_TOKEN."""
+    from nova.channels import TelegramChannel
+    ch = TelegramChannel(persona=persona)
+    info("Telegram channel starting — Ctrl+C to stop")
+    try:
+        ch.run()
+    except RuntimeError as e:
+        error(str(e))
 
 
 if __name__ == "__main__":

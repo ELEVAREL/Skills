@@ -1,131 +1,162 @@
 # Nova Agent
 
-AI-powered CLI agent for organizing your computer and automating tasks. Works like Claude Code but for your file system and daily computer management.
+Nova is an AI-powered agent platform that lives in your terminal. Point it at your
+computer, your repos, or a messaging channel and let a persona-driven Claude take over.
 
-## Features
+**v0.3 makes Nova a real agent platform**, not just a CLI tool:
 
-- **File Organizer** — Automatically categorize and sort files (Documents, Images, Code, etc.)
-- **Directory Analyzer** — Scan directories for statistics, duplicates, and large files
-- **File Watcher** — Auto-organize new files as they arrive (e.g., Downloads folder)
-- **System Monitor** — CPU, memory, disk usage, top processes
-- **Cleanup Finder** — Find caches, temp files, and large files to reclaim space
-- **AI Chat** — Natural language interface powered by Claude for any computer task
-- **Interactive Shell** — Rich terminal UI with command history and autocomplete
+- **Personas (SPIRIT.md)** — swap between specialist AIs without restarting
+- **Skills (SKILL.md)** — drop-in plugin architecture with dynamic tool loading
+- **Memory** — SQLite-backed persistent cross-session recall with FTS search
+- **Gateway** — embedded HTTP control plane so other apps can chat with Nova
+- **Channels** — terminal, HTTP client, Telegram long-poll (Slack/Discord next)
+- **Hub** — local or remote skill marketplace you can sync and install from
+
+See `ARCHITECTURE.md` for the full design rationale and how Nova compares to other
+agent frameworks.
 
 ## Install
 
 ```bash
 cd nova-agent
 pip install -e .
-```
-
-Set your API key for AI features:
-```bash
 export ANTHROPIC_API_KEY=your-key-here
 ```
 
-## Usage
+## Quick tour
 
-### Interactive Mode (like Claude Code)
-
+### Interactive shell
 ```bash
-nova
+nova                           # opens the rich terminal REPL
 ```
 
-This opens an interactive shell where you can:
-- Type natural language: `"organize my Downloads folder"`
-- Use slash commands: `/organize ~/Downloads`
-- Ask questions: `"what's using the most disk space?"`
+Inside the shell, type naturally ("organize my Downloads") or use slash commands:
 
-### Direct Commands
+| Category | Commands |
+| --- | --- |
+| **Persona** | `/persona list`, `/persona use dev-sentinel`, `/persona show researcher` |
+| **Skills** | `/skills list`, `/skills reload`, `/skills enable git-helper`, `/skills search git` |
+| **Memory** | `/mem list`, `/mem add project "API freeze"::"Locks next Thursday"`, `/mem recall auth` |
+| **Hub** | `/hub refresh`, `/hub list`, `/hub install web-fetch-extra` |
+| **Gateway** | `/gateway start`, `/gateway status`, `/gateway stop` |
+
+Type `/help` for the full menu (files, code, services, network, git, search, clipboard, etc.).
+
+### Non-interactive commands
 
 ```bash
-# Organize files (dry-run by default)
-nova organize ~/Downloads
-nova organize ~/Downloads --execute          # Actually move files
-nova organize ~/Downloads --dest ~/Sorted    # Custom destination
+# Single-shot chat
+nova ask "what's using the most disk space?"
+nova ask-as researcher "latest benchmarks for Claude Sonnet vs GPT-5"
 
-# Analyze a directory
-nova analyze ~/Documents
-nova analyze . --recursive
+# Personas
+nova persona list
+nova persona show dev-sentinel
 
-# Watch for new files (auto-organize)
-nova watch ~/Downloads
-nova watch ~/Downloads --live               # Actually move (not just preview)
+# Skills
+nova skills list
+nova skills reload
 
-# System info
-nova system
+# Memory
+nova memory add feedback "terse output" "user wants no trailing summaries"
+nova memory recall deploy
 
-# Find large files
-nova large ~ --min-size 200
+# Hub
+nova hub refresh
+nova hub list
+nova hub install web-fetch-extra
 
-# Cleanup suggestions
-nova cleanup
+# Gateway (HTTP API on port 7878)
+nova gateway start           # foreground, Ctrl+C to stop
+nova gateway status
 
-# Ask AI anything
-nova ask "how much disk space am I using?"
-nova ask "find all Python files modified today"
-
-# Configuration
-nova config
+# Channels
+TELEGRAM_BOT_TOKEN=... nova channel telegram --persona nova-default
 ```
 
-### Interactive Commands
+## Concepts
 
-Inside the Nova shell (`nova`):
+### Personas (SPIRIT.md)
 
-| Command | Description |
-|---------|-------------|
-| `/organize <dir>` | Organize files |
-| `/analyze <dir>` | Analyze directory |
-| `/watch <dir>` | Watch for new files |
-| `/system` | System information |
-| `/processes` | Top processes |
-| `/disks` | Disk usage |
-| `/large [dir]` | Find large files |
-| `/cleanup` | Cleanup suggestions |
-| `/clear` | Clear AI conversation |
-| `/config` | Show configuration |
-| `/help` | Show all commands |
-| `/quit` | Exit |
+A persona is a named AI personality: system prompt, default skill set, model choice,
+and behavioural rules. Nova ships with four:
 
-Or just type naturally — Nova understands plain English.
+- `nova-default` — friendly terse concierge
+- `dev-sentinel` — senior pair-programmer for git and code
+- `researcher` — deep-research mode with mandatory citations
+- `automator` — background ops and scheduling
 
-## Configuration
-
-Config is stored at `~/.nova/config.yaml`:
-
+Add your own under `~/.nova/personas/<id>/SPIRIT.md`. Frontmatter fields:
 ```yaml
-ai:
-  model: claude-sonnet-4-20250514
-  max_tokens: 4096
-organizer:
-  dry_run: false
-watch:
-  directories:
-    - ~/Downloads
+---
+name: my-persona
+version: 0.1.0
+description: One-liner
+model: claude-sonnet-4-20250514   # optional override
+skills: [git-helper, web-fetch]   # auto-load these skills
+tags: [dev]
+greeting: "Hey, ready to work."
+---
+# System prompt markdown body...
 ```
 
-Organization rules are at `~/.nova/organize_rules.yaml` — customize which file types go where.
+### Skills (SKILL.md)
 
-## File Categories
+A skill is a directory with a `SKILL.md` manifest and an optional `tools.py`. Nova
+discovers skills in two places: `nova-agent/skills/` (builtins) and `~/.nova/skills/`
+(user skills + hub installs). Drop a skill in and it shows up after `/skills reload`.
 
-Nova organizes files into these default categories:
+A `tools.py` exposes two things:
 
-| Category | Extensions | Folder |
-|----------|-----------|--------|
-| Documents | pdf, doc, txt, md, epub... | Documents/ |
-| Images | jpg, png, gif, svg, webp... | Pictures/ |
-| Videos | mp4, mkv, avi, mov... | Videos/ |
-| Audio | mp3, wav, flac, aac... | Music/ |
-| Code | py, js, ts, go, rs, java... | Code/ |
-| Data | csv, json, xml, sql, xlsx... | Data/ |
-| Archives | zip, tar, gz, rar, 7z... | Archives/ |
-| Installers | exe, dmg, deb, rpm... | Installers/ |
-| Fonts | ttf, otf, woff... | Fonts/ |
-| Design | psd, ai, sketch, fig... | Design/ |
+```python
+TOOLS = [
+    {
+        "name": "my_tool",
+        "description": "What it does",
+        "input_schema": {"type": "object", "properties": {...}, "required": [...]},
+    },
+]
+
+def execute(name: str, input_data: dict) -> str:
+    ...
+```
+
+Built-in skills: `git-helper`, `web-fetch`, `screenshot`.
+
+### Memory
+
+Persistent memories live in `~/.nova/memory.db`. Nova's brain automatically injects
+the most recent memories into every system prompt so past context carries over.
+Typed entries (`user`, `feedback`, `project`, `reference`, `fact`) are searchable
+via SQLite FTS5 when available.
+
+### Gateway
+
+`nova gateway start` spins up a local HTTP API (`127.0.0.1:7878`) with bearer-token
+auth (token stored in `~/.nova/gateway.token`). Endpoints:
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/healthz` | Liveness |
+| GET | `/v1/personas` | List personas |
+| POST | `/v1/personas/active` | Switch active persona |
+| GET | `/v1/skills` | List skills |
+| POST | `/v1/skills/toggle` | Enable/disable a skill |
+| POST | `/v1/chat` | Run a chat turn |
+| GET | `/v1/memory` | List memories |
+| POST | `/v1/memory` | Add a memory |
+
+### Channels
+
+A channel is a transport that pipes user messages into the brain. Shipped:
+
+- **terminal** — the default REPL (`nova`)
+- **http_client** — Python client against the gateway (used by other adapters)
+- **telegram** — long-poll Telegram bot (`nova channel telegram`)
+
+Slack, Discord, and WebSocket channels are the next targets.
 
 ## Requirements
 
 - Python 3.10+
-- Anthropic API key (for AI features — organizer works without it)
+- `ANTHROPIC_API_KEY` for AI features (file organizer and system tools work without it)
