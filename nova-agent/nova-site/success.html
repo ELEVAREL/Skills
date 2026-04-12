@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nova — your license is ready</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0b0e;
+      --ink: #f5f3ee;
+      --ink-dim: #a8a5a0;
+      --ink-muted: #5e5c57;
+      --accent: #76e4d4;
+      --accent2: #c8a8ff;
+      --red: #ff7a6b;
+      --serif: 'Instrument Serif', ui-serif, Georgia, serif;
+      --sans: 'Inter Tight', -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card {
+      max-width: 680px;
+      width: 100%;
+      background: rgba(16, 16, 22, 0.8);
+      border: 1px solid rgba(118, 228, 212, 0.2);
+      border-radius: 24px;
+      padding: 56px 48px;
+      box-shadow: 0 40px 120px rgba(118, 228, 212, 0.08);
+    }
+    .glyph {
+      font-family: var(--serif);
+      font-size: 48px;
+      color: var(--accent);
+      text-shadow: 0 0 32px rgba(118, 228, 212, 0.6);
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: 48px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+    .sub {
+      color: var(--ink-dim);
+      font-size: 17px;
+      margin-bottom: 36px;
+      line-height: 1.55;
+    }
+
+    /* States */
+    .state { display: none; }
+    .state.active { display: block; }
+
+    .loading-dots { display: inline-flex; gap: 6px; }
+    .loading-dots span {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+    .loading-dots span:nth-child(2) { animation-delay: 0.15s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    /* License key box */
+    .key-box {
+      background: rgba(8, 8, 11, 0.9);
+      border: 1px solid rgba(118, 228, 212, 0.25);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+      position: relative;
+    }
+    .key-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 10px;
+    }
+    .key-value {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      word-break: break-all;
+      line-height: 1.6;
+      user-select: all;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover { background: var(--ink); }
+
+    /* Install command */
+    .install-box {
+      background: rgba(8, 8, 11, 0.9);
+      border: 1px solid rgba(245, 243, 238, 0.1);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .install-box pre {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 2;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .install-box .prompt { color: var(--accent); }
+    .install-box .comment { color: var(--ink-muted); }
+
+    /* Tier badge */
+    .tier-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(118, 228, 212, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(118, 228, 212, 0.2);
+      margin-bottom: 24px;
+    }
+
+    .meta {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin-top: 32px;
+      line-height: 1.8;
+    }
+    .meta a { color: var(--accent); text-decoration: none; }
+
+    .error-msg {
+      background: rgba(255, 122, 107, 0.1);
+      border: 1px solid rgba(255, 122, 107, 0.3);
+      border-radius: 12px;
+      padding: 24px;
+      color: var(--red);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .error-msg a { color: var(--red); }
+
+    .retry-btn {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 12px 24px;
+      border-radius: 999px;
+      border: 1px solid rgba(245, 243, 238, 0.2);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 14px;
+      cursor: pointer;
+      background: transparent;
+      transition: border-color 0.2s;
+    }
+    .retry-btn:hover { border-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="glyph">◆</div>
+
+    <!-- Loading state -->
+    <div id="state-loading" class="state active">
+      <h1>Generating your license<span class="loading-dots"><span></span><span></span><span></span></span></h1>
+      <p class="sub">This usually takes 2–5 seconds. If it doesn't load, reload the page.</p>
+    </div>
+
+    <!-- Success state -->
+    <div id="state-success" class="state">
+      <h1>Welcome to <em>Nova.</em></h1>
+      <p class="sub">Your purchase is complete. Here's your license key — copy it, then run the commands below.</p>
+
+      <div class="tier-badge" id="tier-badge">home</div>
+
+      <div class="key-box">
+        <div class="key-label">Your license key</div>
+        <div class="key-value" id="license-key"></div>
+        <button class="copy-btn" onclick="copyKey()">Copy</button>
+      </div>
+
+      <div class="install-box">
+        <pre><span class="comment"># 1. Install Nova</span>
+<span class="prompt">$</span> pip install nova-agent
+
+<span class="comment"># 2. Activate your license</span>
+<span class="prompt">$</span> nova license activate <span id="key-inline"></span>
+
+<span class="comment"># 3. Set up everything (API key, Telegram, tunnel, service)</span>
+<span class="prompt">$</span> nova onboard</pre>
+      </div>
+
+      <div class="meta">
+        <strong>Email:</strong> <span id="meta-email"></span><br>
+        <strong>Tier:</strong> <span id="meta-tier"></span><br>
+        <strong>Machines:</strong> <span id="meta-machines"></span><br>
+        <strong>Updates until:</strong> <span id="meta-updates"></span><br>
+        <br>
+        We also emailed this key to you. If you lose it,
+        email <a href="mailto:hello@elevare.studio">hello@elevare.studio</a>
+        and we'll resend it.
+      </div>
+    </div>
+
+    <!-- Error state -->
+    <div id="state-error" class="state">
+      <h1>Hmm.</h1>
+      <div class="error-msg" id="error-msg"></div>
+      <button class="retry-btn" onclick="location.reload()">Try again</button>
+    </div>
+
+    <!-- No session state -->
+    <div id="state-no-session" class="state">
+      <h1>No checkout session found.</h1>
+      <p class="sub">
+        This page is meant to be opened automatically after a Stripe checkout.
+        If you already purchased Nova, check your email for the license key.
+        If you haven't yet, <a href="/" style="color: var(--accent)">go buy it →</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'https://ykosczuthuestomkvcbb.supabase.co/functions/v1';
+
+    function show(stateId) {
+      document.querySelectorAll('.state').forEach(el => el.classList.remove('active'));
+      document.getElementById(stateId).classList.add('active');
+    }
+
+    function copyKey() {
+      const key = document.getElementById('license-key').textContent;
+      navigator.clipboard.writeText(key).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    }
+
+    async function fetchLicense(sessionId, attempt = 1) {
+      try {
+        const resp = await fetch(
+          `${API_BASE}/retrieve-license?session_id=${encodeURIComponent(sessionId)}`
+        );
+        const data = await resp.json();
+
+        if (data.ok) {
+          // Success — populate the page
+          document.getElementById('license-key').textContent = data.license_key;
+          document.getElementById('key-inline').textContent = data.license_key;
+          document.getElementById('tier-badge').textContent = data.tier;
+          document.getElementById('meta-email').textContent = data.email;
+          document.getElementById('meta-tier').textContent = data.tier;
+          document.getElementById('meta-machines').textContent = data.max_machines;
+          document.getElementById('meta-updates').textContent =
+            data.updates_until ? new Date(data.updates_until).toLocaleDateString() : 'lifetime';
+          show('state-success');
+          return;
+        }
+
+        // Not found yet — webhook may still be processing
+        if (resp.status === 404 && attempt < 6) {
+          // Retry with exponential backoff (2s, 4s, 8s, 16s, 32s)
+          setTimeout(() => fetchLicense(sessionId, attempt + 1), 2000 * Math.pow(2, attempt - 1));
+          return;
+        }
+
+        // Real error
+        document.getElementById('error-msg').innerHTML =
+          data.message ||
+          'Something went wrong. Email <a href="mailto:hello@elevare.studio">hello@elevare.studio</a> with your receipt and we\'ll send your key manually.';
+        show('state-error');
+      } catch (err) {
+        if (attempt < 4) {
+          setTimeout(() => fetchLicense(sessionId, attempt + 1), 3000);
+          return;
+        }
+        document.getElementById('error-msg').innerHTML =
+          'Network error. Check your connection and reload, or email <a href="mailto:hello@elevare.studio">hello@elevare.studio</a>.';
+        show('state-error');
+      }
+    }
+
+    // Main
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get('session_id');
+
+    if (!sessionId) {
+      show('state-no-session');
+    } else {
+      show('state-loading');
+      // Small delay to let the webhook fire first
+      setTimeout(() => fetchLicense(sessionId), 1500);
+    }
+  </script>
+</body>
+</html>
