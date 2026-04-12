@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nova — redeem your code</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0b0e;
+      --ink: #f5f3ee;
+      --ink-dim: #a8a5a0;
+      --ink-muted: #5e5c57;
+      --accent: #76e4d4;
+      --accent2: #c8a8ff;
+      --red: #ff7a6b;
+      --green: #76e4d4;
+      --serif: 'Instrument Serif', ui-serif, Georgia, serif;
+      --sans: 'Inter Tight', -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card {
+      max-width: 560px;
+      width: 100%;
+      background: rgba(16, 16, 22, 0.8);
+      border: 1px solid rgba(118, 228, 212, 0.2);
+      border-radius: 24px;
+      padding: 52px 44px;
+      box-shadow: 0 40px 120px rgba(118, 228, 212, 0.08);
+    }
+    .glyph {
+      font-family: var(--serif);
+      font-size: 42px;
+      color: var(--accent);
+      text-shadow: 0 0 32px rgba(118, 228, 212, 0.6);
+      margin-bottom: 22px;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: 44px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+    .sub { color: var(--ink-dim); font-size: 16px; margin-bottom: 32px; line-height: 1.5; }
+
+    /* Form */
+    .field { margin-bottom: 20px; }
+    .field label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+    .field input, .field select {
+      width: 100%;
+      padding: 16px 18px;
+      background: rgba(8, 8, 11, 0.9);
+      border: 1px solid rgba(245, 243, 238, 0.12);
+      border-radius: 10px;
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .field input::placeholder { color: var(--ink-muted); }
+    .field input:focus, .field select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(118, 228, 212, 0.1);
+    }
+    .field select {
+      appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235e5c57' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--bg);
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      margin-top: 8px;
+    }
+    .submit-btn:hover {
+      background: var(--accent);
+      box-shadow: 0 14px 48px rgba(118, 228, 212, 0.3);
+      transform: translateY(-2px);
+    }
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* States */
+    .state { display: none; }
+    .state.active { display: block; }
+
+    /* Result states */
+    .result-free {
+      background: rgba(118, 228, 212, 0.08);
+      border: 1px solid rgba(118, 228, 212, 0.25);
+      border-radius: 16px;
+      padding: 28px;
+      margin: 24px 0;
+      text-align: center;
+    }
+    .result-free .tier-name {
+      font-family: var(--serif);
+      font-size: 56px;
+      color: var(--accent);
+      margin: 12px 0 4px;
+    }
+    .result-free .tier-sub {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .result-discount {
+      background: rgba(200, 168, 255, 0.08);
+      border: 1px solid rgba(200, 168, 255, 0.25);
+      border-radius: 16px;
+      padding: 28px;
+      margin: 24px 0;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      font-size: 15px;
+    }
+    .price-row.original { color: var(--ink-muted); text-decoration: line-through; }
+    .price-row.discount { color: var(--accent2); }
+    .price-row.final {
+      font-family: var(--serif);
+      font-size: 44px;
+      color: var(--ink);
+      border-top: 1px dashed rgba(245, 243, 238, 0.1);
+      padding-top: 16px;
+      margin-top: 8px;
+    }
+
+    .download-banner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(118, 228, 212, 0.08);
+      border: 1px solid rgba(118, 228, 212, 0.25);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .download-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .download-text { flex: 1; font-size: 15px; }
+    .download-text strong { font-family: var(--mono); color: var(--accent); }
+
+    .install-box {
+      background: rgba(8, 8, 11, 0.9);
+      border: 1px solid rgba(245, 243, 238, 0.1);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .install-box pre {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 2;
+      white-space: pre-wrap;
+    }
+    .prompt { color: var(--accent); }
+    .comment { color: var(--ink-muted); }
+
+    .error-msg {
+      background: rgba(255, 122, 107, 0.1);
+      border: 1px solid rgba(255, 122, 107, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      color: var(--red);
+      font-size: 15px;
+      margin-top: 16px;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 28px;
+      color: var(--ink-muted);
+      font-size: 14px;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    .pay-btn {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 999px;
+      background: var(--accent2);
+      color: var(--bg);
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      margin-top: 16px;
+      text-align: center;
+      text-decoration: none;
+    }
+    .pay-btn:hover {
+      background: var(--ink);
+      color: var(--bg);
+      box-shadow: 0 14px 48px rgba(200, 168, 255, 0.3);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="glyph">◆</div>
+
+    <!-- FORM STATE -->
+    <div id="state-form" class="state active">
+      <h1>Redeem a <em>code.</em></h1>
+      <p class="sub">Enter your promo code below. Free codes deliver your license instantly.</p>
+
+      <div class="field">
+        <label>Promo code</label>
+        <input type="text" id="input-code" placeholder="NOVABETA" autocomplete="off" spellcheck="false" autofocus />
+      </div>
+      <div class="field">
+        <label>Your email</label>
+        <input type="email" id="input-email" placeholder="you@example.com" />
+      </div>
+      <div class="field">
+        <label>Tier</label>
+        <select id="input-tier">
+          <option value="spark">Spark — $49</option>
+          <option value="home" selected>Home — $149</option>
+          <option value="pro">Pro — $299</option>
+          <option value="lifetime">Lifetime — $499</option>
+        </select>
+      </div>
+
+      <button class="submit-btn" id="btn-redeem" onclick="redeem()">Redeem code</button>
+
+      <div id="form-error" class="error-msg" style="display:none"></div>
+
+      <a class="back-link" href="./">← back to Nova</a>
+    </div>
+
+    <!-- FREE LICENSE RESULT -->
+    <div id="state-free" class="state">
+      <h1>You're in.</h1>
+
+      <div class="result-free">
+        <div class="tier-sub">Your tier</div>
+        <div class="tier-name" id="free-tier"></div>
+        <div class="tier-sub" id="free-email"></div>
+      </div>
+
+      <div class="download-banner">
+        <div class="download-icon">↓</div>
+        <div class="download-text">
+          <strong>nova-license.key</strong> saved to your Downloads folder.
+        </div>
+      </div>
+
+      <p class="sub">Now open a terminal:</p>
+      <div class="install-box">
+        <pre><span class="comment"># Install Nova</span>
+<span class="prompt">$</span> pip install nova-agent
+
+<span class="comment"># Setup wizard (auto-finds your license)</span>
+<span class="prompt">$</span> nova onboard</pre>
+      </div>
+
+      <a class="back-link" href="./">← back to Nova</a>
+    </div>
+
+    <!-- DISCOUNT RESULT -->
+    <div id="state-discount" class="state">
+      <h1>Code <em>applied.</em></h1>
+
+      <div class="result-discount">
+        <div class="price-row original">
+          <span>Original</span>
+          <span id="disc-original"></span>
+        </div>
+        <div class="price-row discount">
+          <span id="disc-label"></span>
+          <span id="disc-amount"></span>
+        </div>
+        <div class="price-row final">
+          <span>You pay</span>
+          <span id="disc-final"></span>
+        </div>
+      </div>
+
+      <a class="pay-btn" id="disc-pay-link" href="#">
+        Continue to checkout →
+      </a>
+
+      <p class="sub" style="margin-top: 20px; font-size: 13px; color: var(--ink-muted); text-align: center;">
+        After payment, your license downloads automatically.
+      </p>
+
+      <a class="back-link" href="./">← back to Nova</a>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div id="state-error" class="state">
+      <h1>Hmm.</h1>
+      <div class="error-msg" id="error-msg"></div>
+      <button class="submit-btn" style="margin-top: 20px" onclick="reset()">Try again</button>
+      <a class="back-link" href="./">← back to Nova</a>
+    </div>
+  </div>
+
+  <script>
+    const API = 'https://ykosczuthuestomkvcbb.supabase.co/functions/v1';
+
+    // Stripe payment links per tier (with session redirect for license delivery)
+    const PAYMENT_LINKS = {
+      spark:    'https://buy.stripe.com/test_9B65kDcKBcQZfF34kh2sM07',
+      home:     'https://buy.stripe.com/test_9B69AT11T4kt50pcQN2sM08',
+      pro:      'https://buy.stripe.com/test_28E3cv4e59EN2ShbMJ2sM09',
+      lifetime: 'https://buy.stripe.com/test_9B63cvaCtaIR50peYV2sM0a',
+    };
+
+    function show(id) {
+      document.querySelectorAll('.state').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function reset() { show('state-form'); }
+
+    function downloadFile(key) {
+      const blob = new Blob([key + '\n'], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'nova-license.key';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    async function redeem() {
+      const code = document.getElementById('input-code').value.trim().toUpperCase();
+      const email = document.getElementById('input-email').value.trim();
+      const tier = document.getElementById('input-tier').value;
+      const errEl = document.getElementById('form-error');
+      const btn = document.getElementById('btn-redeem');
+
+      errEl.style.display = 'none';
+
+      if (!code) { errEl.textContent = 'Enter a promo code.'; errEl.style.display = 'block'; return; }
+      if (!email || !email.includes('@')) { errEl.textContent = 'Enter a valid email.'; errEl.style.display = 'block'; return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Checking...';
+
+      try {
+        const resp = await fetch(`${API}/redeem`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, email, tier }),
+        });
+        const data = await resp.json();
+
+        if (!resp.ok || data.error) {
+          errEl.textContent = data.error || 'Something went wrong.';
+          errEl.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Redeem code';
+          return;
+        }
+
+        if (data.free && data.license_key) {
+          // Free license — download immediately
+          document.getElementById('free-tier').textContent = data.tier;
+          document.getElementById('free-email').textContent = data.email;
+          downloadFile(data.license_key);
+          show('state-free');
+        } else if (!data.free) {
+          // Discount — show math and link to checkout
+          document.getElementById('disc-original').textContent = '$' + (data.original_cents / 100).toFixed(2);
+          document.getElementById('disc-label').textContent =
+            data.discount_type === 'percent'
+              ? data.discount_value + '% off'
+              : '$' + (data.discount_cents / 100).toFixed(0) + ' off';
+          document.getElementById('disc-amount').textContent = '-$' + (data.discount_cents / 100).toFixed(2);
+          document.getElementById('disc-final').textContent = '$' + (data.final_cents / 100).toFixed(2);
+          document.getElementById('disc-pay-link').href = PAYMENT_LINKS[data.tier] || PAYMENT_LINKS.home;
+          show('state-discount');
+        }
+      } catch (err) {
+        errEl.textContent = 'Network error. Check your connection and try again.';
+        errEl.style.display = 'block';
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Redeem code';
+    }
+
+    // Prefill from URL params
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('code')) document.getElementById('input-code').value = params.get('code');
+    if (params.get('email')) document.getElementById('input-email').value = params.get('email');
+    if (params.get('tier')) document.getElementById('input-tier').value = params.get('tier');
+
+    // Auto-submit if all three params present
+    if (params.get('code') && params.get('email')) {
+      setTimeout(() => redeem(), 500);
+    }
+
+    // Enter key submits
+    document.querySelectorAll('.field input').forEach(el => {
+      el.addEventListener('keydown', e => { if (e.key === 'Enter') redeem(); });
+    });
+  </script>
+</body>
+</html>

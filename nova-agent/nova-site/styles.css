@@ -1047,6 +1047,48 @@ section { padding: 120px var(--gutter); }
   letter-spacing: 0.05em;
 }
 
+/* ═════════════════ PROMO STRIP ═════════════════ */
+.promo-strip {
+  margin-top: 56px;
+  text-align: center;
+}
+.promo-inner {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(8, 8, 11, 0.7);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  overflow: hidden;
+  max-width: 480px;
+  width: 100%;
+}
+.promo-field {
+  flex: 1;
+  padding: 16px 22px;
+  background: transparent;
+  border: none;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 15px;
+  outline: none;
+  min-width: 0;
+}
+.promo-field::placeholder { color: var(--ink-muted); }
+.promo-btn {
+  padding: 16px 24px;
+  background: transparent;
+  border: none;
+  border-left: 1px solid var(--rule);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.promo-btn:hover { background: rgba(118, 228, 212, 0.08); }
+
 /* ═════════════════ FAQ ═════════════════ */
 .faq h2 { margin-bottom: 70px; }
 .faq-list {

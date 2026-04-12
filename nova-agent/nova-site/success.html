@@ -194,6 +194,64 @@
       transition: border-color 0.2s;
     }
     .retry-btn:hover { border-color: var(--accent); }
+
+    /* Download banner */
+    .download-banner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(118, 228, 212, 0.08);
+      border: 1px solid rgba(118, 228, 212, 0.25);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin: 20px 0 28px;
+    }
+    .download-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .download-text {
+      flex: 1;
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .download-text strong {
+      font-family: var(--mono);
+      color: var(--accent);
+    }
+    .download-check {
+      font-size: 22px;
+      color: var(--accent);
+    }
+
+    /* Manual fallback */
+    .manual-fallback {
+      margin-top: 28px;
+      border-top: 1px solid rgba(245, 243, 238, 0.08);
+      padding-top: 20px;
+    }
+    .manual-fallback summary {
+      font-size: 14px;
+      color: var(--ink-muted);
+      cursor: pointer;
+      list-style: none;
+    }
+    .manual-fallback summary::-webkit-details-marker { display: none; }
+    .manual-fallback summary::before {
+      content: '+ ';
+      color: var(--accent);
+      font-family: var(--mono);
+    }
+    .manual-fallback[open] summary::before { content: '- '; }
   </style>
 </head>
 <body>
@@ -210,26 +268,43 @@
     <!-- Success state -->
     <div id="state-success" class="state">
       <h1>Welcome to <em>Nova.</em></h1>
-      <p class="sub">Your purchase is complete. Here's your license key — copy it, then run the commands below.</p>
 
       <div class="tier-badge" id="tier-badge">home</div>
 
-      <div class="key-box">
-        <div class="key-label">Your license key</div>
-        <div class="key-value" id="license-key"></div>
-        <button class="copy-btn" onclick="copyKey()">Copy</button>
+      <div class="download-banner" id="download-banner">
+        <div class="download-icon">↓</div>
+        <div class="download-text">
+          <strong>nova-license.key</strong> saved to your Downloads folder.
+        </div>
+        <div class="download-check">✓</div>
       </div>
+
+      <p class="sub">Your license file just downloaded. Now open a terminal and run:</p>
 
       <div class="install-box">
         <pre><span class="comment"># 1. Install Nova</span>
 <span class="prompt">$</span> pip install nova-agent
 
-<span class="comment"># 2. Activate your license</span>
-<span class="prompt">$</span> nova license activate <span id="key-inline"></span>
-
-<span class="comment"># 3. Set up everything (API key, Telegram, tunnel, service)</span>
+<span class="comment"># 2. Start the setup wizard (auto-detects your license from Downloads)</span>
 <span class="prompt">$</span> nova onboard</pre>
       </div>
+
+      <p class="sub" style="margin-top: 24px; font-size: 15px; color: var(--ink-muted);">
+        That's it. Nova finds <code>nova-license.key</code> in your Downloads folder,
+        activates it, and walks you through the rest. Two commands, nothing to copy.
+      </p>
+
+      <details class="manual-fallback">
+        <summary>License didn't download? Click to copy manually</summary>
+        <div class="key-box">
+          <div class="key-label">Your license key</div>
+          <div class="key-value" id="license-key"></div>
+          <button class="copy-btn" onclick="copyKey()">Copy</button>
+        </div>
+        <div class="install-box" style="margin-top: 12px;">
+          <pre><span class="prompt">$</span> nova license activate <span id="key-inline"></span></pre>
+        </div>
+      </details>
 
       <div class="meta">
         <strong>Email:</strong> <span id="meta-email"></span><br>
@@ -237,8 +312,7 @@
         <strong>Machines:</strong> <span id="meta-machines"></span><br>
         <strong>Updates until:</strong> <span id="meta-updates"></span><br>
         <br>
-        We also emailed this key to you. If you lose it,
-        email <a href="mailto:hello@elevare.studio">hello@elevare.studio</a>
+        Lost the file? Email <a href="mailto:hello@elevare.studio">hello@elevare.studio</a>
         and we'll resend it.
       </div>
     </div>
@@ -278,6 +352,23 @@
       });
     }
 
+    /**
+     * Trigger a browser download of nova-license.key.
+     * This file lands in ~/Downloads/ (or wherever the browser saves files).
+     * Nova's CLI scans that folder on startup and auto-activates.
+     */
+    function downloadLicenseFile(licenseKey) {
+      const blob = new Blob([licenseKey + '\n'], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'nova-license.key';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
     async function fetchLicense(sessionId, attempt = 1) {
       try {
         const resp = await fetch(
@@ -286,7 +377,7 @@
         const data = await resp.json();
 
         if (data.ok) {
-          // Success — populate the page
+          // Populate fallback fields
           document.getElementById('license-key').textContent = data.license_key;
           document.getElementById('key-inline').textContent = data.license_key;
           document.getElementById('tier-badge').textContent = data.tier;
@@ -295,6 +386,10 @@
           document.getElementById('meta-machines').textContent = data.max_machines;
           document.getElementById('meta-updates').textContent =
             data.updates_until ? new Date(data.updates_until).toLocaleDateString() : 'lifetime';
+
+          // Auto-download the license file to ~/Downloads/
+          downloadLicenseFile(data.license_key);
+
           show('state-success');
           return;
         }
@@ -325,8 +420,12 @@
     // Main
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get('session_id');
+    const promoCode = params.get('promo') || params.get('code');
 
-    if (!sessionId) {
+    if (promoCode && !sessionId) {
+      // Redirect to the dedicated redeem page
+      window.location.href = 'redeem.html?code=' + encodeURIComponent(promoCode);
+    } else if (!sessionId) {
       show('state-no-session');
     } else {
       show('state-loading');

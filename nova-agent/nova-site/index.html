@@ -491,6 +491,15 @@
           </div>
 
         </div>
+
+        <!-- Promo code input -->
+        <div class="promo-strip">
+          <div class="promo-inner">
+            <input type="text" id="promo-input" class="promo-field" placeholder="Have a code? Enter it here" spellcheck="false" autocomplete="off" />
+            <button class="promo-btn" onclick="goRedeem()">Redeem →</button>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -666,6 +675,17 @@
       });
     }, { threshold: 0.2 });
     document.querySelectorAll('.feature, .work-step, .plan, .receipt').forEach(el => io.observe(el));
+
+    // Promo code redirect
+    function goRedeem() {
+      const code = document.getElementById('promo-input').value.trim();
+      if (code) {
+        window.location.href = 'redeem.html?code=' + encodeURIComponent(code);
+      }
+    }
+    document.getElementById('promo-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') goRedeem();
+    });
   </script>
 </body>
 </html>
