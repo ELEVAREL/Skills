@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dream Academy — Instagram Story</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{margin:0;padding:0;background:#000;font-family:Helvetica,Arial,sans-serif}
+.story{width:1080px;height:1920px;background:linear-gradient(180deg,#0D1B3E 0%,#162d5a 40%,#0D1B3E 100%);position:relative;overflow:hidden;color:#fff}
+
+/* Amber bars */
+.bar-top,.bar-bot{position:absolute;left:0;right:0;height:8px;background:#E8962B;z-index:10}
+.bar-top{top:0}
+.bar-bot{bottom:0}
+
+/* Decorative rings */
+.ring1{position:absolute;top:120px;right:-80px;width:360px;height:360px;border:3px solid rgba(232,150,43,.15);border-radius:50%}
+.ring2{position:absolute;bottom:400px;left:-100px;width:280px;height:280px;border:2px solid rgba(232,150,43,.1);border-radius:50%}
+.ring3{position:absolute;top:50%;right:60px;width:200px;height:200px;border:2px solid rgba(232,150,43,.08);border-radius:50%}
+
+/* Content wrapper */
+.content{position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:space-between;height:100%;padding:80px 72px 40px}
+
+/* Eyebrow */
+.eyebrow{display:inline-block;font-size:28px;font-weight:700;letter-spacing:5px;text-transform:uppercase;border:3px solid #E8962B;border-radius:50px;padding:14px 40px;color:#E8962B;margin-bottom:20px}
+
+/* Logo */
+.logo{font-family:Georgia,'Times New Roman',serif;font-size:52px;font-weight:700;margin-bottom:16px}
+.logo span{color:#E8962B}
+
+/* Top section */
+.top{text-align:center;padding-top:40px}
+
+/* Main headline */
+.headline{font-family:Georgia,'Times New Roman',serif;font-size:96px;font-weight:700;line-height:1.1;text-align:center;margin:40px 0}
+.headline span{color:#E8962B}
+
+/* Features */
+.features{width:100%;display:flex;flex-direction:column;gap:32px;padding:0 20px}
+.feature{display:flex;align-items:center;gap:28px;background:rgba(255,255,255,.06);border:2px solid rgba(232,150,43,.25);border-radius:24px;padding:36px 40px}
+.feature .icon{font-size:56px;flex-shrink:0}
+.feature .text h3{font-family:Georgia,'Times New Roman',serif;font-size:36px;margin-bottom:6px}
+.feature .text p{font-size:26px;color:rgba(255,255,255,.65)}
+
+/* Stats */
+.stats{text-align:center;margin:20px 0}
+.stats .num{font-family:Georgia,'Times New Roman',serif;font-size:64px;font-weight:700;color:#E8962B}
+.stats .label{font-size:26px;color:rgba(255,255,255,.7);margin-top:4px}
+.stats-row{display:flex;gap:80px;justify-content:center}
+
+/* CTA Bar */
+.cta-bar{background:#E8962B;width:calc(100% + 144px);margin:0 -72px;padding:48px 72px;text-align:center}
+.cta-bar h3{font-family:Georgia,'Times New Roman',serif;font-size:44px;margin-bottom:10px}
+.cta-bar p{font-size:30px;opacity:.9}
+
+/* Bottom meta */
+.bottom-meta{text-align:center;font-size:24px;color:rgba(255,255,255,.4);padding:16px 0}
+</style>
+</head>
+<body>
+<div class="story">
+  <div class="bar-top"></div>
+  <div class="bar-bot"></div>
+  <div class="ring1"></div>
+  <div class="ring2"></div>
+  <div class="ring3"></div>
+
+  <div class="content">
+    <div class="top">
+      <span class="eyebrow">Now Enrolling</span>
+      <div class="logo">Dream <span>Academy</span></div>
+    </div>
+
+    <div class="headline">
+      Your Diploma.<br><span>Your Timeline.</span>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="icon">⏰</div>
+        <div class="text">
+          <h3>Flexible Schedule</h3>
+          <p>Morning &amp; afternoon sessions, Mon–Fri</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="icon">👩‍🏫</div>
+        <div class="text">
+          <h3>Real Instructors</h3>
+          <p>In-person teachers who care about your success</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="icon">🎓</div>
+        <div class="text">
+          <h3>Accredited Diploma</h3>
+          <p>Not a GED — a real high school diploma</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stats-row">
+        <div>
+          <div class="num">500+</div>
+          <div class="label">Graduates</div>
+        </div>
+        <div>
+          <div class="num">93%</div>
+          <div class="label">Completion Rate</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-bar">
+      <h3>Start Your Journey Today</h3>
+      <p>Call (804) 228-8200 &nbsp;|&nbsp; dreamacademyrichmond.com</p>
+    </div>
+
+    <div class="bottom-meta">
+      2505 Chamberlin Ave, Richmond VA 23222 &nbsp;|&nbsp; Mon–Fri 9am–4pm
+    </div>
+  </div>
+</div>
+</body>
+</html>

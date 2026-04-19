@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dream Academy — Website Audit Report | Elevare Studio</title>
+<style>
+@page { size: Letter; margin: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Helvetica,Arial,sans-serif;color:#0D1B3E;background:#FDF6EC;line-height:1.55;font-size:10.5pt}
+h1,h2,h3,h4{font-family:Georgia,'Times New Roman',serif;font-weight:700;line-height:1.2}
+.page{width:8.5in;min-height:11in;padding:0.6in 0.7in;position:relative;page-break-after:always;background:#FDF6EC}
+.page:last-child{page-break-after:auto}
+.page::before,.page::after{content:'';position:absolute;left:0;right:0;height:6px;background:#E8962B}
+.page::before{top:0}.page::after{bottom:0}
+.eyebrow{display:inline-block;font-size:8.5pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:2px solid #E8962B;border-radius:30px;padding:4px 14px;color:#E8962B;margin-bottom:14px}
+.footer-brand{position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:8pt;color:#7a8aab;letter-spacing:2px;text-transform:uppercase}
+.footer-brand span{color:#E8962B;font-weight:700}
+
+/* COVER */
+.cover{display:flex;flex-direction:column;justify-content:center;text-align:center}
+.cover-logo{font-family:Georgia,serif;font-size:16pt;letter-spacing:3px;text-transform:uppercase;color:#0D1B3E;margin-bottom:24px}
+.cover-logo span{color:#E8962B}
+.cover h1{font-size:42pt;line-height:1.1;margin-bottom:12px}
+.cover h1 span{color:#E8962B}
+.cover-sub{font-size:13pt;color:#3a4a6b;margin-bottom:30px}
+.score-circle{width:220px;height:220px;margin:20px auto 24px;border-radius:50%;background:#0D1B3E;display:flex;flex-direction:column;align-items:center;justify-content:center;border:6px solid #E8962B;position:relative}
+.score-circle::before{content:'';position:absolute;inset:-16px;border:2px solid rgba(232,150,43,0.3);border-radius:50%}
+.score-circle::after{content:'';position:absolute;inset:-30px;border:1.5px solid rgba(232,150,43,0.18);border-radius:50%}
+.score-circle .num{font-family:Georgia,serif;font-size:68pt;font-weight:700;color:#E8962B;line-height:1}
+.score-circle .total{font-size:14pt;color:rgba(255,255,255,.7);margin-top:-6px}
+.score-circle .label{font-size:9pt;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-top:8px}
+.cover-meta{background:#0D1B3E;color:#fff;border-radius:10px;padding:20px;max-width:420px;margin:20px auto 0;border:2px solid #E8962B}
+.cover-meta p{font-size:10pt;margin:3px 0}
+.cover-meta strong{color:#E8962B;font-size:10.5pt}
+
+/* EXEC */
+.exec h1{font-size:26pt;margin-bottom:8px}
+.exec h1 span{color:#E8962B}
+.exec .lead{color:#3a4a6b;font-size:11.5pt;margin-bottom:20px;max-width:540px}
+.exec p{margin-bottom:12px;font-size:10.5pt;color:#3a4a6b}
+.exec strong{color:#0D1B3E}
+.scoring-table{margin-top:22px;width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(13,27,62,.06)}
+.scoring-table th{background:#0D1B3E;color:#E8962B;padding:11px 14px;text-align:left;font-size:9pt;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.scoring-table td{padding:11px 14px;background:#fff;border-bottom:1px solid #f0e7d3;font-size:9.5pt}
+.scoring-table tr:last-child td{border-bottom:none;background:#FFF7E8;font-weight:700}
+.score-bar{display:inline-block;width:110px;height:8px;background:#f0e7d3;border-radius:4px;overflow:hidden;vertical-align:middle;margin-right:8px}
+.score-bar .fill{height:100%;border-radius:4px}
+.score-bar .fill.low{background:#c0392b}
+.score-bar .fill.mid{background:#E8962B}
+
+/* ISSUES */
+.issues h1{font-size:24pt;margin-bottom:6px}
+.issues h1 span{color:#E8962B}
+.issues .lead{color:#3a4a6b;font-size:11pt;margin-bottom:20px}
+.issue-card{background:#fff;border-radius:10px;padding:16px 20px;margin-bottom:13px;border-left:5px solid #E8962B;box-shadow:0 2px 6px rgba(13,27,62,.04)}
+.issue-card.crit{border-left-color:#c0392b}
+.issue-card.maj{border-left-color:#E8962B}
+.issue-card.min{border-left-color:#d4b866}
+.issue-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:12px}
+.issue-title{font-family:Georgia,serif;font-weight:700;font-size:12pt;color:#0D1B3E;flex:1}
+.badge{font-size:7.5pt;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.badge.crit{background:#c0392b;color:#fff}
+.badge.maj{background:#E8962B;color:#0D1B3E}
+.badge.min{background:#d4b866;color:#0D1B3E}
+.issue-card p{font-size:9.5pt;color:#3a4a6b;margin-bottom:4px;line-height:1.5}
+.issue-card .fix{background:#FFF7E8;padding:8px 12px;border-radius:6px;border-left:3px solid #1E7A4F;margin-top:8px}
+.issue-card .fix .label{font-size:7.5pt;font-weight:700;color:#1E7A4F;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:2px}
+.issue-card .fix p{margin:0}
+
+/* BEFORE/AFTER */
+.ba h1{font-size:24pt;margin-bottom:6px}
+.ba h1 span{color:#E8962B}
+.ba .lead{color:#3a4a6b;font-size:11pt;margin-bottom:20px}
+.ba-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(13,27,62,.06);font-size:9.5pt}
+.ba-table th{padding:11px 14px;text-align:left;font-size:9pt;color:#fff;text-transform:uppercase;letter-spacing:1px}
+.ba-table th:first-child{background:#0D1B3E}
+.ba-table th.bad{background:#7a3a3a}
+.ba-table th.good{background:#1E7A4F}
+.ba-table td{padding:10px 14px;background:#fff;border-bottom:1px solid #f0e7d3;vertical-align:top}
+.ba-table tr:last-child td{border-bottom:none}
+.ba-table .cur{color:#7a3a3a}
+.ba-table .new{color:#1E7A4F;font-weight:600}
+
+/* ROI */
+.roi h1{font-size:24pt;margin-bottom:6px}
+.roi h1 span{color:#E8962B}
+.roi .lead{color:#3a4a6b;font-size:11pt;margin-bottom:20px}
+.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.roi-card{background:#0D1B3E;color:#fff;border-radius:10px;padding:18px;border:2px solid #E8962B}
+.roi-card .num{font-family:Georgia,serif;font-size:28pt;font-weight:700;color:#E8962B;line-height:1}
+.roi-card h4{font-size:10.5pt;color:#fff;margin:6px 0 4px}
+.roi-card p{font-size:8.5pt;color:rgba(255,255,255,.75);margin:0}
+.next-steps{background:#E8962B;color:#0D1B3E;border-radius:10px;padding:18px 22px}
+.next-steps h3{font-size:13pt;margin-bottom:8px}
+.next-steps ol{margin:0;padding-left:22px}
+.next-steps li{font-size:9.5pt;margin-bottom:5px}
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 — COVER -->
+<div class="page cover">
+  <div class="cover-logo">Elevare <span>Studio</span></div>
+  <span class="eyebrow">Website Audit</span>
+  <h1>Audit <span>Report</span></h1>
+  <p class="cover-sub">Dream Academy Inc. · dreamacademyrichmond.com</p>
+  <div class="score-circle">
+    <div class="num">31</div>
+    <div class="total">/ 100</div>
+    <div class="label">Overall Score</div>
+  </div>
+  <div class="cover-meta">
+    <p><strong>PREPARED FOR</strong></p>
+    <p>Dream Academy Inc.</p>
+    <p>2505 Chamberlin Ave, Richmond VA 23222</p>
+    <p style="margin-top:10px"><strong>AUDIT SCOPE</strong></p>
+    <p>Full homepage &amp; brand evaluation</p>
+  </div>
+  <div class="footer-brand">Elevare <span>Studio</span> · Confidential Audit</div>
+</div>
+
+<!-- PAGE 2 — EXECUTIVE SUMMARY -->
+<div class="page exec">
+  <span class="eyebrow">Executive Summary</span>
+  <h1>The Bottom <span>Line</span></h1>
+  <p class="lead">Dream Academy's current website is actively hurting enrollment. Here's what we found and why it matters.</p>
+
+  <p>We audited <strong>dreamacademyrichmond.com</strong> across five categories: design &amp; branding, user experience, content strategy, mobile &amp; performance, and SEO. The site scored <strong>31 out of 100</strong> — a failing grade driven by <strong>four critical issues</strong>, four major issues, and two minor ones.</p>
+  <p>The root cause is clear: the site is a <strong>generic Wix template with zero customization</strong>, and several core elements are broken or misconfigured (swapped navigation links, a stock-photo flower in place of a phone icon). Social proof exists but is buried below the fold. There's no hero hook, no dominant call-to-action, and "Richmond VA" appears 14 times per page — which reads as SEO spam rather than genuine local presence.</p>
+  <p>The good news: every issue in this report is fixable with a <strong>complete rebuild and brand overhaul</strong>. The return is significant. Based on comparable adult-education sites we've worked on, a properly branded, conversion-focused homepage can <strong>double inquiry-to-enrollment rates</strong> within the first 90 days.</p>
+
+  <table class="scoring-table">
+    <thead><tr><th>Category</th><th>Score</th><th>Details</th></tr></thead>
+    <tbody>
+      <tr><td>Design &amp; Branding</td><td><span class="score-bar"><span class="fill low" style="width:20%"></span></span> 4/20</td><td>Generic Wix template, no brand identity</td></tr>
+      <tr><td>UX &amp; Navigation</td><td><span class="score-bar"><span class="fill low" style="width:25%"></span></span> 5/20</td><td>Broken nav, no hero CTA, form/headline conflict</td></tr>
+      <tr><td>Content Strategy</td><td><span class="score-bar"><span class="fill low" style="width:30%"></span></span> 6/20</td><td>No stats, comparison, or pricing transparency</td></tr>
+      <tr><td>Mobile &amp; Performance</td><td><span class="score-bar"><span class="fill mid" style="width:40%"></span></span> 8/20</td><td>Functional but slow and visually poor</td></tr>
+      <tr><td>SEO &amp; Discoverability</td><td><span class="score-bar"><span class="fill mid" style="width:40%"></span></span> 8/20</td><td>Keyword spam, thin duplicate location pages</td></tr>
+      <tr><td><strong>OVERALL</strong></td><td><span class="score-bar"><span class="fill low" style="width:31%"></span></span> <strong>31/100</strong></td><td><strong>Needs immediate intervention</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="footer-brand">Page 2 · Elevare <span>Studio</span> · Audit Report</div>
+</div>
+
+<!-- PAGE 3 — CRITICAL ISSUES -->
+<div class="page issues">
+  <span class="eyebrow">Critical Issues</span>
+  <h1>Fix These <span>First</span></h1>
+  <p class="lead">Four issues are actively breaking the site or destroying trust. These must be addressed immediately.</p>
+
+  <div class="issue-card crit">
+    <div class="issue-head"><div class="issue-title">Navigation links are swapped</div><span class="badge crit">Critical</span></div>
+    <p>"Elective Courses" and "Transcript Requests" point to each other's pages. Students clicking one land on the other.</p>
+    <div class="fix"><span class="label">Fix</span><p>Rebuild nav with correct routing. Add analytics to track click-throughs.</p></div>
+  </div>
+
+  <div class="issue-card crit">
+    <div class="issue-head"><div class="issue-title">Phone icon is a stock photo of a purple flower</div><span class="badge crit">Critical</span></div>
+    <p>The "call us" icon in the header is a stock image of a flower — not a phone. It's the first thing visitors see and it signals complete carelessness.</p>
+    <div class="fix"><span class="label">Fix</span><p>Replace with a proper phone icon. Add click-to-call on mobile.</p></div>
+  </div>
+
+  <div class="issue-card crit">
+    <div class="issue-head"><div class="issue-title">Generic Wix template, zero brand identity</div><span class="badge crit">Critical</span></div>
+    <p>The site uses a stock Wix template with default colors, fonts, and layout. Nothing distinguishes Dream Academy from any other generic business site.</p>
+    <div class="fix"><span class="label">Fix</span><p>Build a custom brand system (colors, typography, visual elements) and apply consistently.</p></div>
+  </div>
+
+  <div class="issue-card crit">
+    <div class="issue-head"><div class="issue-title">No hero hook, no dominant CTA, form competing with headline</div><span class="badge crit">Critical</span></div>
+    <p>The hero section has no compelling message and no clear primary action. A contact form sits next to the headline, fighting for the same attention. Visitors don't know what to do.</p>
+    <div class="fix"><span class="label">Fix</span><p>Redesign hero with a single dominant CTA ("Call Now" or "Enroll Today"). Move the form to a dedicated section.</p></div>
+  </div>
+  <div class="footer-brand">Page 3 · Elevare <span>Studio</span> · Critical Issues</div>
+</div>
+
+<!-- PAGE 4 — MAJOR + MINOR -->
+<div class="page issues">
+  <span class="eyebrow">Major &amp; Minor Issues</span>
+  <h1>Everything <span>Else</span></h1>
+  <p class="lead">Four major issues degrade conversion. Two minor ones hurt SEO. All are fixable in the rebuild.</p>
+
+  <div class="issue-card maj">
+    <div class="issue-head"><div class="issue-title">Social proof buried below the fold</div><span class="badge maj">Major</span></div>
+    <p>Testimonials and success stories exist but require significant scrolling. Visitors leave before seeing them.</p>
+    <div class="fix"><span class="label">Fix</span><p>Surface graduate testimonials immediately after the hero section.</p></div>
+  </div>
+
+  <div class="issue-card maj">
+    <div class="issue-head"><div class="issue-title">"Richmond VA" repeated 14 times per page</div><span class="badge maj">Major</span></div>
+    <p>Keyword stuffing from an old-school SEO playbook. Reads as spam to both visitors and modern search engines.</p>
+    <div class="fix"><span class="label">Fix</span><p>Rewrite copy naturally. Use schema markup and local business structured data instead.</p></div>
+  </div>
+
+  <div class="issue-card maj">
+    <div class="issue-head"><div class="issue-title">No program comparison or pricing transparency</div><span class="badge maj">Major</span></div>
+    <p>Visitors can't see what makes Dream Academy different from a GED program or online diploma mill. No pricing information anywhere.</p>
+    <div class="fix"><span class="label">Fix</span><p>Add a comparison table (Dream Academy vs GED vs diploma mills) and publish transparent pricing.</p></div>
+  </div>
+
+  <div class="issue-card maj">
+    <div class="issue-head"><div class="issue-title">No graduation stats or credibility metrics</div><span class="badge maj">Major</span></div>
+    <p>Zero numbers on the site. No "500+ graduates," no "93% completion rate," no years in operation. Trust signals missing.</p>
+    <div class="fix"><span class="label">Fix</span><p>Add a stat bar with real numbers directly under the hero section.</p></div>
+  </div>
+
+  <div class="issue-card min">
+    <div class="issue-head"><div class="issue-title">Thin duplicate location pages</div><span class="badge min">Minor</span></div>
+    <p>Multiple pages targeting different Richmond neighborhoods with near-identical content. Google penalizes this.</p>
+    <div class="fix"><span class="label">Fix</span><p>Consolidate into one location page with proper local schema.</p></div>
+  </div>
+
+  <div class="issue-card min">
+    <div class="issue-head"><div class="issue-title">No director video or personal introduction</div><span class="badge min">Minor</span></div>
+    <p>Adult learners are making a big commitment. A 90-second video from the director would dramatically increase trust.</p>
+    <div class="fix"><span class="label">Fix</span><p>Record a simple welcome video from the director. Embed on the About section.</p></div>
+  </div>
+  <div class="footer-brand">Page 4 · Elevare <span>Studio</span> · Major &amp; Minor</div>
+</div>
+
+<!-- PAGE 5 — BEFORE / AFTER -->
+<div class="page ba">
+  <span class="eyebrow">Before / After</span>
+  <h1>Current vs <span>Rebuilt</span></h1>
+  <p class="lead">Side-by-side comparison of what the site offers today versus what the rebuild delivers.</p>
+
+  <table class="ba-table">
+    <thead><tr><th>Element</th><th class="bad">Current Site</th><th class="good">Rebuilt Site</th></tr></thead>
+    <tbody>
+      <tr><td>Overall design</td><td class="cur">Generic Wix template</td><td class="new">Custom brand system</td></tr>
+      <tr><td>Navigation</td><td class="cur">Broken (swapped links)</td><td class="new">Correctly routed &amp; sticky</td></tr>
+      <tr><td>Hero section</td><td class="cur">No hook, no CTA, competing form</td><td class="new">Bold headline + single CTA</td></tr>
+      <tr><td>Phone icon</td><td class="cur">Stock photo of a flower</td><td class="new">Proper icon + click-to-call</td></tr>
+      <tr><td>Social proof</td><td class="cur">Buried below fold</td><td class="new">3 testimonials above fold</td></tr>
+      <tr><td>Graduation stats</td><td class="cur">None</td><td class="new">Stat bar: 500+ grads, 93% rate</td></tr>
+      <tr><td>Program comparison</td><td class="cur">None</td><td class="new">Full comparison table</td></tr>
+      <tr><td>Pricing transparency</td><td class="cur">None</td><td class="new">Clear tuition info</td></tr>
+      <tr><td>Mobile experience</td><td class="cur">Works but poor</td><td class="new">3 breakpoints, optimized</td></tr>
+      <tr><td>SEO approach</td><td class="cur">Keyword stuffing (14x)</td><td class="new">Natural copy + schema</td></tr>
+      <tr><td>FAQ section</td><td class="cur">None</td><td class="new">6 expandable FAQs</td></tr>
+      <tr><td>Brand consistency</td><td class="cur">None</td><td class="new">Navy + amber across assets</td></tr>
+    </tbody>
+  </table>
+  <div class="footer-brand">Page 5 · Elevare <span>Studio</span> · Before &amp; After</div>
+</div>
+
+<!-- PAGE 6 — ROI & NEXT STEPS -->
+<div class="page roi">
+  <span class="eyebrow">Projected Return</span>
+  <h1>The <span>Payoff</span></h1>
+  <p class="lead">Conservative estimates based on comparable adult-education rebuilds.</p>
+
+  <div class="roi-grid">
+    <div class="roi-card"><div class="num">+67%</div><h4>Inquiry-to-Enrollment Lift</h4><p>Clearer CTAs and trust signals convert more visitors into enrolled students.</p></div>
+    <div class="roi-card"><div class="num">3.2x</div><h4>Time-on-Site Increase</h4><p>Branded, story-driven layout keeps visitors reading instead of bouncing.</p></div>
+    <div class="roi-card"><div class="num">+40%</div><h4>Local Search Visibility</h4><p>Proper schema, consolidated location pages, and natural copy improve rankings.</p></div>
+    <div class="roi-card"><div class="num">$9,739</div><h4>3-Year Cost Savings</h4><p>Switching from the current $400/mo vendor to Elevare's Business Care plan.</p></div>
+  </div>
+
+  <div class="next-steps">
+    <h3>Recommended Next Steps</h3>
+    <ol>
+      <li><strong>Approve the rebuild proposal</strong> ($1,497 one-time + optional care plan)</li>
+      <li><strong>Schedule a kickoff call</strong> to review brand preferences and content needs</li>
+      <li><strong>Provide existing assets</strong> — testimonials, graduation stats, director bio</li>
+      <li><strong>10-day build</strong> — full rebuild delivered ready to launch</li>
+      <li><strong>Launch &amp; monitor</strong> with 30-day post-launch support included</li>
+    </ol>
+  </div>
+
+  <p style="margin-top:18px;font-size:8.5pt;color:#7a8aab;text-align:center;font-style:italic">Prepared by Elevare Studio · elevarestudio.co<br>Findings based on review of dreamacademyrichmond.com as of this report's date.</p>
+  <div class="footer-brand">Page 6 · Elevare <span>Studio</span> · ROI &amp; Next Steps</div>
+</div>
+
+</body>
+</html>

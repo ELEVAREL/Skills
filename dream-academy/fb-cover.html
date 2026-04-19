@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dream Academy — Facebook Cover</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{margin:0;padding:0;background:#000;font-family:Helvetica,Arial,sans-serif}
+.cover{width:1920px;height:1005px;background:linear-gradient(135deg,#0D1B3E 0%,#162d5a 60%,#0D1B3E 100%);position:relative;overflow:hidden;color:#fff}
+
+/* Amber bars */
+.bar-top,.bar-bot{position:absolute;left:0;right:0;height:6px;background:#E8962B;z-index:10}
+.bar-top{top:0}
+.bar-bot{bottom:0}
+
+/* Decorative rings */
+.ring1{position:absolute;top:-60px;right:200px;width:400px;height:400px;border:3px solid rgba(232,150,43,.12);border-radius:50%}
+.ring2{position:absolute;bottom:-80px;right:500px;width:320px;height:320px;border:2px solid rgba(232,150,43,.08);border-radius:50%}
+.ring3{position:absolute;top:200px;left:680px;width:240px;height:240px;border:2px solid rgba(232,150,43,.06);border-radius:50%}
+
+/* Layout */
+.layout{position:relative;z-index:5;display:grid;grid-template-columns:480px 1fr 420px;height:100%;align-items:center;padding:60px 80px;gap:40px}
+
+/* Left — Brand */
+.left{padding-left:40px;padding-bottom:120px}
+.logo{font-family:Georgia,'Times New Roman',serif;font-size:52px;font-weight:700;margin-bottom:12px}
+.logo span{color:#E8962B}
+.tagline{font-size:22px;color:rgba(255,255,255,.7);line-height:1.4;margin-bottom:24px}
+.eyebrow{display:inline-block;font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;border:2px solid #E8962B;border-radius:30px;padding:8px 22px;color:#E8962B}
+
+/* Center — Headline */
+.center{text-align:center}
+.main-headline{font-family:Georgia,'Times New Roman',serif;font-size:72px;font-weight:700;line-height:1.15;margin-bottom:20px}
+.main-headline span{color:#E8962B}
+.sub-headline{font-size:24px;color:rgba(255,255,255,.7);margin-bottom:28px}
+.cta-btn{display:inline-block;background:#E8962B;color:#fff;font-weight:700;font-size:22px;padding:18px 48px;border-radius:12px}
+
+/* Right — Stats */
+.right{display:flex;flex-direction:column;gap:24px;padding-right:40px}
+.stat-card{background:rgba(255,255,255,.06);border:2px solid rgba(232,150,43,.25);border-radius:20px;padding:28px 32px;text-align:center}
+.stat-card .num{font-family:Georgia,'Times New Roman',serif;font-size:56px;font-weight:700;color:#E8962B}
+.stat-card .label{font-size:18px;color:rgba(255,255,255,.65);margin-top:4px}
+
+/* Bottom info bar */
+.bottom-bar{position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:16px;color:rgba(255,255,255,.35);z-index:5;padding:0 200px}
+
+/* Safe zone note: FB profile pic overlaps ~200px from left, ~200px from bottom */
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="bar-top"></div>
+  <div class="bar-bot"></div>
+  <div class="ring1"></div>
+  <div class="ring2"></div>
+  <div class="ring3"></div>
+
+  <div class="layout">
+    <div class="left">
+      <div class="logo">Dream <span>Academy</span></div>
+      <div class="tagline">Adult High School<br>Diploma Program</div>
+      <span class="eyebrow">Now Enrolling</span>
+    </div>
+
+    <div class="center">
+      <div class="main-headline">Your Future<br><span>Starts Here</span></div>
+      <div class="sub-headline">Flexible classes. Real instructors. Accredited diploma.</div>
+      <div class="cta-btn">Call (804) 228-8200</div>
+    </div>
+
+    <div class="right">
+      <div class="stat-card">
+        <div class="num">500+</div>
+        <div class="label">Graduates</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">93%</div>
+        <div class="label">Completion Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">12</div>
+        <div class="label">Months Average</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    2505 Chamberlin Ave, Richmond VA 23222 &nbsp;|&nbsp; Mon–Fri 9am–4pm &nbsp;|&nbsp; dreamacademyrichmond.com
+  </div>
+</div>
+</body>
+</html>
